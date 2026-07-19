@@ -1,0 +1,38 @@
+<section class="contact">
+  <div class="container contact__layout">
+    <div class="contact__info">
+      <h1 class="section-title">Entre em contato</h1>
+      <p class="section-subtitle">
+        Dúvidas sobre fragrâncias, pedidos ou parcerias? Envie uma mensagem
+        ou entre em contato pelos canais abaixo.
+      </p>
+
+      <ul class="contact__list">
+        <li><strong>E-mail:</strong> salescristina809&#64;gmail.com</li>
+      </ul>
+    </div>
+
+    <form class="contact__form" [formGroup]="contactForm" (ngSubmit)="submit()">
+      @if (submitted()) {
+        <p class="contact__success">Mensagem enviada. Retornaremos em breve.</p>
+      }
+
+      <div class="field">
+        <label for="contact-name">Nome</label>
+        <input id="contact-name" type="text" formControlName="name">
+      </div>
+
+      <div class="field">
+        <label for="contact-email">E-mail</label>
+        <input id="contact-email" type="email" formControlName="email">
+      </div>
+
+      <div class="field">
+        <label for="contact-message">Mensagem</label>
+        <textarea id="contact-message" rows="5" formControlName="message"></textarea>
+      </div>
+
+      <button type="submit" class="btn__send_message" [disabled]="sending()">{{ sending() ? "Enviando..." : "Enviar mensagem" }}</button>
+    </form>
+  </div>
+</section>

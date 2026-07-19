@@ -1,0 +1,84 @@
+.contact {
+  padding: 48px 0 80px;
+}
+
+.contact__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.contact__list {
+  list-style: none;
+  padding: 0;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--color-brown);
+}
+
+.contact__form {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 0.82rem;
+  color: var(--color-brown-dark);
+}
+
+input,
+textarea {
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-beige);
+  background: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-ink);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-amber);
+  }
+}
+
+.contact__success {
+  background: var(--color-cream-dark);
+  color: var(--color-success);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.btn__send_message {
+  width: 100%;
+  margin-top: 8px;
+  background: var(--color-brown);
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 20px;
+  transition: 0.3s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: 900px) {
+  .contact__layout {
+    grid-template-columns: 1fr;
+  }
+}

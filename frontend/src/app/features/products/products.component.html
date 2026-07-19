@@ -1,0 +1,22 @@
+<section class="products">
+  <div class="container">
+    <h1 class="section-title">Nossos produtos</h1>
+    <p class="section-subtitle">Escolha entre velas, home sprays e difusores para perfumar cada cômodo.</p>
+
+    <div class="products__filters">
+      @for (filter of filters; track filter.value) {
+        <button class="products__filter" [class.is-active]="activeFilter() === filter.value" (click)="setFilter(filter.value)">
+          {{ filter.label }}
+        </button>
+      }
+    </div>
+
+    <div class="products__grid">
+      @for (product of filteredProducts(); track product.id) {
+        <app-product-card [product]="product"></app-product-card>
+      } @empty {
+        <p>Nenhum produto encontrado nessa categoria.</p>
+      }
+    </div>
+  </div>
+</section>

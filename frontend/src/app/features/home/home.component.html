@@ -1,0 +1,49 @@
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__text">
+      <h1 class="hero__title">Transforme sua casa em um refúgio de aromas</h1>
+      <p class="hero__subtitle">
+        Velas artesanais, home sprays e difusores criados para trazer calma,
+        aconchego e personalidade para cada cômodo da sua casa.
+      </p>
+      <div class="hero__buttons">
+        <a routerLink="/produtos" class="btn_primary">Ver produtos</a>
+        <a routerLink="/contato" class="btn_outline">Fale com a gente</a>
+      </div>
+    </div>
+
+    <div class="hero__image">
+        <img src="assets/Candle-Home.jpeg" alt="Vela em destaque: Pastilhas">
+    </div>
+  </div>
+</section>
+
+<section class="highlights">
+  <div class="container highlights__grid">
+    <div class="highlight-card">
+      <h3>Cera Vegetal</h3>
+      <p>Velas produzidas com cera de soja, queima limpa e mais duradoura.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>Feito à Mão</h3>
+      <p>Produção artesanal, em pequenos lotes, com atenção a cada detalhe.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>Entrega Cuidadosa</h3>
+      <p>Embalagem protegida para que seu pedido chegue intacto e perfumado.</p>
+    </div>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="container">
+    <h2 class="section-title">Mais Amados</h2>
+    <p class="section-subtitle">Uma seleção dos aromas favoritos dos nossos clientes.</p>
+
+    <div class="featured__grid">
+      @for (product of featuredProducts(); track product.id) {
+        <app-product-card [product]="product"></app-product-card>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,139 @@
+<section class="checkout">
+  <div class="container">
+    <h1 class="section-title">Finalizar compra</h1>
+
+    @if (submitSuccess()) {
+      <div class="checkout__success">
+        <h2>Pedido enviado com sucesso!</h2>
+        <p>
+          Recebemos seus dados e as informações do pagamento. Em breve você receberá
+          a confirmação por e-mail.
+        </p>
+        <a routerLink="/produtos" class="btn btn-primary">Continuar comprando</a>
+      </div>
+    } @else if (cartService.items().length === 0) {
+      <div class="checkout__empty">
+        <p>Seu carrinho está vazio.</p>
+        <a routerLink="/produtos" class="btn btn-primary">Ver produtos</a>
+      </div>
+    } @else {
+      <form class="checkout__layout" [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
+        <div class="checkout__form">
+          <h2>Seus dados</h2>
+
+          <div class="field">
+            <label for="name">Nome completo</label>
+            <input id="name" type="text" formControlName="name" placeholder="Seu nome">
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="email">E-mail</label>
+              <input id="email" type="email" formControlName="email" placeholder="voce@email.com">
+            </div>
+            <div class="field">
+              <label for="phone">Telefone</label>
+              <input id="phone" type="tel" formControlName="phone" placeholder="(00) 00000-0000">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="address">Endereço</label>
+            <input id="address" type="text" formControlName="address" placeholder="Rua, número, complemento">
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="city">Cidade</label>
+              <input id="city" type="text" formControlName="city">
+            </div>
+            <div class="field field--small">
+              <label for="state">UF</label>
+              <input id="state" type="text" maxlength="2" formControlName="state">
+            </div>
+            <div class="field">
+              <label for="zipCode">CEP</label>
+              <input id="zipCode" type="text" formControlName="zipCode" placeholder="00000-000">
+            </div>
+          </div>
+
+          <h2>Forma de pagamento</h2>
+
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" formControlName="paymentMethod" value="PIX">
+              <span class="payment-option__icon">📱</span>
+              <span>Pix</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" formControlName="paymentMethod" value="CREDITO">
+              <span class="payment-option__icon">💳</span>
+              <span>Cartão de Crédito</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" formControlName="paymentMethod" value="DEBITO">
+              <span class="payment-option__icon">🏦</span>
+              <span>Cartão de Débito</span>
+            </label>
+          </div>
+
+          @if (isCardPayment) {
+            <div class="field field--small">
+              <label for="cardInstallments">Parcelas</label>
+              <select id="cardInstallments" formControlName="cardInstallments">
+                @for (installment of [1, 2, 3, 4, 5, 6]; track installment) {
+                  <option [value]="installment">{{ installment }}x</option>
+                }
+              </select>
+            </div>
+          }
+
+          <div class="field">
+            <label for="notes">Observações (opcional)</label>
+            <textarea id="notes" formControlName="notes" rows="3" placeholder="Ex.: horário preferido de entrega"></textarea>
+          </div>
+
+          <p class="checkout__note">
+            O pagamento é processado de forma segura via Mercado Pago. Ao confirmar,
+            enviaremos os dados do seu pedido para nossa equipe.
+          </p>
+
+          @if (submitError()) {
+            <p class="checkout__error">{{ submitError() }}</p>
+          }
+
+          <button type="submit" class="checkout__submit" [disabled]="isSubmitting()">
+            {{ isSubmitting() ? 'Enviando...' : 'Confirmar pedido' }}
+          </button>
+        </div>
+
+        <aside class="checkout__summary">
+          <h2>Resumo</h2>
+          @for (item of cartService.items(); track item.product.id) {
+            <div class="checkout__summary-item">
+              <span>{{ item.quantity }}x {{ item.product.name }}</span>
+              <span>R$ {{ formatPrice(item.quantity * item.product.price) }}</span>
+            </div>
+          }
+          <hr>
+          <div class="checkout__summary-item">
+            <span>Subtotal</span>
+            <span>R$ {{ formatPrice(cartService.totalAmount()) }}</span>
+          </div>
+
+          <div class="checkout__summary-item">
+            <span>Frete</span>
+            <span>R$ {{ formatPrice(shipping()) }}</span>
+          </div>
+
+          <hr>
+
+          <div class="checkout__summary-total">
+            <span>Total</span>
+            <span>R$ {{ formatPrice(orderTotal()) }}</span>
+          </div>
+        </aside>
+      </form>
+    }
+  </div>
+</section>

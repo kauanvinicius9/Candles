@@ -1,0 +1,18 @@
+<header class="header">
+  <div class="container header__inner">
+    <a routerLink="/" class="header__brand">
+      <img src="assets/Logo-Reviva-Black-435.16x400.11.svg" alt="Reviva Logo" class="header__logo"/>
+    </a>
+
+    <nav class="header__nav">
+      <a routerLink="/">Início</a>
+      <a routerLink="/produtos">Produtos</a>
+      <a routerLink="/contato">Contato</a>
+    </nav>
+
+    <a routerLink="/carrinho" class="header__cart">
+      <img src="assets/Cart-Icon.png" class="header__cart-icon" alt="Carrinho">
+      <span class="header__cart-count">{{ cartService.totalItems() }}</span>
+    </a>
+  </div>
+</header>
