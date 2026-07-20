@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class ContactComponent {
   readonly submitted = signal(false);
   readonly sending = signal(false);
+  readonly errorMessage = signal(false);
 
   readonly contactForm: FormGroup;
 
@@ -29,6 +30,7 @@ export class ContactComponent {
 
   submit(): void {
     this.submitted.set(false);
+    this.errorMessage.set(false);
 
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
@@ -43,10 +45,21 @@ export class ContactComponent {
         this.submitted.set(true);
         this.sending.set(false);
         this.contactForm.reset();
+
+        setTimeout(() => {
+          this.submitted.set(false);
+        }, 3000);
       },
+
       error: (error: any) => {
-        this.sending.set(false)
-        console.error("Erro ao enviar mensagem:", error)
+        this.sending.set(false);
+        this.errorMessage.set(true);
+
+        console.error("Erro ao enviar mensagem:", error);
+
+        setTimeout(() => {
+          this.errorMessage.set(false);
+        }, 3000);
       }
     });
   }

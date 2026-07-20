@@ -9,13 +9,29 @@
           Recebemos seus dados e as informações do pagamento. Em breve você receberá
           a confirmação por e-mail.
         </p>
-        <a routerLink="/produtos" class="btn btn-primary">Continuar comprando</a>
+
+        @if (pixQrCodeBase64()) {
+          <div class="pix-payment">
+            <h3>Pagamento via Pix</h3>
+            <img class="pix-payment__qrcode" [src]="'data:image/png;base64,' + pixQrCodeBase64()" alt="QR Code Pix">
+            <p>Copie o código Pix</p>
+            <textarea readonly>{{ pixQrCode() }}</textarea>
+
+            @if (pixTicketUrl()) {
+              <a class="btn-payment" [href]="pixTicketUrl()!" target="_blank">Abrir pagamento</a>
+            }
+          </div>
+        }
+
+        <a routerLink="/produtos" class="btn-buy">Continuar comprando</a>
       </div>
+
     } @else if (cartService.items().length === 0) {
       <div class="checkout__empty">
         <p>Seu carrinho está vazio.</p>
-        <a routerLink="/produtos" class="btn btn-primary">Ver produtos</a>
+        <a routerLink="/produtos" class="btn-products">Ver produtos</a>
       </div>
+
     } @else {
       <form class="checkout__layout" [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
         <div class="checkout__form">
@@ -31,6 +47,7 @@
               <label for="email">E-mail</label>
               <input id="email" type="email" formControlName="email" placeholder="voce@email.com">
             </div>
+
             <div class="field">
               <label for="phone">Telefone</label>
               <input id="phone" type="tel" formControlName="phone" placeholder="(00) 00000-0000">
@@ -47,10 +64,12 @@
               <label for="city">Cidade</label>
               <input id="city" type="text" formControlName="city">
             </div>
+
             <div class="field field--small">
               <label for="state">UF</label>
               <input id="state" type="text" maxlength="2" formControlName="state">
             </div>
+
             <div class="field">
               <label for="zipCode">CEP</label>
               <input id="zipCode" type="text" formControlName="zipCode" placeholder="00000-000">
@@ -62,24 +81,29 @@
           <div class="payment-options">
             <label class="payment-option">
               <input type="radio" formControlName="paymentMethod" value="PIX">
-              <span class="payment-option__icon">📱</span>
+              <img src="assets/Pix-Logo.png" alt="Logo pix">
               <span>Pix</span>
             </label>
+
             <label class="payment-option">
               <input type="radio" formControlName="paymentMethod" value="CREDITO">
-              <span class="payment-option__icon">💳</span>
+              <img src="assets/Card-Logo.png" alt="Logo cartão">
               <span>Cartão de Crédito</span>
             </label>
+
             <label class="payment-option">
               <input type="radio" formControlName="paymentMethod" value="DEBITO">
-              <span class="payment-option__icon">🏦</span>
+              <img src="assets/Bank-Logo.png" alt="Logo banco">
               <span>Cartão de Débito</span>
             </label>
           </div>
 
           @if (isCardPayment) {
+            <div id="cardPaymentBrick_container"></div>
+
             <div class="field field--small">
               <label for="cardInstallments">Parcelas</label>
+
               <select id="cardInstallments" formControlName="cardInstallments">
                 @for (installment of [1, 2, 3, 4, 5, 6]; track installment) {
                   <option [value]="installment">{{ installment }}x</option>
@@ -94,8 +118,7 @@
           </div>
 
           <p class="checkout__note">
-            O pagamento é processado de forma segura via Mercado Pago. Ao confirmar,
-            enviaremos os dados do seu pedido para nossa equipe.
+            O pagamento é processado de forma segura via Mercado Pago SDK.
           </p>
 
           @if (submitError()) {

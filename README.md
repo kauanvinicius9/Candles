@@ -16,6 +16,8 @@ reviva/
 - Node.js 20+
 - Angular CLI 17 (`npm install -g @angular/cli`)
 
+`npm install @mercadopago/sdk-js`
+
 ### Rodando localmente
 ```bash
 cd frontend

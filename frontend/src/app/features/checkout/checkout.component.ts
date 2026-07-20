@@ -3,8 +3,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { CartService } from "../../core/services/cart.service";
 import { OrderService } from "../../core/services/order.service";
-import { OrderRequest, PaymentMethod } from "../../core/models/order.model";
+import { OrderRequest, OrderResponse, PaymentMethod } from "../../core/models/order.model";
 import { ShippingRequest, ShippingResponse } from "../../core/models/shipping.model";
+import { MercadoPagoService } from "../../core/services/mercado.pago.service";
+import { CardPaymentRequest } from "../../core/models/order.model";
 
 @Component({
   selector: "app-checkout",
@@ -15,11 +17,17 @@ import { ShippingRequest, ShippingResponse } from "../../core/models/shipping.mo
 })
 export class CheckoutComponent {
   private readonly formBuilder = inject(FormBuilder);
+
+  private mp: any;
+  private cardBrick: any;
   
   readonly cartService = inject(CartService);
   readonly isSubmitting = signal(false);
   readonly submitError = signal<string | null>(null);
   readonly submitSuccess = signal(false);
+  readonly pixQrCode = signal<string | null>(null);
+  readonly pixQrCodeBase64 = signal<string | null>(null);
+  readonly pixTicketUrl = signal<string | null>(null);
   readonly shipping = signal(0);
   readonly orderTotal = signal(this.cartService.totalAmount());
 
@@ -39,13 +47,25 @@ export class CheckoutComponent {
   constructor(
     private readonly orderService: OrderService,
     private readonly router: Router,
+    private readonly mercadoPagoService: MercadoPagoService
   ) {
+
+    this.initializeMercadoPago();
     this.checkoutForm.get("state")?.valueChanges.subscribe(state => {
 
       if (!state) {
         return;
       }
+
       this.calculateShipping(state);
+    });
+
+    this.checkoutForm.get("paymentMethod")?.valueChanges.subscribe(method => {
+      if (method === "CREDITO") {
+        setTimeout(() => {
+          this.renderCardBrick();
+        }, 100);
+      }
     });
   }
 
@@ -53,8 +73,74 @@ export class CheckoutComponent {
     return this.checkoutForm.value.paymentMethod === "CREDITO";
   }
 
+  private async initializeMercadoPago(): Promise<void> {
+    this.mp = await this.mercadoPagoService.initialize();
+  }
+
   formatPrice(value: number): string {
     return value.toFixed(2).replace(".", ",");
+  }
+
+  private async renderCardBrick(): Promise<void> {
+    console.log("Brick render");
+  }
+
+  private sendCardPayment(
+    cardData: any
+  ) {
+    const request: CardPaymentRequest = {
+      orderId: 1,
+      token: cardData.token,
+      installments: this.checkoutForm.value.cardInstallments ?? 1,
+      paymentMethodId: cardData.payment_method_id
+    };
+
+    this.orderService .payWithCard(request) .subscribe({
+      next:(response)=> {
+        console.log(
+          "Pagamento aprovado",
+          response
+        );
+
+        this.submitSuccess.set(true);
+      },
+
+      error:(error)=>{
+        console.error(
+          "Erro pagamento",
+          error
+        );
+        this.submitError.set(
+          "Pagamento recusado"
+        );
+      }
+    });
+  }
+
+  private async createCardBrick() {
+    const bricksBuilder = this.mp.bricks();
+    this.cardBrick = await bricksBuilder.create(
+      "cardPayment",
+      "cardPaymentBrick_container",
+      {
+        initialization: {
+          amount: this.orderTotal()
+        },
+
+        callbacks: {
+          onsubmit:
+          async (cardData:any)=>{
+            this.sendCardPayment(
+              cardData
+            );
+          },
+
+          onError(error: any){
+            console.error("Erro cartão", error);
+          }
+        }
+      }
+    );
   }
 
   private calculateShipping(state: string): void {
@@ -101,16 +187,40 @@ export class CheckoutComponent {
     this.submitError.set(null);
 
     this.orderService.submitOrder(order).subscribe({
-      next: () => {
+      next: (response: OrderResponse) => {
         this.isSubmitting.set(false);
         this.submitSuccess.set(true);
         this.cartService.clearCart();
+
+        if (response.paymentMethod === "PIX") {
+          this.pixQrCode.set(
+            response.pixQrCode ?? null
+          );
+
+          this.pixQrCodeBase64.set(
+            response.pixQrCodeBase64 ?? null
+          );
+
+          this.pixTicketUrl.set(
+            response.pixTicketUrl ?? null
+          );
+        }
+
+        setTimeout(() => {
+          this.submitSuccess.set(false);
+        }, 3000);
       },
-      error: () => {
+
+      error: (error: any) => {
         this.isSubmitting.set(false);
         this.submitError.set(
           "Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes.",
         );
+        console.error("Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes.", error);
+
+        setTimeout(() => {
+          this.submitError.set(null);
+        }, 3000)
       },
     });
   }

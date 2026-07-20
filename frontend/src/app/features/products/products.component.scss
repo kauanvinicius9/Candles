@@ -1,3 +1,5 @@
+@use "../../../scss/variables" as *;
+
 .products {
   padding: 48px 0 80px;
 }
@@ -10,18 +12,18 @@
 }
 
 .products__filter {
-  background: var(--color-white);
-  color: var(--color-brown);
+  background: $color-white;
+  color: $color-brown;
   padding: 10px 20px;
   border-radius: 999px;
   font-weight: 600;
-  box-shadow: var(--shadow-soft);
+  box-shadow: $shadow-soft;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
 .products__filter.is-active {
-  background: var(--color-amber);
-  color: var(--color-white);
+  background: $color-amber;
+  color: $color-white;
 }
 
 .products__grid {

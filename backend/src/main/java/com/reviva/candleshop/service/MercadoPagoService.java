@@ -1,53 +1,71 @@
 package com.reviva.candleshop.service;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+
+import org.springframework.stereotype.Service;
 import com.mercadopago.client.payment.PaymentClient;
 import com.mercadopago.client.payment.PaymentCreateRequest;
 import com.mercadopago.client.payment.PaymentPayerRequest;
 import com.mercadopago.resources.payment.Payment;
 import com.reviva.candleshop.model.Order;
-import com.reviva.candleshop.model.PaymentMethod;
-
-import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @Service
 public class MercadoPagoService {
 
-    public Payment createPayment(Order order) throws Exception {
+    public Payment createPixPayment(Order order) throws Exception {
         PaymentClient client = new PaymentClient();
+        PaymentPayerRequest payer =
+                PaymentPayerRequest.builder()
+                        .email(order.getCustomer().getEmail())
+                        .firstName(order.getCustomer().getName())
+                        .build();
 
-        PaymentPayerRequest payer = PaymentPayerRequest.builder()
-                .email(order.getCustomer().getEmail())
-                .firstName(order.getCustomer().getName())
-                .build();
+        PaymentCreateRequest request =
+                PaymentCreateRequest.builder()
+                        .transactionAmount(order.getTotalAmount())
+                        .description("Pedido Reviva Velas #" + order.getId())
+                        .paymentMethodId("pix")
+                        .payer(payer)
+                        .dateOfExpiration(OffsetDateTime.now().plusMinutes(30))
+                        .build();
 
-        PaymentCreateRequest.PaymentCreateRequestBuilder requestBuilder = PaymentCreateRequest.builder()
-                .transactionAmount(order.getTotalAmount())
-                .description("Pedido Reviva Velas & Aromas #" + order.getId())
-                .payer(payer)
-                .installments(resolveInstallments(order))
-                .paymentMethodId(resolvePaymentMethodId(order.getPaymentMethod()));
-
-        return client.create(requestBuilder.build());
+        return client.create(request);
     }
 
-    private Integer resolveInstallments(Order order) {
-        if (order.getPaymentMethod() == PaymentMethod.CREDITO && order.getCardInstallments() != null) {
-            return order.getCardInstallments();
+    public String getPixQrCode(Payment payment) {
+
+        if (payment.getPointOfInteraction() == null || payment.getPointOfInteraction().getTransactionData() == null) {
+            return null;
         }
-        return 1;
+
+        return payment
+                .getPointOfInteraction()
+                .getTransactionData()
+                .getQrCode();
     }
 
-    private String resolvePaymentMethodId(PaymentMethod paymentMethod) {
-        return switch (paymentMethod) {
-            case PIX -> "pix";
-            case CREDITO -> "master";
-            case DEBITO -> "debmaster";
-        };
+    public String getPixQrCodeBase64(Payment payment) {
+
+        if (payment.getPointOfInteraction() == null || payment.getPointOfInteraction().getTransactionData() == null) {
+            return null;
+        }
+
+        return payment
+                .getPointOfInteraction()
+                .getTransactionData()
+                .getQrCodeBase64();
     }
 
-    public BigDecimal roundedAmount(BigDecimal amount) {
-        return amount.setScale(2, java.math.RoundingMode.HALF_UP);
+    public String getPixTicketUrl(Payment payment) {
+
+        if (payment.getPointOfInteraction() == null || payment.getPointOfInteraction().getTransactionData() == null) {
+            return null;
+        }
+
+        return payment
+                .getPointOfInteraction()
+                .getTransactionData()
+                .getTicketUrl();
     }
 }

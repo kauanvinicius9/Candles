@@ -1,8 +1,10 @@
+@use "../../../scss/variables" as *;
+
 .hero {
   background: linear-gradient(
     135deg, 
-   var(--color-cream-dark), 
-   var(--color-beige));
+   $color-cream-dark, 
+   $color-beige);
   padding: 64px 0;
 }
 
@@ -17,10 +19,11 @@
   font-size: 2.6rem;
   margin: 16px 0;
   line-height: 1.2;
+  font-family: $font-body;
 }
 
 .hero__subtitle {
-  color: var(--color-brown);
+  color: $color-brown;
   font-size: 1.05rem;
   max-width: 480px;
 }
@@ -31,17 +34,47 @@
 }
 
 .hero__image {
-  width: 100%;;
+  width: 100%;
   height: 400px;
   display: flex;
   overflow: hidden;
+  position: relative;
+  border-radius: 25px;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    border-radius: 25px;
+    transition: transform 0.4s ease;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    span {
+      color: #ffffff;
+      font-size: 1.3rem;
+      font-family: $font-body;
+    } 
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.05);
+    }
+  
+    .hero__overlay {
+      opacity: 1;
+      cursor: default;
+    }
   }
 }
 
@@ -56,11 +89,11 @@
 }
 
 .highlight-card {
-  background: var(--color-white);
-  border-radius: var(--radius-md);
+  background: $color-white;
+  border-radius: $radius-md;
   padding: 28px;
   text-align: center;
-  box-shadow: var(--shadow-soft);
+  box-shadow: $shadow-soft;
 }
 
 .featured {
@@ -81,7 +114,7 @@
 }
 
 .btn_primary {
-  background: var(--color-brown);
+  background: $color-brown;
   color: #ffff;
   padding: 13px 25px;
   border-radius: 25px;
@@ -92,13 +125,13 @@
 }
 
 .btn_outline {
-  color: var(--color-brown);
-  border: 2px solid var(--color-brown);
+  color: $color-brown;
+  border: 2px solid $color-brown;
   padding: 11px 25px;
   border-radius: 25px;
 
   &:hover {
-    background: var(--color-brown);
+    background: $color-brown;
     color: #ffffff;
   }
 }

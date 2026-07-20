@@ -6,9 +6,9 @@ import emailjs from "@emailjs/browser";
     providedIn: "root"
 })
 export class EmailService {
-    private readonly serviceId = "service_ghwllkl";
-    private readonly templateid = "template_06yst2t";
-    private readonly publickey = "UDeyd973nxgS5hG4l";
+    private readonly serviceid = "service_ghwllkl";
+    private readonly templateid = "template_o6yst2t";
+    private readonly publickey = "_gywwE8Rq6W38f5Rn";
 
     sendEmail(data: {
         name: string;
@@ -17,7 +17,7 @@ export class EmailService {
     }) {
         return from(
             emailjs.send(
-                this.serviceId,
+                this.serviceid,
                 this.templateid,
                 data,
                 {

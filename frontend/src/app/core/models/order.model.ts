@@ -26,6 +26,15 @@ export interface OrderResponse {
   status: string;
   paymentMethod: PaymentMethod;
   pixQrCode?: string;
+  pixQrCodeBase64?: string;
+  pixTicketUrl?: string;
   pixCopyPaste?: string;
   paymentUrl?: string;
+}
+
+export interface CardPaymentRequest {
+    orderId: number;
+    token: string;
+    installments: number;
+    paymentMethodId: string; 
 }

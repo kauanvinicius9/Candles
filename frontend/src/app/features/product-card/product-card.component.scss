@@ -1,14 +1,16 @@
+@use "../../../scss/variables" as *;
+
 .product-card {
-  background: var(--color-white);
-  border-radius: var(--radius-md);
+  background: $color-white;
+  border-radius: $radius-md;
   overflow: hidden;
-  box-shadow: var(--shadow-soft);
+  box-shadow: $shadow-soft;
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
-    box-shadow: var(--shadow-hover);
+    box-shadow: $shadow-hover;
   }
 }
 
@@ -16,14 +18,14 @@
   aspect-ratio: 1 / 1;
   background: linear-gradient(
     160deg, 
-    var(--color-beige), 
-    var(--color-sand));
+    $color-beige, 
+    $color-sand);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: var(--color-brown-dark);
+  color: $color-brown-dark;
   padding: 16px;
 
   span {
@@ -52,20 +54,20 @@
 
 .product-card__fragrance {
   font-size: 0.85rem;
-  color: var(--color-brown);
+  color: $color-brown;
   min-height: 38px;
 }
 
 .product-card__price {
   font-size: 1.15rem;
-  color: var(--color-amber);
+  color: $color-amber;
   margin-top: auto;
 }
 
 .product-card__button {
   width: 100%;
   margin-top: 8px;
-  background: var(--color-brown);
+  background:$color-brown;
   color: #ffffff;
   padding: 10px;
   border-radius: 20px;

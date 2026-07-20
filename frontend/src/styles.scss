@@ -1,23 +1,22 @@
-:root {
-  --color-cream: #fbf3e7;
-  --color-cream-dark: #f2e4cd;
-  --color-beige: #ecdcc2;
-  --color-sand: #d9bd98;
-  --color-terracotta: #c98a68;
-  --color-amber: #b5754d;
-  --color-brown: #6b4a3a;
-  --color-brown-dark: #4a3327;
-  --color-ink: #3c2c22;
-  --color-gold: #c9a15a;
-  --color-white: #fffdf9;
-  --color-success: #7c9473;
-  --color-danger: #b5573f;
-  --shadow-soft: 0 8px 24px rgba(107, 74, 58, 0.12);
-  --shadow-hover: 0 12px 32px rgba(107, 74, 58, 0.18);
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 24px;
-}
+$color-cream: #fbf3e7;
+$color-cream-dark: #f2e4cd;
+$color-beige: #ecdcc2;
+$color-sand: #d9bd98;
+$color-terracotta: #c98a68;
+$color-amber: #b5754d;
+$color-brown: #6b4a3a;
+$color-brown-dark: #4a3327;
+$color-ink: #3c2c22;
+$color-gold: #c9a15a;
+$color-white: #fffdf9;
+$color-success: #7c9473;
+$color-danger: #b5573f;
+$shadow-soft: 0 8px 24px rgba(107, 74, 58, 0.12);
+$shadow-hover: 0 12px 32px rgba(107, 74, 58, 0.18);
+$radius-sm: 8px;
+$radius-md: 14px;
+$radius-lg: 24px;
+$font-body: "Inter", sans-serif;
 
 * {
   box-sizing: border-box;
@@ -31,14 +30,14 @@ html, body {
 
 body {
   font-family:  "Inter", sans-serif;
-  background: var(--color-cream);
-  color: var(--color-ink);
+  background: $color-cream;
+  color: $color-ink;
   line-height: 1.55;
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-title);
-  color: var(--color-brown-dark);
+  font-family: $font-body;
+  color: $color-brown-dark;
   margin: 0;
 }
 
@@ -48,7 +47,7 @@ a {
 }
 
 button {
-  font-family: var(--font-body);
+  font-family:$font-body;
   cursor: pointer;
   border: none;
   outline: none;
@@ -66,9 +65,10 @@ button {
   justify-content: center;
   gap: 8px;
   padding: 12px 26px;
-  border-radius: var(--radius-lg);
+  border-radius: $radius-lg;
   font-size: 0.95rem;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+  transition: transform 0.15s ease, 
+    box-shadow 0.15s ease, background 0.2s ease;
 
   &:hover {
       transform: translateY(-2px);
@@ -76,29 +76,29 @@ button {
 }
 
 .btn-primary {
-  background: var(--color-amber);
-  color: var(--color-white);
-  box-shadow: var(--shadow-soft);
+  background: $color-amber;
+  color: $color-white;
+  box-shadow: $shadow-soft;
 
   &:hover {
-    background: var(--color-brown);
-    box-shadow: var(--shadow-hover);
+    background: $color-brown;
+    box-shadow: $shadow-hover;
   }
 }
 
 .btn-outline {
   background: transparent;
-  border: 1.5px solid var(--color-amber);
-  color: var(--color-brown);
+  border: 1.5px solid $color-amber;
+  color: $color-brown;
 
   &:hover {
-    background: var(--color-cream-dark);
+    background: $color-cream-dark;
   }
 }
 
 .btn-danger {
   background: transparent;
-  color: var(--color-danger);
+  color: $color-danger;
 }
 
 .section-title {
@@ -107,7 +107,7 @@ button {
 }
 
 .section-subtitle {
-  color: var(--color-brown);
+  color: $color-brown;
   font-size: 1.02rem;
   margin-bottom: 32px;
   max-width: 560px;
@@ -115,8 +115,8 @@ button {
 
 .tag {
   display: inline-block;
-  background: var(--color-beige);
-  color: var(--color-brown-dark);
+  background: $color-beige;
+  color: $color-brown-dark;
   font-size: 0.75rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;

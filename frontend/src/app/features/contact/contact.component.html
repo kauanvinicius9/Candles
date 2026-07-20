@@ -9,12 +9,17 @@
 
       <ul class="contact__list">
         <li><strong>E-mail:</strong> salescristina809&#64;gmail.com</li>
+        <li><strong>Instagram:</strong> &#64;revivavelas</li>
       </ul>
     </div>
 
     <form class="contact__form" [formGroup]="contactForm" (ngSubmit)="submit()">
       @if (submitted()) {
         <p class="contact__success">Mensagem enviada. Retornaremos em breve.</p>
+      }
+
+      @if (errorMessage()) {
+        <p class="contact__error">Erro ao enviar mensagem. Tente novamente mais tarde.</p>
       }
 
       <div class="field">

@@ -1,6 +1,8 @@
+@use "../../../scss/variables" as *;
+
 .header {
-  background: var(--color-white);
-  box-shadow: var(--shadow-soft);
+  background: $color-white;
+  box-shadow: $shadow-soft;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -17,10 +19,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-title);
+  font-family: $font-body;
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--color-brown-dark);
+  color: $color-brown-dark;
 }
 
 .header__logo {
@@ -31,7 +33,7 @@
 .header__nav {
   display: flex;
   gap: 28px;
-  color: var(--color-brown);
+  color: $color-brown;
 
   a {
     padding-bottom: 4px;
@@ -39,7 +41,7 @@
     transition: border-color 0.2s ease, color 0.2s ease;
 
     &:hover {
-      color: var(--color-amber);
+      color: $color-amber;
     }
   }
 }
@@ -52,7 +54,7 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: var(--color-cream-dark);
+  background: $color-cream-dark;
   font-size: 1.2rem;
 }
 
@@ -64,8 +66,8 @@
   position: absolute;
   top: -6px;
   right: -6px;
-  background: var(--color-amber);
-  color: var(--color-white);
+  background: $color-amber;
+  color: $color-white;
   font-size: 0.7rem;
   font-weight: 700;
   min-width: 20px;

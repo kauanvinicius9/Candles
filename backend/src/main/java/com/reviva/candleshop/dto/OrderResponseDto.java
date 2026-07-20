@@ -9,11 +9,10 @@ public class OrderResponseDto {
     private PaymentMethod paymentMethod;
     private String pixQrCode;
     private String pixCopyPaste;
+    private String pixTicketUrl;
     private String paymentUrl;
 
-    public OrderResponseDto() {
-    }
-
+    public OrderResponseDto() {}
     public OrderResponseDto(Long orderId, String status, PaymentMethod paymentMethod) {
         this.orderId = orderId;
         this.status = status;
@@ -56,15 +55,31 @@ public class OrderResponseDto {
         return pixCopyPaste;
     }
 
+    public String getPixQrCodeBase64() {
+        return pixQrCodeBase64;
+    }
+
     public void setPixCopyPaste(String pixCopyPaste) {
         this.pixCopyPaste = pixCopyPaste;
+    }
+
+    public void setPixQrCodeBase64(String pixQrCodeBase64) {
+        this.pixQrCodeBase64 = pixQrCodeBase64;
     }
 
     public String getPaymentUrl() {
         return paymentUrl;
     }
 
+    public String getPixTicketUrl() {
+        return pixTicketUrl;
+    }
+
     public void setPaymentUrl(String paymentUrl) {
         this.paymentUrl = paymentUrl;
+    }
+
+    public void setPixTicketUrl(String pixTickerUrl) {
+        this.pixTicketUrl = pixTicketUrl;
     }
 }

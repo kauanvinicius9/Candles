@@ -19,9 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 @Service
 public class OrderService {
+
+    private String pixQrCode;
+    private String pixQrCodeBase64;
+    private String pixTicketUrl;
 
     private final OrderRepository orderRepository;
     private final ProductService productService;
@@ -45,10 +51,13 @@ public class OrderService {
         Order order = buildOrder(requestDto);
         Order savedOrder = orderRepository.save(order);
 
-        processPayment(savedOrder);
+        if (savedOrder.getPaymentMethod() == PaymentMethod.PIX) {
+            createPixPayment(savedOrder);
+        } else {
+            processPayment(savedOrder);
+        }
 
         emailService.sendOrderNotification(savedOrder);
-
         return toResponseDto(savedOrder);
     }
 
@@ -103,6 +112,27 @@ public class OrderService {
         return customer;
     }
 
+    private void createPixPayment(Order order) {
+        try {
+            Payment payment = mercadoPagoService.createPixPayment(order);
+            order.setMercadoPagoId(String.valueOf(payment.getId()));
+            order.setStatus(OrderStatus.PENDENTE);
+            pixQrCode = mercadoPagoService.getPixQrCode(payment);
+            pixQrCodeBase64 = mercadoPagoService.getPixQrCodeBase64(payment);
+            pixTicketUrl = mercadoPagoService.getPixTicketUrl(payment);
+            orderRepository.save(order);
+
+        } catch (Exception exception) {
+            order.setStatus(OrderStatus.PENDENTE);
+            orderRepository.save(order);
+
+            throw new RuntimeException(
+                "Erro ao gerar PIX",
+                exception
+            );
+        }
+    }
+
     private void processPayment(Order order) {
         try {
             Payment payment = mercadoPagoService.createPayment(order);
@@ -135,7 +165,14 @@ public class OrderService {
         );
 
         if (order.getPaymentMethod() == PaymentMethod.PIX) {
-            responseDto.setPixQrCode("Consulte o QR Code gerado pelo Mercado Pago no painel de pagamento.");
+            responseDto.setPixQrCode(pixQrCode);
+            responseDto.setPixQrCodeBase64(
+                pixQrCodeBase64
+            );
+
+            responseDto.setPixTicketUrl(
+                pixTicketUrl
+            );
         }
 
         return responseDto;
