@@ -37,4 +37,6 @@ export interface CardPaymentRequest {
     token: string;
     installments: number;
     paymentMethodId: string; 
+    paymentTypeId: string;
+    issuerId: string;
 }

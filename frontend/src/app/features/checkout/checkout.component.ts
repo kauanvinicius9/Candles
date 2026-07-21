@@ -61,7 +61,7 @@ export class CheckoutComponent {
     });
 
     this.checkoutForm.get("paymentMethod")?.valueChanges.subscribe(method => {
-      if (method === "CREDITO") {
+      if (method === "CREDITO" || method === "DEBITO") {
         setTimeout(() => {
           this.renderCardBrick();
         }, 100);
@@ -70,7 +70,14 @@ export class CheckoutComponent {
   }
 
   get isCardPayment(): boolean {
-    return this.checkoutForm.value.paymentMethod === "CREDITO";
+    return (
+      this.checkoutForm.value.paymentMethod === "CREDITO" ||
+      this.checkoutForm.value.paymentMethod === "DEBITO"
+    );
+  }
+
+  get isCreditCard(): boolean {
+      return this.checkoutForm.value.paymentMethod === "CREDITO";
   }
 
   private async initializeMercadoPago(): Promise<void> {
@@ -82,7 +89,11 @@ export class CheckoutComponent {
   }
 
   private async renderCardBrick(): Promise<void> {
-    console.log("Brick render");
+
+      if (this.cardBrick) {
+        await this.cardBrick.unmount();
+      }
+      await this.createCardBrick();
   }
 
   private sendCardPayment(
@@ -92,7 +103,9 @@ export class CheckoutComponent {
       orderId: 1,
       token: cardData.token,
       installments: this.checkoutForm.value.cardInstallments ?? 1,
-      paymentMethodId: cardData.payment_method_id
+      paymentMethodId: cardData.payment_method_id,
+      paymentTypeId: cardData.payment_type_id,
+      issuerId: cardData.issuer_id
     };
 
     this.orderService .payWithCard(request) .subscribe({
@@ -119,6 +132,11 @@ export class CheckoutComponent {
 
   private async createCardBrick() {
     const bricksBuilder = this.mp.bricks();
+
+    if (this.cardBrick) {
+      await this.cardBrick.unmount();
+    }
+
     this.cardBrick = await bricksBuilder.create(
       "cardPayment",
       "cardPaymentBrick_container",
@@ -128,7 +146,7 @@ export class CheckoutComponent {
         },
 
         callbacks: {
-          onsubmit:
+          onSubmit:
           async (cardData:any)=>{
             this.sendCardPayment(
               cardData

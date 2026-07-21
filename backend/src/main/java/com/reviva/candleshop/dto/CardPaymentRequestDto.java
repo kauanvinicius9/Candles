@@ -6,6 +6,9 @@ public class CardPaymentRequestDto {
     private String token;
     private Integer installments;
     private String paymentMethodId;
+    private String paymentTypeId;
+    private String issuerId;
+
     public Long getOrderId() {
         return orderId;
     }
@@ -36,5 +39,21 @@ public class CardPaymentRequestDto {
 
     public void setPaymentMethodId(String paymentMethodId) {
         this.paymentMethodId = paymentMethodId;
+    }
+
+    public String getPaymentTypeId() {
+        return paymentTypeId;
+    }
+
+    public void setPaymentTypeId(String paymentTypeId) {
+        this.paymentTypeId = paymentTypeId;
+    }
+
+    public String getIssuerId() {
+        return issuerId;
+    }
+
+    public void setIssuerId(String issuerId) {
+        this.issuerId = issuerId
     }
 }

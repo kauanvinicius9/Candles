@@ -35,6 +35,11 @@ public class CardPaymentService {
                     .token(dto.getToken())
                     .installments(dto.getInstallments())
                     .paymentMethodId(dto.getPaymentMethodId())
+                    .issuerId(Long.valueOf(dto.getIssuerId()))
+                    .installments("credit_cart".equals(dto.getPaymentTypeId())
+                        ? dto.getInstallments()
+                        : 1
+                    )
                     .description("Pedido Reviva Velas #" + order.getId())
                     .payer(payer)
                     .build();

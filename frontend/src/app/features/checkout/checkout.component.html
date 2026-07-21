@@ -100,6 +100,9 @@
 
           @if (isCardPayment) {
             <div id="cardPaymentBrick_container"></div>
+            }
+
+            @if (isCreditCard) {
 
             <div class="field field--small">
               <label for="cardInstallments">Parcelas</label>
@@ -125,19 +128,23 @@
             <p class="checkout__error">{{ submitError() }}</p>
           }
 
-          <button type="submit" class="checkout__submit" [disabled]="isSubmitting()">
-            {{ isSubmitting() ? 'Enviando...' : 'Confirmar pedido' }}
-          </button>
+          @if (!isCardPayment) {
+            <button type="submit" class="checkout__submit" [disabled]="isSubmitting()">
+              {{ isSubmitting() ? 'Enviando...' : 'Confirmar pedido' }}
+            </button>
+          }
         </div>
 
         <aside class="checkout__summary">
           <h2>Resumo</h2>
+
           @for (item of cartService.items(); track item.product.id) {
             <div class="checkout__summary-item">
               <span>{{ item.quantity }}x {{ item.product.name }}</span>
               <span>R$ {{ formatPrice(item.quantity * item.product.price) }}</span>
             </div>
           }
+
           <hr>
           <div class="checkout__summary-item">
             <span>Subtotal</span>
