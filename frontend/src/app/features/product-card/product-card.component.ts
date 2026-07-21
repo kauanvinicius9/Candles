@@ -9,6 +9,7 @@ import { CartService } from '../../core/services/cart.service';
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss'
 })
+
 export class ProductCardComponent {
   @Input({ required: true }) product!: Product;
 

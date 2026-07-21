@@ -11,6 +11,7 @@ import { ProductCardComponent } from '../product-card/product-card.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
+
 export class HomeComponent implements OnInit {
   readonly featuredProducts = signal<Product[]>([]);
 

@@ -10,6 +10,7 @@ import { CartService } from '../../core/services/cart.service';
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
+
 export class CartComponent {
   constructor(readonly cartService: CartService) {}
 

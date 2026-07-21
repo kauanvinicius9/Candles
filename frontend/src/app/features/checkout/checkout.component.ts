@@ -48,8 +48,8 @@ export class CheckoutComponent {
     private readonly orderService: OrderService,
     private readonly router: Router,
     private readonly mercadoPagoService: MercadoPagoService
-  ) {
 
+  ) {
     this.initializeMercadoPago();
     this.checkoutForm.get("state")?.valueChanges.subscribe(state => {
 
@@ -71,8 +71,7 @@ export class CheckoutComponent {
 
   get isCardPayment(): boolean {
     return (
-      this.checkoutForm.value.paymentMethod === "CREDITO" ||
-      this.checkoutForm.value.paymentMethod === "DEBITO"
+      this.checkoutForm.value.paymentMethod === "CREDITO" || this.checkoutForm.value.paymentMethod === "DEBITO"
     );
   }
 
@@ -92,6 +91,7 @@ export class CheckoutComponent {
 
       if (this.cardBrick) {
         await this.cardBrick.unmount();
+        console.log(this.cardBrick)
       }
       await this.createCardBrick();
   }

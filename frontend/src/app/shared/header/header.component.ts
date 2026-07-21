@@ -9,6 +9,7 @@ import { CartService } from '../../core/services/cart.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
+
 export class HeaderComponent {
   constructor(readonly cartService: CartService) {}
 }

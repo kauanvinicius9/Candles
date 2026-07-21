@@ -18,9 +18,11 @@ export class ProductsComponent implements OnInit {
 
   readonly filteredProducts = computed(() => {
     const filter = this.activeFilter();
+
     if (filter === 'todos') {
       return this.allProducts();
     }
+    
     return this.allProducts().filter((product) => product.category === filter);
   });
 

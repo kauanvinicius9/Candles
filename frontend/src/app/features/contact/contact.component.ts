@@ -14,13 +14,13 @@ export class ContactComponent {
   readonly submitted = signal(false);
   readonly sending = signal(false);
   readonly errorMessage = signal(false);
-
   readonly contactForm: FormGroup;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly emailService: EmailService
   ) {
+
     this.contactForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
