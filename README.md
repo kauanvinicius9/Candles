@@ -9,8 +9,6 @@
   <img width="1" />
   <img src="https://skillicons.dev/icons?i=angular" height="45" alt="angularjs logo" title="Angular" />
   <img width="1" />
-  <img src="https://skillicons.dev/icons?i=postgres" height="45" alt="postgresql logo" title="PostgreSQL" />
-  <img width="1" />
   <img src="https://skillicons.dev/icons?i=postman" height="45" alt="postman logo" title="Postman" />
   <img width="1" />
   <img src="https://skillicons.dev/icons?i=figma" height="45" alt="figma logo" title="Figma" />

@@ -15,15 +15,18 @@ import com.reviva.candleshop.dto.OrderResponseDto;
 import com.reviva.candleshop.dto.ShippingResponseDto;
 import com.reviva.candleshop.dto.ShippingRequestDto;
 import com.reviva.candleshop.service.OrderService;
+import com.reviva.candleshop.service.ShippingService;
 
 @RestController
 @RequestMapping("/api/pedidos")
 public class OrderController {
 
     private final OrderService orderService;
+    private final ShippingService shippingService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, ShippingService shippingService) {
         this.orderService = orderService;
+        this.shippingService = shippingService;
     }
 
     @PostMapping
@@ -34,7 +37,7 @@ public class OrderController {
 
     @PostMapping("/frete")
     public ShippingResponseDto calculateShipping(@Valid @RequestBody ShippingRequestDto request) {
-            BigDecimal shipping = orderService.calculateShipping(
+            BigDecimal shipping = shippingService.calculateShipping(
                 request.getState(),
                 request.getSubtotal()
             );

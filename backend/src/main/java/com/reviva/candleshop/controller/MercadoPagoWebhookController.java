@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.reviva.candleshop.service.MercadoPagoWebhookService;
+import com.reviva.candleshop.service.MercadoPagoWebhookValidator;
 
 @RestController
 @RequestMapping("/api/pagamentos")
@@ -11,7 +12,7 @@ public class MercadoPagoWebhookController {
     private final MercadoPagoWebhookService webhookService;
     private final MercadoPagoWebhookValidator validator;
 
-    public MercadoPagoWebHookController(
+    public MercadoPagoWebhookController(
         MercadoPagoWebhookService webhookService,
         MercadoPagoWebhookValidator validator
     ) {
@@ -44,10 +45,10 @@ public class MercadoPagoWebhookController {
 
         boolean valid = validator.validate(signature, requestId, data_id);
         if (!valid) {
-            return ResponseEntity .badRequest() .build();
+            return ResponseEntity.badRequest().build();
         }
         
-        webhookService.processWebHook(
+        webhookService.processWebhook(
             type,
             data_id
         );

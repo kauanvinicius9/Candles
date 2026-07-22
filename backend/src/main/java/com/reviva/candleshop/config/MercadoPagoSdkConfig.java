@@ -7,7 +7,7 @@ import com.mercadopago.MercadoPagoConfig;
 import jakarta.annotation.PostConstruct;
 
 @Configuration
-public class MercadoPagoConfiguration {
+public class MercadoPagoSdkConfig {
 
     @Value("${mercadopago.access-token}")
     private String accessToken;

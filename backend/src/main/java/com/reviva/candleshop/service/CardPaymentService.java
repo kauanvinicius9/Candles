@@ -23,7 +23,12 @@ public class CardPaymentService {
                     .findById(dto.getOrderId())
                     .orElseThrow();
 
+            String issuerId = dto.getIssuerId() != null && !dto.getIssuerId().isBlank()
+                ? dto.getIssuerId()
+                : null;
+
             PaymentClient client = new PaymentClient();
+            
             PaymentPayerRequest payer =
                     PaymentPayerRequest.builder()
                     .email(order.getCustomer().getEmail())
@@ -33,10 +38,10 @@ public class CardPaymentService {
             PaymentCreateRequest request = PaymentCreateRequest.builder()
                     .transactionAmount(order.getTotalAmount())
                     .token(dto.getToken())
-                    .installments(dto.getInstallments())
                     .paymentMethodId(dto.getPaymentMethodId())
-                    .issuerId(Long.valueOf(dto.getIssuerId()))
-                    .installments("credit_cart".equals(dto.getPaymentTypeId())
+                    .issuerId(issuerId)
+                    .installments(
+                        "credit_card".equals(dto.getPaymentTypeId())
                         ? dto.getInstallments()
                         : 1
                     )

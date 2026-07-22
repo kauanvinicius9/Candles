@@ -8,6 +8,7 @@ public class OrderResponseDto {
     private String status;
     private PaymentMethod paymentMethod;
     private String pixQrCode;
+    private String pixQrCodeBase64;
     private String pixCopyPaste;
     private String pixTicketUrl;
     private String paymentUrl;
@@ -79,7 +80,7 @@ public class OrderResponseDto {
         this.paymentUrl = paymentUrl;
     }
 
-    public void setPixTicketUrl(String pixTickerUrl) {
+    public void setPixTicketUrl(String pixTicketUrl) {
         this.pixTicketUrl = pixTicketUrl;
     }
 }

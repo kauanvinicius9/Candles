@@ -1,9 +1,9 @@
 package com.reviva.candleshop.service;
 
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import org.springframework.stereotype.Service;
+
 import com.mercadopago.client.payment.PaymentClient;
 import com.mercadopago.client.payment.PaymentCreateRequest;
 import com.mercadopago.client.payment.PaymentPayerRequest;
@@ -13,8 +13,14 @@ import com.reviva.candleshop.model.Order;
 @Service
 public class MercadoPagoService {
 
+    public Payment getPayment(String id) throws Exception {
+        PaymentClient client = new PaymentClient();
+        return client.get(Long.valueOf(id));
+    }
+
     public Payment createPixPayment(Order order) throws Exception {
         PaymentClient client = new PaymentClient();
+
         PaymentPayerRequest payer =
                 PaymentPayerRequest.builder()
                         .email(order.getCustomer().getEmail())
@@ -27,7 +33,9 @@ public class MercadoPagoService {
                         .description("Pedido Reviva Velas #" + order.getId())
                         .paymentMethodId("pix")
                         .payer(payer)
-                        .dateOfExpiration(OffsetDateTime.now().plusMinutes(30))
+                        .dateOfExpiration(
+                                OffsetDateTime.now().plusMinutes(30)
+                        )
                         .build();
 
         return client.create(request);
@@ -35,9 +43,8 @@ public class MercadoPagoService {
 
     public String getPixQrCode(Payment payment) {
 
-        if (payment.getPointOfInteraction() == null || payment.getPointOfInteraction().getTransactionData() == null) {
+        if (payment.getPointOfInteraction() == null)
             return null;
-        }
 
         return payment
                 .getPointOfInteraction()
@@ -47,7 +54,7 @@ public class MercadoPagoService {
 
     public String getPixQrCodeBase64(Payment payment) {
 
-        if (payment.getPointOfInteraction() == null || payment.getPointOfInteraction().getTransactionData() == null) {
+        if (payment.getPointOfInteraction() == null) {
             return null;
         }
 
@@ -59,7 +66,7 @@ public class MercadoPagoService {
 
     public String getPixTicketUrl(Payment payment) {
 
-        if (payment.getPointOfInteraction() == null || payment.getPointOfInteraction().getTransactionData() == null) {
+        if (payment.getPointOfInteraction() == null) {
             return null;
         }
 

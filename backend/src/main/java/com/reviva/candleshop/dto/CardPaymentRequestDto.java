@@ -54,6 +54,6 @@ public class CardPaymentRequestDto {
     }
 
     public void setIssuerId(String issuerId) {
-        this.issuerId = issuerId
+        this.issuerId = issuerId;
     }
 }
