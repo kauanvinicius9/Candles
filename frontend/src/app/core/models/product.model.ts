@@ -8,6 +8,4 @@ export interface Product {
   description: string;
   price: number;
   imagePlaceholder: string;
-  burnTimeHours?: number;
-  volumeMl?: number;
 }

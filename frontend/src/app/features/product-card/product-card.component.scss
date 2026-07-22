@@ -71,4 +71,9 @@
   color: #ffffff;
   padding: 10px;
   border-radius: 20px;
+  transition: 0.3s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
 }
