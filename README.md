@@ -21,7 +21,5 @@
   <img width="1" />
   <img src="https://skillicons.dev/icons?i=sass" height="45" alt="sass logo" title="SCSS" />
   <img width="1" />
-  <img src="https://skillicons.dev/icons?i=hibernate" height="45" alt="hibernate logo" title="Hibernate" />
-  <img width="1" />
   <img src="https://skillicons.dev/icons?i=maven" height="45" alt="apachemaven logo" title="Apache Maven" />
 </div>
