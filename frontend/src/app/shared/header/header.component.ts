@@ -11,5 +11,7 @@ import { CartService } from '../../core/services/cart.service';
 })
 
 export class HeaderComponent {
-  constructor(readonly cartService: CartService) {}
+  constructor(
+    readonly cartService: CartService,
+  ) {}
 }

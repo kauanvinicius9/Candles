@@ -8,6 +8,10 @@
     <p class="product-card__fragrance">{{ product.fragrance }}</p>
     <p class="product-card__price">R$ {{ product.price.toFixed(2).replace('.', ',') }}</p>
 
+    @if (product.isNew) {
+      <p class="badge">Novo</p>
+    }
+
     <button class="product-card__button" (click)="addToCart()">
       {{ justAdded ? 'Adicionado' : 'Adicionar ao carrinho' }}
     </button>

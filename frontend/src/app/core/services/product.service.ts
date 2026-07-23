@@ -13,6 +13,7 @@ export class ProductService {
       description: 'Vela de creme de morango com delicados morangos por cima. Peça decorativa.',
       price: 69.9,
       imagePlaceholder: 'assets/Candle-Strawberry.jpeg',
+      isNew: true,
     },
     {
       id: 2,
@@ -22,6 +23,7 @@ export class ProductService {
       description: 'Calma e Aconchego para momentos de oração.',
       price: 64.9,
       imagePlaceholder: 'assets/Candle-NSA.jpeg',
+      isNew: false,
     },
     // {
     //   id: 4,
@@ -51,6 +53,7 @@ export class ProductService {
       description: 'Difusor para carro com uma leve fragrância de bambu.',
       price: 10.0,
       imagePlaceholder: 'assets/Dif-Car.jpeg',
+      isNew: false,
     },
     {
       id: 7,
@@ -60,6 +63,7 @@ export class ProductService {
       description: 'Essência de lavanda, perfume que acalma.',
       price: 52.90,
       imagePlaceholder: 'assets/Candle-Lavanda.jpeg',
+      isNew: true,
     },
     {
       id: 8,
@@ -69,6 +73,7 @@ export class ProductService {
       description: 'Tampa de madeira, 160 gramas, fragrância de sua escolha.',
       price: 36.90,
       imagePlaceholder: 'assets/Candle-Pistache.jpeg',
+      isNew: false,
     },
     {
       id: 9,
@@ -78,6 +83,7 @@ export class ProductService {
       description: 'Pode de vidro contendo fósforos.',
       price: 36.90,
       imagePlaceholder: 'assets/Candle-WaxMelt.jpeg',
+      isNew: false,
     }
   ];
 
