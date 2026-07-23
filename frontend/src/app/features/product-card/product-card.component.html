@@ -1,9 +1,7 @@
 <article class="product-card">
   <div class="product-card__image">
-    <span>Foto do produto</span>
-    <small>{{ product.name }}</small>
+    <img src="{{ product.imagePlaceholder }}" alt="{{ product.name }}">
   </div>
-
   <div class="product-card__body">
     <span class="tag">{{ categoryLabel }}</span>
     <h3 class="product-card__name">{{ product.name }}</h3>

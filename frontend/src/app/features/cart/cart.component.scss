@@ -51,6 +51,12 @@
   justify-content: center;
   font-size: 0.75rem;
   color: $color-brown-dark;
+
+  img {
+    width: 57px;
+    object-fit: contain;
+    border-radius: 6px;
+  }
 }
 
 .cart-item__info h3 {

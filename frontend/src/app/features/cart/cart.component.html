@@ -7,13 +7,14 @@
         <p>Seu carrinho está vazio.</p>
         <a routerLink="/produtos" class="btn__products">Ver produtos</a>
       </div>
+
     } @else {
       <div class="cart__layout">
         <div class="cart__items">
           @for (item of cartService.items(); track item.product.id) {
             <div class="cart-item">
               <div class="cart-item__image">
-                <span>Foto</span>
+                <img src="{{ item.product.imagePlaceholder }}" alt="{{ item.product.name }}">
               </div>
 
               <div class="cart-item__info">

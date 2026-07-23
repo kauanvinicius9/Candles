@@ -28,15 +28,10 @@
   color: $color-brown-dark;
   padding: 16px;
 
-  span {
-    font-weight: 700;
-    font-size: 0.85rem;
-  }
-
-  small {
-    margin-top: 4px;
-    font-size: 0.75rem;
-    opacity: 0.75;
+  img {
+    width: 214px;
+    object-fit: contain;
+    border-radius: 10px;
   }
 }
 

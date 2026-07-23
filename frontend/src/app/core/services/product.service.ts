@@ -12,7 +12,7 @@ export class ProductService {
       fragrance: 'Creme de morango',
       description: 'Vela de creme de morango com delicados morangos por cima. Peça decorativa.',
       price: 69.9,
-      imagePlaceholder: 'assets/produtos/vela-ambar-baunilha.jpg',
+      imagePlaceholder: 'assets/Candle-Strawberry.jpeg',
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ export class ProductService {
       fragrance: 'Essência de Lavanda',
       description: 'Calma e Aconchego para momentos de oração.',
       price: 64.9,
-      imagePlaceholder: 'assets/produtos/vela-lavanda-camomila.jpg',
+      imagePlaceholder: 'assets/Candle-NSA.jpeg',
     },
     // {
     //   id: 4,
@@ -50,7 +50,7 @@ export class ProductService {
       fragrance: 'Bambu',
       description: 'Difusor para carro com uma leve fragrância de bambu.',
       price: 10.0,
-      imagePlaceholder: 'assets/produtos/difusor-baunilha-tonka.jpg',
+      imagePlaceholder: 'assets/Dif-Car.jpeg',
     },
     {
       id: 7,
@@ -59,16 +59,25 @@ export class ProductService {
       fragrance: 'Essência de Lavanda',
       description: 'Essência de lavanda, perfume que acalma.',
       price: 52.90,
-      imagePlaceholder: 'assets/produtos/difusor-rosas-pimenta.jpg',
+      imagePlaceholder: 'assets/Candle-Lavanda.jpeg',
     },
     {
       id: 8,
-      name: 'Vela Entretempos',
+      name: 'Entretempos',
       category: 'vela',
       fragrance: 'Pistache, Lavanda ou Chá Branco',
       description: 'Tampa de madeira, 160 gramas, fragrância de sua escolha.',
       price: 36.90,
-      imagePlaceholder: 'assets/produtos/vela-cafe-caramelo.jpg',
+      imagePlaceholder: 'assets/Candle-Pistache.jpeg',
+    },
+    {
+      id: 9,
+      name: 'Wax Melt',
+      category: 'vela',
+      fragrance: 'Chá Branco e Jasmine',
+      description: 'Pode de vidro contendo fósforos.',
+      price: 36.90,
+      imagePlaceholder: 'assets/Candle-WaxMelt.jpeg',
     }
   ];
 
