@@ -24,6 +24,16 @@ mvn spring:boot-run
 
 ---
 
+## Accessibility
+
+- Sign language support;
+- Self-Contrast;
+- Voice;
+- TAB navigation;
+- Adaptable text source
+
+---
+
 <div align="left">
   <img src="https://skillicons.dev/icons?i=ts" height="45" alt="typescript logo" title="TypeScript" />
   <img width="1" />
