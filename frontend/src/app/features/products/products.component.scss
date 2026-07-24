@@ -2,33 +2,33 @@
 
 .products {
   padding: 48px 0 80px;
-}
 
-.products__filters {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-}
+  &__filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
 
-.products__filter {
-  background: $color-white;
-  color: $color-brown;
-  padding: 10px 20px;
-  border-radius: 999px;
-  box-shadow: $shadow-soft;
-  transition: background 0.2s ease, color 0.2s ease;
-}
+  &__filter {
+    background: $color-white;
+    color: $color-brown;
+    padding: 10px 20px;
+    border-radius: 999px;
+    box-shadow: $shadow-soft;
+    transition: background 0.2s ease, color 0.2s ease;
 
-.products__filter.is-active {
-  background: $color-amber;
-  color: $color-white;
-}
+    &.is-active {
+      background: $color-amber;
+      color: $color-white;
+    }
+  }
 
-.products__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
 }
 
 @media (max-width: 960px) {

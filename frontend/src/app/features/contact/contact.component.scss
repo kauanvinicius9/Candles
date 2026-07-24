@@ -2,33 +2,47 @@
 
 .contact {
   padding: 48px 0 80px;
-}
 
-.contact__layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
 
-.contact__list {
-  list-style: none;
-  padding: 0;
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  color: $color-brown;
-}
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: $color-brown;
+  }
 
-.contact__form {
-  background: $color-white;
-  border-radius: $radius-md;
-  box-shadow: $shadow-soft;
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  &__form {
+    background: $color-white;
+    border-radius: $radius-md;
+    box-shadow: $shadow-soft;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__success {
+    background: $color-cream-dark;
+    color: $color-success;
+    padding: 10px 14px;
+    border-radius: $radius-sm;
+  }
+
+  &__error {
+    background-color: $color-cream-dark;
+    color: $color-danger;
+    padding: 10px 14px;
+    border-radius: $radius-sm;
+  }
 }
 
 .field {
@@ -56,20 +70,6 @@ textarea {
     outline: none;
     border-color: $color-amber;
   }
-}
-
-.contact__success {
-  background: $color-cream-dark;
-  color: $color-success;
-  padding: 10px 14px;
-  border-radius: $radius-sm;
-}
-
-.contact__error {
-  background-color: $color-cream-dark;
-  color: $color-danger;
-  padding: 10px 14px;
-  border-radius: $radius-sm;
 }
 
 .btn__send_message {

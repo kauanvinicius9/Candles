@@ -12,63 +12,60 @@
   &:hover {
     box-shadow: $shadow-hover;
   }
-}
 
-.product-card__image {
-  aspect-ratio: 1 / 1;
-  background: linear-gradient(
-    160deg, 
-    $color-beige, 
-    $color-sand);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: $color-brown-dark;
-  padding: 16px;
+  &__image {
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(160deg, $color-beige, $color-sand);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: $color-brown-dark;
+    padding: 16px;
 
-  img {
-    width: 214px;
-    object-fit: contain;
-    border-radius: 10px;
+    img {
+      width: 214px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
   }
-}
 
-.product-card__body {
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
+  &__body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
 
-.product-card__name {
-  font-size: 1.2rem;
-}
+  &__name {
+      font-size: 1.2rem;
+  }
 
-.product-card__fragrance {
-  font-size: 0.85rem;
-  color: $color-brown;
-  min-height: 38px;
-}
+  &__fragrance {
+    font-size: 0.85rem;
+    color: $color-brown;
+    min-height: 38px;
+  }
 
-.product-card__price {
-  font-size: 1.15rem;
-  color: $color-amber;
-  margin-top: auto;
-}
+  &__price {
+    font-size: 1.15rem;
+    color: $color-amber;
+    margin-top: auto;
+  }
 
-.product-card__button {
-  width: 100%;
-  margin-top: 8px;
-  background:$color-brown;
-  color: #ffffff;
-  padding: 10px;
-  border-radius: 20px;
-  transition: 0.3s ease;
+  &__button {
+    width: 100%;
+    margin-top: 8px;
+    background: $color-brown;
+    color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+    transition: 0.3s ease;
 
-  &:hover {
-    opacity: 0.85;
+    &:hover {
+      opacity: 0.85;
+    }
   }
 }

@@ -1,91 +1,78 @@
 @use "../../../scss/variables" as *;
 
 .hero {
-  background: linear-gradient(
-    135deg, 
-   $color-cream-dark, 
-   $color-beige);
+  background: linear-gradient(135deg, $color-cream-dark, $color-beige);
   padding: 64px 0;
-}
 
-.hero__inner {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 48px;
-  align-items: center;
-}
-
-.hero__title {
-  font-size: 2.6rem;
-  margin: 16px 0;
-  line-height: 1.2;
-  font-family: $font-body;
-}
-
-.hero__subtitle {
-  color: $color-brown;
-  font-size: 1.05rem;
-  max-width: 480px;
-}
-
-.hero__buttons {
-  gap: 6px;
-  display: flex;
-}
-
-.hero__image {
-  width: 100%;
-  height: 400px;
-  display: flex;
-  overflow: hidden;
-  position: relative;
-  border-radius: 25px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease;
+  &__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
   }
 
-  .hero__overlay {
+  &__title {
+    font-size: 2.6rem;
+    margin: 16px 0;
+    line-height: 1.2;
+    font-family: $font-body;
+  }
+
+  &__subtitle {
+    color: $color-brown;
+    font-size: 1.05rem;
+    max-width: 480px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 6px;
+  }
+
+  &__image {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    border-radius: 25px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  &__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0, 0, 0, 0.45);
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    cursor: default;
 
     span {
-      color: #ffffff;
+      color: #fff;
       font-size: 1.3rem;
       font-family: $font-body;
-    } 
-  }
-
-  &:hover {
-    img {
-      transform: scale(1.05);
-    }
-  
-    .hero__overlay {
-      opacity: 1;
-      cursor: default;
     }
   }
 }
 
 .highlights {
   padding: 56px 0;
-}
 
-.highlights__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
 }
 
 .highlight-card {
@@ -98,12 +85,12 @@
 
 .featured {
   padding: 40px 0 80px;
-}
 
-.featured__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
 }
 
 .btn_primary,
@@ -115,7 +102,7 @@
 
 .btn_primary {
   background: $color-brown;
-  color: #ffff;
+  color: #fff;
   padding: 13px 25px;
   border-radius: 25px;
 
@@ -132,7 +119,7 @@
 
   &:hover {
     background: $color-brown;
-    color: #ffffff;
+    color: #fff;
   }
 }
 
