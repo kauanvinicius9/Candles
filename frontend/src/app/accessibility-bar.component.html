@@ -1,0 +1,6 @@
+<nav class="accessibility-bar" role="region" aria-label="Accessibility Controls">
+  <button  class="accessibility-bar__button"  (click)="onIncreaseFont()"  title="Increase font size"  aria-label="Increase text size"> A+</button>
+  <button class="accessibility-bar__button" (click)="onDecreaseFont()" title="Decrease font size" aria-label="Decrease text size">A-</button>
+  <button class="accessibility-bar__button" [class.accessibility-bar__button--active]="isHighContrast"(click)="onToggleContrast()" title="Toggle high contrast" aria-label="Toggle high contrast mode">◐</button>
+  <button class="accessibility-bar__button" [class.accessibility-bar__button--active]="isSpeechActive"(click)="onToggleSpeech()" title="Toggle text-to-speech on hover" aria-label="Toggle text-to-speech on hover">🔊</button>
+</nav>
