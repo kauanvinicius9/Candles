@@ -1,16 +1,21 @@
-$color-cream: #fbf3e7;
-$color-cream-dark: #f2e4cd;
-$color-beige: #ecdcc2;
-$color-sand: #d9bd98;
-$color-terracotta: #c98a68;
-$color-amber: #b5754d;
-$color-brown: #6b4a3a;
-$color-brown-dark: #4a3327;
-$color-ink: #3c2c22;
-$color-gold: #c9a15a;
-$color-white: #fffdf9;
-$color-success: #7c9473;
-$color-danger: #b5573f;
+$color-cream: #f8fbff;
+$color-cream-dark: #eef6ff;
+$color-beige: #dbeafe;
+$color-sand: #bfdbfe;
+$color-terracotta: #93c5fd;
+$color-amber: #60a5fa;
+$color-brown: #2563eb;
+$color-brown-dark: #1d4ed8;
+$color-ink: #0f172a;
+$color-gold: #38bdf8;
+
+$color-white: #ffffff;
+$color-black: #000000;
+$color-silver: #8c8c8c;
+
+$color-success: #22c55e;
+$color-danger: #ef4444;
+
 $shadow-soft: 0 8px 24px rgba(107, 74, 58, 0.12);
 $shadow-hover: 0 12px 32px rgba(107, 74, 58, 0.18);
 $radius-sm: 8px;
@@ -30,7 +35,7 @@ html, body {
 
 body {
   font-family:  $font-body;
-  background: $color-cream;
+  background: $color-white;
   color: $color-ink;
   line-height: 1.55;
 }

@@ -80,9 +80,19 @@ export class ProductService {
       name: 'Wax Melt',
       category: 'vela',
       fragrance: 'Chá Branco e Jasmine',
-      description: 'Pode de vidro contendo fósforos.',
+      description: 'Pote de vidro contendo fósforos.',
       price: 36.90,
       imagePlaceholder: 'assets/Candle-WaxMelt.jpeg',
+      isNew: false,
+    },
+    {
+      id: 10,
+      name: 'Luz de Sakura',
+      category: 'home-spray',
+      fragrance: 'Bambu',
+      description: 'Segredo da folhas, frescor e elegância.',
+      price: 36.90,
+      imagePlaceholder: 'assets/HomeSpray-Sakura.jpeg',
       isNew: false,
     }
   ];

@@ -20,8 +20,6 @@ ng serve
 mvn spring:boot-run
 ```
 
-- [https://www.figma.com/Reviva](https://www.figma.com/design/We9AbBQcWGBB1UgivdpAMJ/Reviva-Ateli%C3%AA?node-id=0-1&p=f&t=jiN8JiX0w6WQgfrd-0 "Click to Access")
-
 ---
 
 ## Accessibility

@@ -1,46 +1,118 @@
 @use "../../../scss/variables" as *;
 
 .footer {
-  background: $color-brown-dark;
-  color: $color-cream;
   margin-top: 60px;
+  background: $color-ink;
+  color: $color-cream;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 40px 24px;
+    text-align: left;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-body;
+    font-size: 1.3rem;
+    color: $color-white;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    opacity: .9;
+
+    a {
+      color: $color-white;
+      text-decoration: none;
+      transition: .3s ease;
+
+      &:hover {
+        color: $color-gold;
+      }
+    }
+  }
+
+  &__copy {
+    margin: 0;
+    font-size: .8rem;
+    opacity: .7;
+  }
 }
 
-.footer__inner {
-  padding: 40px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  gap: 16px;
-  text-align: left;
-}
+@media (max-width: 992px) {
+  .footer {
+    margin-top: 48px;
 
-.footer__brand {
-  font-family: $font-body;
-  font-size: 1.3rem;
-  display: flex;
-  align-items: left;
-  gap: 8px;
-}
+    &__inner {
+      padding: 32px 20px;
+    }
 
-.footer__links {
-  display: flex;
-  gap: 24px;
-  opacity: 0.9;
- 
-
-  a {
-    color: #ffffff;
-    transition: 0.3s ease;
-
-    &:hover {
-      color: $color-gold;
+    &__links {
+      gap: 18px;
     }
   }
 }
 
-.footer__copy {
-  font-size: 0.8rem;
-  opacity: 0.7;
-  margin: 0;
+@media (max-width: 768px) {
+  .footer {
+    margin-top: 40px;
+
+    &__inner {
+      align-items: center;
+      text-align: center;
+      padding: 28px 20px;
+    }
+
+    &__brand {
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    &__links {
+      justify-content: center;
+      gap: 16px;
+    }
+
+    &__copy {
+      font-size: .85rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    margin-top: 32px;
+
+    &__inner {
+      padding: 24px 16px;
+      gap: 14px;
+    }
+
+    &__brand {
+      font-size: 1.1rem;
+    }
+
+    &__links {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+
+      a {
+        width: 100%;
+      }
+    }
+
+    &__copy {
+      font-size: .75rem;
+    }
+  }
 }

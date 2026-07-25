@@ -1,17 +1,20 @@
 @use "../../../scss/variables" as *;
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   background: $color-white;
   box-shadow: $shadow-soft;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 .header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
   padding: 16px 24px;
 }
 
@@ -23,22 +26,27 @@
   font-size: 1.6rem;
   font-weight: 700;
   color: $color-brown-dark;
+  white-space: nowrap;
 }
 
 .header__logo {
   width: 60px;
+  height: auto;
   object-fit: contain;
 }
 
 .header__nav {
   display: flex;
+  align-items: center;
   gap: 28px;
-  color: $color-brown;
+  color: $color-ink;
+  flex-wrap: wrap;
 
   a {
+    white-space: nowrap;
     padding-bottom: 4px;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.2s ease, color 0.2s ease;
+    transition: color .2s ease, border-color .2s ease;
 
     &:hover {
       color: $color-amber;
@@ -49,37 +57,118 @@
 .header__cart {
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   width: 42px;
   height: 42px;
   border-radius: 50%;
   background: $color-cream-dark;
-  font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
 .header__cart-icon {
   width: 20px;
+  height: 20px;
 }
 
 .header__cart-count {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: $color-amber;
-  color: $color-white;
-  font-size: 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-width: 20px;
   height: 20px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: $color-amber;
+  color: $color-white;
+  font-size: .7rem;
+  font-weight: 600;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 992px) {
+  .header__inner {
+    padding: 14px 20px;
+    gap: 20px;
+  }
+
+  .header__brand {
+    font-size: 1.4rem;
+  }
+
+  .header__logo {
+    width: 52px;
+  }
+
   .header__nav {
-    gap: 16px;
-    font-size: 0.9rem;
+    gap: 18px;
+    font-size: .95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header__inner {
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px 16px;
+  }
+
+  .header__brand {
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  .header__nav {
+    justify-content: center;
+    gap: 14px;
+    font-size: .9rem;
+  }
+
+  .header__cart {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__inner {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .header__brand {
+    font-size: 1.1rem;
+  }
+
+  .header__logo {
+    width: 42px;
+  }
+
+  .header__nav {
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+    font-size: .85rem;
+
+    a {
+      padding: 4px 0;
+    }
+  }
+
+  .header__cart {
+    width: 36px;
+    height: 36px;
+  }
+
+  .header__cart-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .header__cart-count {
+    min-width: 18px;
+    height: 18px;
+    font-size: .65rem;
   }
 }
