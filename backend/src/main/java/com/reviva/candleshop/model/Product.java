@@ -34,6 +34,9 @@ public class Product {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private BigDecimal weightG;
+
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -91,5 +94,13 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public BigDecimal getWeightG() {
+        return weightG;
+    }
+
+    public void setWeightG(BigDecimal weightG) {
+        this.weightG = weightG;
     }
 }

@@ -75,4 +75,10 @@ public class OrderItem {
     public BigDecimal getSubtotal() {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
+
+    public BigDecimal getTotalWeightG() {
+        return product.getWeightG().multiply(
+            BigDecimal.valueOf(quantity)
+        );
+    }
 }

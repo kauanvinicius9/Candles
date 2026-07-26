@@ -12,8 +12,11 @@ export class CartService {
     this.itemsSignal().reduce((sum, item) => sum + item.quantity, 0)
   );
 
-  readonly totalAmount = computed(() =>
-    this.itemsSignal().reduce((sum, item) => sum + item.quantity * item.product.price, 0)
+  readonly subtotalAmount = computed(() =>
+    this.itemsSignal().reduce(
+      (sum, item) => sum + item.quantity * item.product.price, 
+      0
+    )
   );
 
   addToCart(product: Product, quantity = 1): void {

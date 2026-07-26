@@ -1,6 +1,7 @@
 package com.reviva.candleshop.service;
 
 import com.mercadopago.resources.payment.Payment;
+
 import com.reviva.candleshop.dto.CustomerDto;
 import com.reviva.candleshop.dto.OrderItemDto;
 import com.reviva.candleshop.dto.OrderRequestDto;
@@ -26,21 +27,21 @@ public class OrderService {
     private final ProductService productService;
     private final MercadoPagoService mercadoPagoService;
     private final EmailService emailService;
-    private final ShippingService shippingService;
+    private final FreightService freightService;
 
     public OrderService(
             OrderRepository orderRepository,
             ProductService productService,
             MercadoPagoService mercadoPagoService,
             EmailService emailService,
-            ShippingService shippingService
+            FreightService freightService
     ) {
 
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.mercadoPagoService = mercadoPagoService;
         this.emailService = emailService;
-        this.shippingService = shippingService;
+        this.freightService = freightService;
     }
 
     @Transactional
@@ -81,14 +82,14 @@ public class OrderService {
             item.setQuantity(itemDto.getQuantity());
             item.setUnitPrice(product.getPrice());
             items.add(item);
-            subtotal = subtotal.add(item.getSubtotal());}
-
-        BigDecimal shipping = shippingService.calculateShipping(
-            requestDto.getCustomer().getState(),
-            subtotal
-        );
+            subtotal = subtotal.add(item.getSubtotal());
+        }
 
         order.setItems(items);
+
+        BigDecimal totalWeightG = order.calculateTotalWeightG();
+        BigDecimal shipping = freightService.calculate(totalWeightG);
+        
         order.setSubtotalAmount(subtotal);
         order.setShippingAmount(shipping);
         order.setTotalAmount(subtotal.add(shipping));

@@ -1,5 +1,3 @@
-import { CartItem } from './cart-item.model';
-
 export type PaymentMethod = 'CREDITO' | 'DEBITO' | 'PIX';
 
 export interface CustomerInfo {
@@ -14,11 +12,15 @@ export interface CustomerInfo {
 
 export interface OrderRequest {
   customer: CustomerInfo;
-  items: CartItem[];
+  items: OrderItemRequest[];
   paymentMethod: PaymentMethod;
-  totalAmount: number;
   cardInstallments?: number;
   notes?: string;
+}
+
+export interface OrderItemRequest {
+  productId: number;
+  quantity: number;
 }
 
 export interface OrderResponse {
@@ -30,13 +32,17 @@ export interface OrderResponse {
   pixTicketUrl?: string;
   pixCopyPaste?: string;
   paymentUrl?: string;
+  subtotalAmount: number;
+  shippingAmount: number;
+  totalAmount: number;
+
 }
 
 export interface CardPaymentRequest {
     orderId: number;
     token: string;
     installments: number;
-    paymentMethodId: string; 
+    paymentMethodId: string;
     paymentTypeId: string;
     issuerId: string;
 }

@@ -1,9 +1,14 @@
 export interface ShippingRequest {
-    state: String;
-    subtotal: number;
+  state: string;
+  items: ShippingItemRequest[];
+}
+
+export interface ShippingItemRequest {
+  productId: number;
+  quantity: number;
 }
 
 export interface ShippingResponse {
-    shipping: number;
-    total: number;
+  shipping: number;
+  total: number;
 }

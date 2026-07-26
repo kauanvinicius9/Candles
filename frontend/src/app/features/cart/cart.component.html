@@ -42,16 +42,19 @@
           <h2>Resumo do pedido</h2>
           <div class="cart__summary-row">
             <span>Itens ({{ cartService.totalItems() }})</span>
-            <span>R$ {{ formatPrice(cartService.totalAmount()) }}</span>
+            <span>R$ {{ formatPrice(cartService.subtotalAmount()) }}</span>
           </div>
+          
           <div class="cart__summary-row">
             <span>Frete</span>
             <span>A calcular</span>
           </div>
+
           <hr>
+
           <div class="cart__summary-row cart__summary-total">
             <span>Total</span>
-            <span>R$ {{ formatPrice(cartService.totalAmount()) }}</span>
+            <span>R$ {{ formatPrice(cartService.subtotalAmount()) }}</span>
           </div>
 
           <a routerLink="/checkout" class="cart__checkout-btn">Finalizar compra</a>

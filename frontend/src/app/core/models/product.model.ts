@@ -9,4 +9,5 @@ export interface Product {
   price: number;
   imagePlaceholder: string;
   isNew: boolean;
+  weightG: number;
 }

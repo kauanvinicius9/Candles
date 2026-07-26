@@ -11,10 +11,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
@@ -153,5 +155,12 @@ public class Order {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public BigDecimal calculateTotalWeightG() {
+        return items.stream()
+            .map(OrderItem::getTotalWeightG)
+            .filter(Objects::nonNull)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

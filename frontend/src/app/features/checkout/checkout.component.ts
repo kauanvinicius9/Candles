@@ -4,7 +4,6 @@ import { Router, RouterLink } from "@angular/router";
 import { CartService } from "../../core/services/cart.service";
 import { OrderService } from "../../core/services/order.service";
 import { OrderRequest, OrderResponse, PaymentMethod } from "../../core/models/order.model";
-import { ShippingRequest, ShippingResponse } from "../../core/models/shipping.model";
 import { MercadoPagoService } from "../../core/services/mercado.pago.service";
 import { CardPaymentRequest } from "../../core/models/order.model";
 
@@ -15,21 +14,25 @@ import { CardPaymentRequest } from "../../core/models/order.model";
   templateUrl: "./checkout.component.html",
   styleUrl: "./checkout.component.scss",
 })
+
 export class CheckoutComponent {
   private readonly formBuilder = inject(FormBuilder);
 
   private mp: any;
   private cardBrick: any;
-  
+
   readonly cartService = inject(CartService);
   readonly isSubmitting = signal(false);
   readonly submitError = signal<string | null>(null);
   readonly submitSuccess = signal(false);
+
   readonly pixQrCode = signal<string | null>(null);
   readonly pixQrCodeBase64 = signal<string | null>(null);
   readonly pixTicketUrl = signal<string | null>(null);
+
+  readonly subtotal = signal(this.cartService.subtotalAmount());
   readonly shipping = signal(0);
-  readonly orderTotal = signal(this.cartService.totalAmount());
+  readonly orderTotal = signal(this.cartService.subtotalAmount());
 
   readonly checkoutForm = this.formBuilder.group({
     name: ["", [Validators.required, Validators.minLength(3)]],
@@ -47,20 +50,18 @@ export class CheckoutComponent {
   constructor(
     private readonly orderService: OrderService,
     private readonly router: Router,
-    private readonly mercadoPagoService: MercadoPagoService
+    private readonly mercadoPagoService: MercadoPagoService,
 
   ) {
     this.initializeMercadoPago();
-    this.checkoutForm.get("state")?.valueChanges.subscribe(state => {
-
+    this.checkoutForm.get("state")?.valueChanges.subscribe((state) => {
       if (!state) {
         return;
       }
-
       this.calculateShipping(state);
     });
 
-    this.checkoutForm.get("paymentMethod")?.valueChanges.subscribe(method => {
+    this.checkoutForm.get("paymentMethod")?.valueChanges.subscribe((method) => {
       if (method === "CREDITO" || method === "DEBITO") {
         setTimeout(() => {
           this.renderCardBrick();
@@ -71,12 +72,13 @@ export class CheckoutComponent {
 
   get isCardPayment(): boolean {
     return (
-      this.checkoutForm.value.paymentMethod === "CREDITO" || this.checkoutForm.value.paymentMethod === "DEBITO"
+      this.checkoutForm.value.paymentMethod === "CREDITO" ||
+      this.checkoutForm.value.paymentMethod === "DEBITO"
     );
   }
 
   get isCreditCard(): boolean {
-      return this.checkoutForm.value.paymentMethod === "CREDITO";
+    return this.checkoutForm.value.paymentMethod === "CREDITO";
   }
 
   private async initializeMercadoPago(): Promise<void> {
@@ -89,44 +91,33 @@ export class CheckoutComponent {
 
   private async renderCardBrick(): Promise<void> {
 
-      if (this.cardBrick) {
-        await this.cardBrick.unmount();
-        console.log(this.cardBrick)
-      }
-      await this.createCardBrick();
+    if (this.cardBrick) {
+      await this.cardBrick.unmount();
+    }
+
+    await this.createCardBrick();
   }
 
-  private sendCardPayment(
-    cardData: any
-  ) {
+  private sendCardPayment(cardData: any) {
     const request: CardPaymentRequest = {
       orderId: 1,
       token: cardData.token,
       installments: this.checkoutForm.value.cardInstallments ?? 1,
       paymentMethodId: cardData.payment_method_id,
       paymentTypeId: cardData.payment_type_id,
-      issuerId: cardData.issuer_id
+      issuerId: cardData.issuer_id,
     };
 
-    this.orderService .payWithCard(request) .subscribe({
-      next:(response)=> {
-        console.log(
-          "Pagamento aprovado",
-          response
-        );
-
+    this.orderService.payWithCard(request).subscribe({
+      next: (response) => {
+        console.log("Pagamento aprovado", response);
         this.submitSuccess.set(true);
       },
 
-      error:(error)=>{
-        console.error(
-          "Erro pagamento",
-          error
-        );
-        this.submitError.set(
-          "Pagamento recusado"
-        );
-      }
+      error: (error) => {
+        console.error("Erro pagamento", error);
+        this.submitError.set("Pagamento recusado");
+      },
     });
   }
 
@@ -142,21 +133,18 @@ export class CheckoutComponent {
       "cardPaymentBrick_container",
       {
         initialization: {
-          amount: this.orderTotal()
+          amount: this.orderTotal(),
         },
 
         callbacks: {
-          onSubmit:
-          async (cardData:any)=>{
-            this.sendCardPayment(
-              cardData
-            );
+          onSubmit: async (cardData: any) => {
+            this.sendCardPayment(cardData);
           },
 
-          onError(error: any){
+          onError(error: any) {
             console.error("Erro cartão", error);
-          }
-        }
+          },
+        },
       }
     );
   }
@@ -164,24 +152,34 @@ export class CheckoutComponent {
   private calculateShipping(state: string): void {
     this.orderService.calculateShipping({
       state,
-      subtotal: this.cartService.totalAmount()
-    }).subscribe({
-      next: (response: ShippingResponse) => {
+      items: this.cartService.items().map((item) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+      })),
+    })
+
+    .subscribe({
+      next: (response) => {
         this.shipping.set(response.shipping);
         this.orderTotal.set(response.total);
-      }
+      },
+
+      error: (error) => {
+        console.error("Erro ao calcular frete", error);
+      },
     });
   }
 
   submitOrder(): void {
+
     if (this.checkoutForm.invalid || this.cartService.items().length === 0) {
       this.checkoutForm.markAllAsTouched();
       return;
     }
 
     const formValue = this.checkoutForm.getRawValue();
-
     const order: OrderRequest = {
+
       customer: {
         name: formValue.name ?? "",
         email: formValue.email ?? "",
@@ -190,38 +188,38 @@ export class CheckoutComponent {
         city: formValue.city ?? "",
         state: formValue.state ?? "",
         zipCode: formValue.zipCode ?? "",
+
       },
-      
-      items: this.cartService.items(),
+
+      items: this.cartService.items().map((item) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+
+      })),
+
       paymentMethod: formValue.paymentMethod ?? "PIX",
-      totalAmount: this.orderTotal(),
       cardInstallments: this.isCardPayment
         ? (formValue.cardInstallments ?? 1)
         : undefined,
+
       notes: formValue.notes ?? "",
     };
 
     this.isSubmitting.set(true);
     this.submitError.set(null);
-
     this.orderService.submitOrder(order).subscribe({
+
       next: (response: OrderResponse) => {
+        this.shipping.set(response.shippingAmount);
+        this.orderTotal.set(response.totalAmount);
         this.isSubmitting.set(false);
         this.submitSuccess.set(true);
         this.cartService.clearCart();
 
         if (response.paymentMethod === "PIX") {
-          this.pixQrCode.set(
-            response.pixQrCode ?? null
-          );
-
-          this.pixQrCodeBase64.set(
-            response.pixQrCodeBase64 ?? null
-          );
-
-          this.pixTicketUrl.set(
-            response.pixTicketUrl ?? null
-          );
+          this.pixQrCode.set(response.pixQrCode ?? null);
+          this.pixQrCodeBase64.set(response.pixQrCodeBase64 ?? null);
+          this.pixTicketUrl.set(response.pixTicketUrl ?? null);
         }
 
         setTimeout(() => {
@@ -232,13 +230,17 @@ export class CheckoutComponent {
       error: (error: any) => {
         this.isSubmitting.set(false);
         this.submitError.set(
-          "Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes.",
+          "Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes."
         );
-        console.error("Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes.", error);
+
+        console.error(
+          "Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes.",
+          error
+        );
 
         setTimeout(() => {
           this.submitError.set(null);
-        }, 3000)
+        }, 3000);
       },
     });
   }
