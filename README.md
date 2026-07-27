@@ -46,4 +46,8 @@ mvn spring:boot-run
   <img src="https://skillicons.dev/icons?i=sass" height="45" alt="sass logo" title="SCSS" />
   <img width="1" />
   <img src="https://skillicons.dev/icons?i=maven" height="45" alt="apachemaven logo" title="Apache Maven" />
+  <img width="1" />
+  <img src="https://skillicons.dev/icons?i=aws" height="45" alt="amazonwebservices logo" title="Amazon Web Services" />
+  <img width="1" />
+  <img src="https://skillicons.dev/icons?i=docker" height="45" alt="docker logo" title="Docker" />
 </div>
