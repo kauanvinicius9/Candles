@@ -26,20 +26,39 @@
 
       <div class="field">
         <label for="contact-name">Nome</label>
-        <input id="contact-name" type="text" formControlName="name">
+        <input id="contact-name" type="text" formControlName="name" placeholder="Seu nome">
+        @if (f['name'].touched && f['name'].invalid) {
+          <span class="field__error">Informe seu nome (até 3 caracteres)</span>
+        }
       </div>
 
       <div class="field">
         <label for="contact-email">E-mail</label>
-        <input id="contact-email" type="email" formControlName="email">
+        <input id="contact-email" type="email" formControlName="email" placeholder="voce@gmail.com">
+        @if (f['email'].touched && f['email'].invalid) {
+          <span class="field__error">Informe um e-mail válido. Ex: email&#64;dominio.com</span>
+        }
       </div>
 
       <div class="field">
         <label for="contact-message">Mensagem</label>
-        <textarea id="contact-message" rows="5" formControlName="message"></textarea>
+        <textarea id="contact-message" rows="5" formControlName="message" placeholder="Escreva sua mensagem..."></textarea>
+        @if (f['message'].touched && f['message'].invalid) {
+          <span class="field__error">Sua mensagem precisa ter pelo menos 10 caracteres válidos</span>
+        }
       </div>
 
-      <button type="submit" class="btn__send_message" [disabled]="sending()">{{ sending() ? "Enviando..." : "Enviar mensagem" }}</button>
+      @if (submitted()) {
+        <p class="contact__success">Mensagem enviada</p>
+      }
+
+      @if (errorMessage()) {
+        <p class="contact__error">Ocorreu um erro ao enviar</p>
+      }
+
+      <button type="submit" [disabled]="sending() || contactForm.invalid" class="btn__send_message">
+        {{ sending() ? "Enviando..." : "Enviar mensagem" }}
+      </button>
     </form>
   </div>
 </section>

@@ -33,7 +33,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: 8px;
+
     padding: 18px;
   }
 
@@ -41,20 +41,23 @@
     font-size: 1.2rem;
     color: $color-black;
     line-height: 1.4;
+    margin-top: 10px;
   }
 
   &__fragrance {
     min-height: 38px;
     color: $color-silver;
     font-size: .85rem;
-    line-height: 1.5;
   }
 
   &__price {
-    margin-top: auto;
     color: $color-amber;
     font-size: 1.15rem;
     font-weight: 600;
+  }
+
+  &__description {
+    color: $color-silver;
   }
 
   &__button {

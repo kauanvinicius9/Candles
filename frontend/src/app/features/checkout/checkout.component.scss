@@ -42,7 +42,7 @@
   }
 
   &__note {
-    font-size: .8rem;
+    font-size: 0.8rem;
     color: $color-silver;
   }
 
@@ -71,10 +71,16 @@
     border-radius: 25px;
     background: $color-brown;
     color: $color-white;
-    transition: .3s ease;
+    transition: 0.3s ease;
 
     &:hover {
-      opacity: .85;
+      opacity: 0.85;
+    }
+
+    &:disabled {
+      background-color: $color-silver !important;
+      cursor: not-allowed !important;
+      opacity: 0.7;
     }
   }
 
@@ -101,7 +107,7 @@
 
   &__summary-item {
     margin-bottom: 8px;
-    font-size: .88rem;
+    font-size: 0.88rem;
     color: $color-silver;
   }
 
@@ -113,10 +119,22 @@
 }
 
 .field {
+  input.ng-invalid.ng-touched,
+  select.ng-invalid.ng-touched {
+    border-color: $color-danger !important;
+    background-color: $background-color-danger;
+  }
+
   display: flex;
   flex: 1;
   flex-direction: column;
   gap: 6px;
+
+  &__error {
+    color: $color-danger;
+    margin-top: 4px;
+    display: block;
+  }
 }
 
 .field--small {
@@ -129,7 +147,7 @@
 }
 
 label {
-  font-size: .82rem;
+  font-size: 0.82rem;
   color: $color-silver;
 }
 
@@ -143,7 +161,7 @@ textarea {
   background: $color-cream;
   color: $color-ink;
   font-family: $font-body;
-  font-size: .95rem;
+  font-size: 0.95rem;
 
   &:focus {
     outline: none;
@@ -169,12 +187,12 @@ textarea {
   border-radius: $radius-md;
   cursor: pointer;
   color: $color-black;
-  transition: .3s ease;
+  transition: 0.3s ease;
   white-space: nowrap;
 
   input[type="radio"],
   input {
-    width: auto; 
+    width: auto;
     height: auto;
     padding: 0;
     margin: 0;
@@ -223,10 +241,10 @@ textarea {
   border-radius: 25px;
   background: $color-brown;
   color: $color-white;
-  transition: .3s ease;
+  transition: 0.3s ease;
 
   &:hover {
-    opacity: .85;
+    opacity: 0.85;
   }
 }
 
@@ -297,19 +315,19 @@ textarea {
 
     &__summary-item,
     &__summary-total {
-      font-size: .92rem;
+      font-size: 0.92rem;
     }
   }
 
   label {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 
   input,
   select,
   textarea {
     padding: 10px 12px;
-    font-size: .92rem;
+    font-size: 0.92rem;
   }
 
   .payment-options {
@@ -378,12 +396,12 @@ textarea {
   select,
   textarea {
     padding: 9px 10px;
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   .payment-option {
     padding: 10px;
-    font-size: .88rem;
+    font-size: 0.88rem;
 
     img {
       width: 14px;
@@ -398,7 +416,7 @@ textarea {
 
     textarea {
       height: 90px;
-      font-size: .85rem;
+      font-size: 0.85rem;
     }
   }
 
@@ -422,11 +440,11 @@ textarea {
   input,
   select,
   textarea {
-    font-size: .85rem;
+    font-size: 0.85rem;
   }
 
   .payment-option {
-    font-size: .82rem;
+    font-size: 0.82rem;
     gap: 6px;
   }
 

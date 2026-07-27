@@ -6,6 +6,7 @@
     <span class="tag">{{ categoryLabel }}</span>
     <h3 class="product-card__name">{{ product.name }}</h3>
     <p class="product-card__fragrance">{{ product.fragrance }}</p>
+    <p class="product-card__description">{{ product.description }}</p>
     <p class="product-card__price">R$ {{ product.price.toFixed(2).replace('.', ',') }}</p>
 
     @if (product.isNew) {

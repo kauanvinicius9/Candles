@@ -1,11 +1,16 @@
 import { Component, inject, signal } from "@angular/core";
-import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { CartService } from "../../core/services/cart.service";
 import { OrderService } from "../../core/services/order.service";
 import { OrderRequest, OrderResponse, PaymentMethod } from "../../core/models/order.model";
 import { MercadoPagoService } from "../../core/services/mercado.pago.service";
 import { CardPaymentRequest } from "../../core/models/order.model";
+
+function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | null {
+  const isWhiteSpace = (control.value || "").trim().length === 0;
+  return !isWhiteSpace ? null : { whitespace: true };
+}
 
 @Component({
   selector: "app-checkout",
@@ -34,17 +39,23 @@ export class CheckoutComponent {
   readonly shipping = signal(0);
   readonly orderTotal = signal(this.cartService.subtotalAmount());
 
-  readonly checkoutForm = this.formBuilder.group({
-    name: ["", [Validators.required, Validators.minLength(3)]],
-    email: ["", [Validators.required, Validators.email]],
-    phone: ["", [Validators.required]],
-    address: ["", [Validators.required]],
-    city: ["", [Validators.required]],
-    state: ["", [Validators.required, Validators.maxLength(2)]],
-    zipCode: ["", [Validators.required]],
+  // Regex rigorosos, validações
+  private readonly emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  private readonly phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
+  private readonly zipCodeRegex = /^\d{5}-?\d{3}$/;
+  private readonly stateRegex = /^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO)$/i;
+
+readonly checkoutForm = this.formBuilder.group({
+    name: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(100), noWhiteSpaceValidator]],
+    email: ["", [Validators.required, Validators.pattern(this.emailRegex)]],
+    phone: ["", [Validators.required, Validators.pattern(this.phoneRegex)]],
+    address: ["", [Validators.required, Validators.minLength(5), noWhiteSpaceValidator]],
+    city: ["", [Validators.required, Validators.minLength(2), noWhiteSpaceValidator]],
+    state: ["", [Validators.required, Validators.pattern(this.stateRegex)]],
+    zipCode: ["", [Validators.required, Validators.pattern(this.zipCodeRegex)]],
     paymentMethod: ["PIX" as PaymentMethod, [Validators.required]],
     cardInstallments: [1],
-    notes: [""],
+    notes: ["", [Validators.maxLength(250)]],
   });
 
   constructor(
@@ -55,10 +66,8 @@ export class CheckoutComponent {
   ) {
     this.initializeMercadoPago();
     this.checkoutForm.get("state")?.valueChanges.subscribe((state) => {
-      if (!state) {
-        return;
-      }
-      this.calculateShipping(state);
+      if (!state || this.checkoutForm.get("state")?.invalid) return;
+      this.calculateShipping(state.toUpperCase());
     });
 
     this.checkoutForm.get("paymentMethod")?.valueChanges.subscribe((method) => {
@@ -68,6 +77,10 @@ export class CheckoutComponent {
         }, 100);
       }
     });
+  }
+
+  get f() {
+    return this.checkoutForm.controls;
   }
 
   get isCardPayment(): boolean {
@@ -90,11 +103,9 @@ export class CheckoutComponent {
   }
 
   private async renderCardBrick(): Promise<void> {
-
     if (this.cardBrick) {
       await this.cardBrick.unmount();
     }
-
     await this.createCardBrick();
   }
 
@@ -123,7 +134,6 @@ export class CheckoutComponent {
 
   private async createCardBrick() {
     const bricksBuilder = this.mp.bricks();
-
     if (this.cardBrick) {
       await this.cardBrick.unmount();
     }
@@ -138,9 +148,14 @@ export class CheckoutComponent {
 
         callbacks: {
           onSubmit: async (cardData: any) => {
+
+            if (this.checkoutForm.invalid) {
+              this.checkoutForm.markAllAsTouched();
+              this.submitError.set("Preencha todos os dados de entrega corretamente");
+              return;
+            }
             this.sendCardPayment(cardData);
           },
-
           onError(error: any) {
             console.error("Erro cartão", error);
           },
@@ -171,38 +186,38 @@ export class CheckoutComponent {
   }
 
   submitOrder(): void {
-
     if (this.checkoutForm.invalid || this.cartService.items().length === 0) {
       this.checkoutForm.markAllAsTouched();
+      this.submitError.set("Preencha todos os campos corretamente");
+
+      setTimeout(() => {
+        this.submitError.set(null);
+      }, 3000);
       return;
     }
 
     const formValue = this.checkoutForm.getRawValue();
     const order: OrderRequest = {
-
       customer: {
-        name: formValue.name ?? "",
-        email: formValue.email ?? "",
-        phone: formValue.phone ?? "",
-        address: formValue.address ?? "",
-        city: formValue.city ?? "",
-        state: formValue.state ?? "",
-        zipCode: formValue.zipCode ?? "",
-
+        name: formValue.name?.trim() ?? "",
+        email: formValue.email?.trim() ?? "",
+        phone: formValue.phone?.trim() ?? "",
+        address: formValue.address?.trim() ?? "",
+        city: formValue.city?.trim() ?? "",
+        state: formValue.state?.trim().toUpperCase() ?? "",
+        zipCode: formValue.zipCode?.trim() ?? "",
       },
 
       items: this.cartService.items().map((item) => ({
         productId: item.product.id,
         quantity: item.quantity,
-
       })),
 
       paymentMethod: formValue.paymentMethod ?? "PIX",
       cardInstallments: this.isCardPayment
         ? (formValue.cardInstallments ?? 1)
         : undefined,
-
-      notes: formValue.notes ?? "",
+      notes: formValue.notes?.trim() ?? "",
     };
 
     this.isSubmitting.set(true);
@@ -232,7 +247,6 @@ export class CheckoutComponent {
         this.submitError.set(
           "Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes."
         );
-
         console.error(
           "Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes.",
           error

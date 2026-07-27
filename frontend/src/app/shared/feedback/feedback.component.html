@@ -1,0 +1,87 @@
+<section class="section-feedback">
+  <div class="container-feedback">
+    <h3>Avaliações dos Clientes</h3>
+
+    <div class="list-feedback">
+      <div *ngIf="avaliations().length === 0" class="no-feedback">
+        Seja o primeiro a avaliar este produto
+      </div>
+
+      <div *ngFor="let item of avaliations()" class="card-feedback">
+        <div class="card-header">
+          <strong>{{ item.nameClient }}</strong>
+          <span class="stars">
+            <span *ngFor="let i of [1,2,3,4,5]">
+              {{ i <= item.stars ? '★' : '☆' }}
+            </span>
+          </span>
+        </div>
+        <p class="feedback-text">{{ item.feedback }}</p>
+        <small class="data">{{ item.creationDate | date:'dd/MM/yyyy' }}</small>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="form-feedback">
+      @if (successMessage()) {
+        <div class="alert success">{{ successMessage() }}</div>
+      }
+
+      @if (errorMessage()) {
+        <div class="alert-error">{{ errorMessage() }}</div>
+      }
+
+      <form [formGroup]="feedbackForm" (ngSubmit)="submit()">
+        <div class="stars-area">
+          <label>Nota:</label>
+          <span class="stars-select">
+            @for (i of [1, 2, 3, 4, 5]; track i) {
+              <span (click)="selectStar(i)" [class.ativa]="i <= selectedStars()">
+              ★
+            </span>
+            }
+          </span>
+        </div>
+
+        <div class="area">
+          <label for="name">Nome</label>
+          <input type="text" id="name" formControlName="nameClient" name="nameClient"  placeholder="Seu nome" [class.input-error]="f['nameClient'].invalid && f['nameClient'].touched" required />
+          @if (f['nameClient'].touched && f['nameClient'].invalid) {
+            <span class="error-msg">
+              @if (f['nameClient'].errors?.['required'] || f['nameClient'].errors?.['whiteSpace']) {
+                Seu nome é obrigatório
+
+              } @else if (f['nameClient'].errors?.['minlength']) {
+                Seu nome deve ter no mínimo 3 caracteres.
+
+              } @else if (f['nameClient'].errors?.['maxlength']) {
+                Seu nome deve ter no máximo 100 caracteres.
+              }
+            </span>
+          }
+        </div>
+
+        <div class="area">
+          <label for="feedback">Comentário</label>
+          <textarea id="feedback" formControlName="feedback" name="feedback" rows="4" placeholder="O que achou do produto?" [class.input-error]="f['feedback'].invalid && f['feedback'].touched" required></textarea>
+          @if (f['feedback'].touched && f['feedback'].invalid) {
+            <span class="error-msg">
+              @if (f['feedback'].errors?.['required'] || f['feedback'].errors?.['whitespace']) {
+                Seu comentário é obrigatório.
+
+              } @else if (f['feedback'].errors?.['minlength']) {
+                Seu comentário deve ter no mínimo 5 caracteres.
+
+              } @else if (f['feedback'].errors?.['maxlength']) {
+                Seu comentário deve ter no máximo 500 caracteres.
+              }
+            </span>
+          }
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="feedbackForm.invalid || sending()">{{ sending() ? "Enviando..." : "Enviar avaliação" }}</button>
+      </form>
+    </div>
+  </div>
+</section>

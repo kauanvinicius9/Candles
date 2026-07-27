@@ -2,6 +2,7 @@
 
 .contact {
   padding: 48px 0 80px;
+  min-height: calc(100vh - 275px);
 
   &__layout {
     display: grid;
@@ -49,14 +50,34 @@
   }
 }
 
+button[type="submit"] {
+  &:disabled {
+  background-color: $color-silver !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+ }
+}
+
 .field {
   display: flex;
   flex-direction: column;
   gap: 6px;
+
+  input.ng-invalid.ng-touched,
+  textarea.ng-invalid.ng-touched {
+    border-color: $color-danger !important;
+    background-color: $background-color-danger;
+  }
+
+  &__error {
+    color: $color-danger;
+    margin-top: 4px;
+    display: block;
+  }
 }
 
 label {
-  font-size: .82rem;
+  font-size: 1rem;
   color: $color-silver;
 }
 
@@ -94,8 +115,16 @@ textarea {
   color: $color-white;
   transition: .3s ease;
 
-  &:hover {
-    opacity: .85;
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    background-color: $color-beige !important; 
+    color: $color-white;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
   }
 }
 

@@ -40,39 +40,60 @@
           <div class="field">
             <label for="name">Nome completo</label>
             <input id="name" type="text" formControlName="name" placeholder="Seu nome">
+            @if (f.name.touched && f.name.invalid) {
+              <span class="field__error">Informe seu nome e sobrenome completo</span>
+            }
           </div>
 
           <div class="field-row">
             <div class="field">
               <label for="email">E-mail</label>
               <input id="email" type="email" formControlName="email" placeholder="voce@email.com">
+              @if (f.email.touched && f.email.invalid) {
+                <span class="field__error">E-mail inválido. Ex: nome&#64;dominio.com</span>
+              }
             </div>
 
             <div class="field">
-              <label for="phone">Telefone</label>
+              <label for="phone">Telefone / Whatsapp</label>
               <input id="phone" type="tel" formControlName="phone" placeholder="(00) 00000-0000">
+              @if (f.phone.touched && f.phone.invalid) {
+                <span class="field__error">DDD + Número inválido</span>
+              }
             </div>
           </div>
 
           <div class="field">
             <label for="address">Endereço</label>
             <input id="address" type="text" formControlName="address" placeholder="Rua, número, complemento">
+            @if (f.address.touched && f.address.invalid) {
+              <span class="field__error">Seu endereço é obrigatório</span>
+            }
           </div>
 
           <div class="field-row">
             <div class="field">
               <label for="city">Cidade</label>
               <input id="city" type="text" formControlName="city">
+              @if (f.city.touched && f.city.invalid) {
+                <span class="field__error">Sua cidade é obrigatória</span>
+              }
             </div>
 
             <div class="field field--small">
               <label for="state">UF</label>
               <input id="state" type="text" maxlength="2" formControlName="state">
+              @if (f.state.touched && f.state.invalid) {
+                <span class="field__error">UF inválida. (Ex: SP)</span>
+              }
             </div>
 
             <div class="field">
               <label for="zipCode">CEP</label>
               <input id="zipCode" type="text" formControlName="zipCode" placeholder="00000-000">
+              @if (f.zipCode.touched && f.zipCode.invalid) {
+                <span class="field__error">CEP inválido, precisa conter 8 dígitos.</span>
+              }
             </div>
           </div>
 
@@ -129,7 +150,7 @@
           }
 
           @if (!isCardPayment) {
-            <button type="submit" class="checkout__submit" [disabled]="isSubmitting()">
+            <button type="submit" class="checkout__submit" [disabled]="isSubmitting() || checkoutForm.invalid">
               {{ isSubmitting() ? 'Enviando...' : 'Confirmar pedido' }}
             </button>
           }
