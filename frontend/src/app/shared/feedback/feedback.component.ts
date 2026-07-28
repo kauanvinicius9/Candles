@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
 import { AvaliationService } from "../../core/services/avaliation.service";
 import { Avaliation } from "../../core/models/avaliation.model";
+import { ConfirmationModalComponent } from "../../confirmation-modal.component";
 
 function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | null {
   const isWhiteSpace = (control.value || "").trim().length === 0;
@@ -12,20 +13,21 @@ function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | nul
 @Component({
   selector: "app-coments",
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ConfirmationModalComponent],
   templateUrl: "./feedback.component.html",
   styleUrls: ["./feedback.component.scss"],
 })
-export class FeedbackComponent implements OnInit {
+export class FeedbackComponent implements OnInit, OnChanges {
+  
   @Input() productId!: number;
-
+  
+  showConfirmModal = signal<boolean>(false);
   avaliations = signal<Avaliation[]>([]);
   sending = signal(false);
   successMessage = signal("");
   errorMessage = signal("");
-
-  feedbackForm: FormGroup;
   selectedStars = signal(5);
+  feedbackForm: FormGroup;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -51,6 +53,23 @@ export class FeedbackComponent implements OnInit {
     return this.feedbackForm.controls;
   }
 
+  openModal(): void {
+    if (this.feedbackForm.invalid) {
+      this.feedbackForm.markAllAsTouched();
+      return;
+    }
+    this.showConfirmModal.set(true);
+  }
+
+  handleConfirm(): void {
+    this.showConfirmModal.set(false);
+    this.submit();
+  }
+
+  handleCancel(): void {
+    this.showConfirmModal.set(false);
+  }
+
   loadAvaliation(): void {
     if (!this.productId) return;
 
@@ -68,7 +87,7 @@ export class FeedbackComponent implements OnInit {
     this.selectedStars.set(nota);
   }
 
-  submit(): void {
+  private submit(): void {
     this.clearMessages();
 
     if (this.feedbackForm.invalid) {

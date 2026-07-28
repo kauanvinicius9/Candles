@@ -33,7 +33,7 @@
       </div>
 
     } @else {
-      <form class="checkout__layout" [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
+      <form class="checkout__layout" [formGroup]="checkoutForm" (ngSubmit)="openModal()">
         <div class="checkout__form">
           <h2>Seus dados</h2>
 
@@ -150,10 +150,21 @@
           }
 
           @if (!isCardPayment) {
-            <button type="submit" class="checkout__submit" [disabled]="isSubmitting() || checkoutForm.invalid">
-              {{ isSubmitting() ? 'Enviando...' : 'Confirmar pedido' }}
+            <button 
+                type="button" 
+                class="checkout__submit" 
+                [disabled]="sending() || checkoutForm.invalid" 
+                (click)="openModal()">
+                {{ sending() ? 'Enviando...' : 'Confirmar pedido' }}
             </button>
           }
+
+          <app-confirmation-modal 
+            [isOpen]="showConfirmModal()" 
+            title="Confirmar pedido" 
+            message="Deseja confirmar seu pedido?" 
+            (confirmed)="handleConfirm()" 
+            (cancelled)="handleCancel()" />
         </div>
 
         <aside class="checkout__summary">

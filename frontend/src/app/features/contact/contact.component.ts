@@ -1,33 +1,37 @@
 import { Component, signal } from '@angular/core';
 import { EmailService } from "../../core/services/email.service";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ConfirmationModalComponent } from '../../confirmation-modal.component';
 
 function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | null {
-  const isWhiteSpace = (control.value || "").trim().length === 0;
+  if (!control.value) {
+    return null;
+  }
+  const isWhiteSpace = control.value.trim().length === 0;
   return !isWhiteSpace ? null : { whitespace: true };
 }
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ConfirmationModalComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
-
 export class ContactComponent {
   readonly submitted = signal(false);
   readonly sending = signal(false);
   readonly errorMessage = signal(false);
+  readonly showConfirmModal = signal<boolean>(false);
   readonly contactForm: FormGroup;
 
+  // Regex rígido de e-mail
   private readonly emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly emailService: EmailService
   ) {
-
     this.contactForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), noWhiteSpaceValidator]],
       email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
@@ -37,6 +41,23 @@ export class ContactComponent {
 
   get f() {
     return this.contactForm.controls;
+  }
+
+  openModal(): void {
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
+    this.showConfirmModal.set(true);
+  }
+
+  handleConfirm(): void {
+    this.showConfirmModal.set(false); 
+    this.submit();
+  }
+
+  handleCancel(): void {
+    this.showConfirmModal.set(false);
   }
 
   submit(): void {

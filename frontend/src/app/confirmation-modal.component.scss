@@ -1,0 +1,77 @@
+@use "../scss/variables" as *;
+
+dialog:not([open]) {
+    display: none !important;
+}
+
+.modal-dialog {
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: $shadow-soft;
+    background-color: $color-white;
+    z-index: 99999 !important;
+
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 0.652);
+    }
+}
+
+.modal-body {
+    padding: 24px;
+    
+    h3 {
+        margin-top: 0;
+        color: $color-black;
+        font-size: 1.25rem;
+    }
+
+    p {
+        color: $color-silver;
+        margin-bottom: 24px;
+        font-size: 0.95rem;
+    }
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    button {
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        border: none;
+        background: $color-brown;
+        transition: 0.3s ease;
+    }
+
+    .btn-primary {
+        background: $color-brown;
+        color: $color-white;
+        transition: 0.3s ease;
+        border-radius: 20px;
+        width: 100%;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+
+    .btn-secondary {
+        background: $color-white;
+        color: $color-brown;
+        border: 2px solid $color-brown;
+        transition: 0.3s ease;
+        border-radius: 20px;
+        width: 100%;
+
+        &:hover {
+            background: $color-brown;
+            color: $color-white;
+        }
+    }
+}
