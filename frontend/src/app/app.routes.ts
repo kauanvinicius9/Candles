@@ -15,6 +15,7 @@ export const routes: Routes = [
 
   // Rota protegida
   { path: 'checkout', component: CheckoutComponent, title: 'Finalizar Compra | Reviva', canActivate: [checkoutGuard]},
+  
   { path: 'contato', component: ContactComponent, title: 'Contato | Reviva' },
   { path: 'sobre', component: AboutProductsComponent, title: 'Sobre | Reviva' },
   { path: 'avaliacao', component: FeedbackComponent, title: 'Avaliacao | Reviva' },
