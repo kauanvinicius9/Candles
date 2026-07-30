@@ -35,22 +35,13 @@ mvn spring:boot-run
 - **GSC WebSite**: [https://search.google.com](https://search.google.com/search-console/about "Click to Access")
 - **Official URL**: [https://reviva.com.br](https://reviva.com.br "Click to Access")
 - **EmailJS**: [https://emailjs.com](https://emailjs.com "Click to Access")
-- **Amazon Web Service (AWS)**: [https://aws.amazon.com](https://aws.amazon.com "Click to Access")
 
 <div align="left">
   <img src="https://skillicons.dev/icons?i=ts" height="45" alt="typescript logo" title="TypeScript" />
-  <img width="1" />
   <img src="https://skillicons.dev/icons?i=java" height="45" alt="java logo" title="Java" />
-  <img width="1" />
   <img src="https://skillicons.dev/icons?i=spring" height="45" alt="spring logo" title="Spring-Boot" />
-  <img width="1" />
   <img src="https://skillicons.dev/icons?i=angular" height="45" alt="angularjs logo" title="Angular" />
-  <img width="1" />
   <img src="https://skillicons.dev/icons?i=sass" height="45" alt="sass logo" title="SCSS" />
-  <img width="1" />
   <img src="https://skillicons.dev/icons?i=maven" height="45" alt="apachemaven logo" title="Apache Maven" />
-  <img width="1" />
-  <img src="https://skillicons.dev/icons?i=aws" height="45" alt="amazonwebservices logo" title="Amazon Web Services" />
-  <img width="1" />
   <img src="https://skillicons.dev/icons?i=docker" height="45" alt="docker logo" title="Docker" />
 </div>
