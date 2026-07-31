@@ -33,8 +33,10 @@ mvn spring:boot-run
 ---
 
 - **GSC WebSite**: [https://search.google.com](https://search.google.com/search-console/about "Click to Access")
-- **Official URL**: [https://reviva.com.br](https://reviva.com.br "Click to Access")
+- **Official URL**: [https://revivavelas.com.br](https://revivavelas.com.br "Click to Access")
 - **EmailJS**: [https://emailjs.com](https://emailjs.com "Click to Access")
+
+
 
 <div align="left">
   <img src="https://skillicons.dev/icons?i=ts" height="45" alt="typescript logo" title="TypeScript" />
