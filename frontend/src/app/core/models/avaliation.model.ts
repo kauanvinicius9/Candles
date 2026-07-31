@@ -3,6 +3,6 @@ export interface Avaliation {
     nameClient: string;
     stars: number;
     feedback: string;
-    productId: number;
+    productId?: number;
     creationDate?: string;
 }

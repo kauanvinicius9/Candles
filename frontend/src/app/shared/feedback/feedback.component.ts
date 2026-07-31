@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit, signal, SimpleChanges } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
 import { AvaliationService } from "../../core/services/avaliation.service";
@@ -17,9 +17,7 @@ function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | nul
   templateUrl: "./feedback.component.html",
   styleUrls: ["./feedback.component.scss"],
 })
-export class FeedbackComponent implements OnInit, OnChanges {
-  
-  @Input() productId!: number;
+export class FeedbackComponent implements OnInit {
   
   showConfirmModal = signal<boolean>(false);
   avaliations = signal<Avaliation[]>([]);
@@ -41,12 +39,6 @@ export class FeedbackComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadAvaliation();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['productId'] && !changes['productId'].firstChange) {
-      this.loadAvaliation();
-    }
   }
 
   get f() {
@@ -71,9 +63,7 @@ export class FeedbackComponent implements OnInit, OnChanges {
   }
 
   loadAvaliation(): void {
-    if (!this.productId) return;
-
-    this.avaliationService.findByProduct(this.productId).subscribe({
+    this.avaliationService.findAll().subscribe({
       next: (dados) => {
         this.avaliations.set(dados);
       },
@@ -96,12 +86,14 @@ export class FeedbackComponent implements OnInit, OnChanges {
     }
 
     const rawData = this.feedbackForm.getRawValue();
+    
     const newAvaliation: Avaliation = {
       nameClient: rawData.nameClient.trim(),
       feedback: rawData.feedback.trim(),
       stars: this.selectedStars(),
-      productId: this.productId,
     };
+
+    console.log(newAvaliation);
 
     this.sending.set(true);
     this.avaliationService.sendAvaliation(newAvaliation).subscribe({

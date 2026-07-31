@@ -11,8 +11,8 @@ export class AvaliationService {
 
     constructor(private http: HttpClient) {}
 
-    findByProduct(productId: number): Observable<Avaliation[]> {
-        return this.http.get<Avaliation[]>(`${this.apiUrl}/produto/${productId}`);
+    findAll(): Observable<Avaliation[]> {
+        return this.http.get<Avaliation[]>(`${this.apiUrl}/produto/`);
     }
 
     sendAvaliation(avaliation: Avaliation): Observable<string> {

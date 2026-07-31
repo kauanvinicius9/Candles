@@ -1,4 +1,4 @@
-package com.revivas.candleshop.model;
+package com.reviva.candleshop.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 @Table(name = "avaliacoes")
 public class Avaliation {
 
-    @Is
-    @Generatedvalue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Seu nome é obrigatório")
@@ -25,15 +25,14 @@ public class Avaliation {
     @Column(length = 1000)
     private String feedback;
 
-    @Notnull
-    private Long productId;
+    @NotNull
 
-    @Emunerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private StatusAvaliation status = StatusAvaliation.PENDENTE;
     private LocalDateTime creationDate = LocalDateTime.now();
 
     public enum StatusAvaliation {
-        PENDETE, APROVADO, REJEITADO
+        PENDENTE, APROVADO, REJEITADO
     }
 
     public Long getId() { return id; }
@@ -47,9 +46,6 @@ public class Avaliation {
 
     public String getFeedback() { return feedback; }
     public void setFeedback(String feedback) { this.feedback = feedback; }
-
-    public Long getProductId() { return productId; }
-    public void setProductId(Long productId) { this.productId = productId; }
 
     public StatusAvaliation getStatus() { return status; }
     public void setStatus(StatusAvaliation status) { this.status = status; }

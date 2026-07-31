@@ -1,6 +1,6 @@
 package com.reviva.candleshop.controller;
 
-import com.reviva.candleshop.dto.AvaliationDTO;
+import com.reviva.candleshop.dto.AvaliationDto;
 import com.reviva.candleshop.model.Avaliation;
 import com.reviva.candleshop.repository.AvaliationRepository;
 
@@ -23,26 +23,27 @@ public class AvaliationController {
     }
 
     // Listagem de avaliações aprovadas
-    @GetMapping("/produto/{produtoId}")
-    public ResponseEntity<List<Avaliation>> listByProduct(@PathVariable Long productId) {
-        List<Avaliation> aprovadas = repository.findByProductIdAndStatusOrderByCreationDataDesc(
-            productId, Avaliation.StatusAvaliation.APROVADO
+    @GetMapping
+    public ResponseEntity<List<Avaliation>>listApproved() {
+        List<Avaliation> aprovadas = repository.findByStatusOrderByCreationDateDesc(
+            Avaliation.StatusAvaliation.APROVADO
         );
         return ResponseEntity.ok(aprovadas);
     }
 
     // Endpoint pública
     @PostMapping
-    public ResponseEntity<String> create(@Valid @RequestBody AvaliationDTO dto) {
+    public ResponseEntity<String> create(@RequestBody AvaliationDto dto) {
         Avaliation avaliation = new Avaliation();
+
         avaliation.setNameClient(dto.nameClient());
         avaliation.setStars(dto.stars());
         avaliation.setFeedback(dto.feedback());
-        avaliation.setProductId(dto.productId());
+        repository.save(avaliation);
         // Status já pendente
 
         repository.save(avaliation);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Avaliação enviada. Ela ficará visível assim que for aprovada")
+        return ResponseEntity.status(HttpStatus.CREATED).body("Avaliação enviada. Ela ficará visível assim que for aprovada");
     }
 
     // Endpoint adm
@@ -50,6 +51,15 @@ public class AvaliationController {
     public ResponseEntity<Void> approve(@PathVariable Long id) {
         return repository.findById(id).map(avali -> {
             avali.setStatus(Avaliation.StatusAvaliation.APROVADO);
+            repository.save(avali);
+            return ResponseEntity.ok().<Void>build();
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}/rejeitar")
+    public ResponseEntity<Void> reject(@PathVariable Long id) {
+        return repository.findById(id).map(avali -> {
+            avali.setStatus(Avaliation.StatusAvaliation.REJEITADO);
             repository.save(avali);
             return ResponseEntity.ok().<Void>build();
         }).orElse(ResponseEntity.notFound().build());

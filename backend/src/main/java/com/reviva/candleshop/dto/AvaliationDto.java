@@ -2,7 +2,7 @@ package com.reviva.candleshop.dto;
 
 import jakarta.validation.constraints.*;
 
-public record AvaliacaoDTO(
+public record AvaliationDto(
     @NotBlank(message = "Informe seu nome")
     String nameClient,
 
@@ -10,8 +10,5 @@ public record AvaliacaoDTO(
     Integer stars,
 
     @NotBlank(message = "Escreva um comentário")
-    String feedback,
-
-    @NotNull
-    Long productId
+    String feedback
 ) {}
