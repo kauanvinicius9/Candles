@@ -1,20 +1,41 @@
 package com.reviva.candleshop.dto;
 
+import java.math.BigDecimal;
+
 public class CardPaymentRequestDto {
 
-    private Long orderId;
+    private String customerName;
+    private String customerEmail;
+    private BigDecimal totalAmount;
+
     private String token;
     private Integer installments;
     private String paymentMethodId;
     private String paymentTypeId;
     private String issuerId;
 
-    public Long getOrderId() {
-        return orderId;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public String getToken() {

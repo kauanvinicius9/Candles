@@ -7,56 +7,38 @@ import com.mercadopago.client.payment.PaymentCreateRequest;
 import com.mercadopago.client.payment.PaymentPayerRequest;
 import com.mercadopago.resources.payment.Payment;
 import com.reviva.candleshop.dto.CardPaymentRequestDto;
-import com.reviva.candleshop.model.Order;
-import com.reviva.candleshop.repository.OrderRepository;
 
 @Service
 public class CardPaymentService {
-    private final OrderRepository orderRepository;
-    public CardPaymentService(OrderRepository orderRepository){
-        this.orderRepository = orderRepository;
-    }
-
-    public Payment createPayment(CardPaymentRequestDto dto){
+    public Payment createPayment(CardPaymentRequestDto dto) {
         try {
-            Order order = orderRepository
-                    .findById(dto.getOrderId())
-                    .orElseThrow();
-
             String issuerId = dto.getIssuerId() != null && !dto.getIssuerId().isBlank()
-                ? dto.getIssuerId()
-                : null;
+                    ? dto.getIssuerId()
+                    : null;
 
             PaymentClient client = new PaymentClient();
-            
-            PaymentPayerRequest payer =
-                    PaymentPayerRequest.builder()
-                    .email(order.getCustomer().getEmail())
-                    .firstName(order.getCustomer().getName())
+            PaymentPayerRequest payer = PaymentPayerRequest.builder()
+                    .firstName(dto.getCustomerName())
+                    .email(dto.getCustomerEmail())
                     .build();
 
             PaymentCreateRequest request = PaymentCreateRequest.builder()
-                    .transactionAmount(order.getTotalAmount())
+                    .transactionAmount(dto.getTotalAmount())
                     .token(dto.getToken())
                     .paymentMethodId(dto.getPaymentMethodId())
                     .issuerId(issuerId)
                     .installments(
-                        "credit_card".equals(dto.getPaymentTypeId())
-                        ? dto.getInstallments()
-                        : 1
-                    )
-                    .description("Pedido Reviva Velas #" + order.getId())
+                            "credit_card".equals(dto.getPaymentTypeId())
+                                    ? dto.getInstallments()
+                                    : 1)
+                    .description("Compra Reviva Velas")
                     .payer(payer)
                     .build();
 
-            Payment payment = client.create(request);
-            order.setMercadoPagoId(String.valueOf(payment.getId()));
-            orderRepository.save(order);
-            return payment;
+            return client.create(request);
 
-        } catch(Exception e){
-            throw new RuntimeException("Erro ao processar cartão",e
-            );
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao processar pagamento", e);
         }
     }
 }

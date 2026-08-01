@@ -1,24 +1,51 @@
 package com.reviva.candleshop.dto;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public class OrderItemDto {
 
+    private String name;
+
     @NotNull
-    private Long productId;
+    private BigDecimal price;
+
+    @NotNull
+    private BigDecimal weight;
 
     @NotNull
     @Min(1)
     private Integer quantity;
 
-    public Long getProductId() {
-        return productId;
+
+    public String getName() {
+        return name;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setName(String name) {
+        this.name = name;
     }
+
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
 
     public Integer getQuantity() {
         return quantity;

@@ -1,5 +1,6 @@
 package com.reviva.candleshop.service;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import org.springframework.stereotype.Service;
@@ -8,7 +9,7 @@ import com.mercadopago.client.payment.PaymentClient;
 import com.mercadopago.client.payment.PaymentCreateRequest;
 import com.mercadopago.client.payment.PaymentPayerRequest;
 import com.mercadopago.resources.payment.Payment;
-import com.reviva.candleshop.model.Order;
+import com.reviva.candleshop.dto.OrderRequestDto;
 
 @Service
 public class MercadoPagoService {
@@ -18,31 +19,39 @@ public class MercadoPagoService {
         return client.get(Long.valueOf(id));
     }
 
-    public Payment createPixPayment(Order order) throws Exception {
-        PaymentClient client = new PaymentClient();
+    public Payment createPixPayment(
+            OrderRequestDto order,
+            BigDecimal totalAmount
 
+    ) throws Exception {
+        PaymentClient client = new PaymentClient();
         PaymentPayerRequest payer =
                 PaymentPayerRequest.builder()
-                        .email(order.getCustomer().getEmail())
-                        .firstName(order.getCustomer().getName())
+                        .email(
+                            order.getCustomer().getEmail()
+                        )
+                        .firstName(
+                            order.getCustomer().getName()
+                        )
                         .build();
 
         PaymentCreateRequest request =
                 PaymentCreateRequest.builder()
-                        .transactionAmount(order.getTotalAmount())
-                        .description("Pedido Reviva Velas #" + order.getId())
+                        .transactionAmount(totalAmount)
+                        .description(
+                            "Compra Reviva Velas"
+                        )
                         .paymentMethodId("pix")
                         .payer(payer)
                         .dateOfExpiration(
-                                OffsetDateTime.now().plusMinutes(30)
+                            OffsetDateTime.now()
+                            .plusMinutes(30)
                         )
                         .build();
-
         return client.create(request);
     }
 
     public String getPixQrCode(Payment payment) {
-
         if (payment.getPointOfInteraction() == null)
             return null;
 
@@ -53,7 +62,6 @@ public class MercadoPagoService {
     }
 
     public String getPixQrCodeBase64(Payment payment) {
-
         if (payment.getPointOfInteraction() == null) {
             return null;
         }
@@ -65,7 +73,6 @@ public class MercadoPagoService {
     }
 
     public String getPixTicketUrl(Payment payment) {
-
         if (payment.getPointOfInteraction() == null) {
             return null;
         }

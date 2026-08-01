@@ -5,7 +5,6 @@ import { CartComponent } from './features/cart/cart.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
 import { ContactComponent } from './features/contact/contact.component';
 import { AboutProductsComponent } from './features/about/about.component';
-import { FeedbackComponent } from './shared/feedback/feedback.component';
 import { checkoutGuard } from './checkout.guard';
 
 export const routes: Routes = [
@@ -18,6 +17,5 @@ export const routes: Routes = [
   
   { path: 'contato', component: ContactComponent, title: 'Contato | Reviva' },
   { path: 'sobre', component: AboutProductsComponent, title: 'Sobre | Reviva' },
-  { path: 'avaliacao', component: FeedbackComponent, title: 'Avaliacao | Reviva' },
   { path: '**', redirectTo: '' }
 ];
