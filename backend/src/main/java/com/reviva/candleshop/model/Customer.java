@@ -1,30 +1,19 @@
 package com.reviva.candleshop.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-
-@Embeddable
 public class Customer {
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
     private String city;
 
-    @Column(nullable = false, length = 2)
     private String state;
 
-    @Column(name = "zip_code", nullable = false)
     private String zipCode;
 
     public String getName() {

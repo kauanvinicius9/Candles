@@ -1,21 +1,15 @@
 package com.reviva.candleshop.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "payment_logs")
-public class PaymentLog {
+public class PaymentLog{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String mercadoPagoId;
     private String status;
     private String event;
     private LocalDateTime createdAt;
 
-    @PrePersist
     public void prePersist(){
         createdAt = LocalDateTime.now();
     }
