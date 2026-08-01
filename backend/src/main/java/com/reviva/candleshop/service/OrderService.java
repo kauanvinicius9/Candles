@@ -13,17 +13,14 @@ import com.reviva.candleshop.dto.OrderResponseDto;
 public class OrderService {
 
     private final MercadoPagoService mercadoPagoService;
-    private final EmailService emailService;
     private final FreightService freightService;
 
 
     public OrderService(
             MercadoPagoService mercadoPagoService,
-            EmailService emailService,
             FreightService freightService
     ) {
         this.mercadoPagoService = mercadoPagoService;
-        this.emailService = emailService;
         this.freightService = freightService;
     }
 
@@ -62,20 +59,15 @@ public class OrderService {
 
 
         Payment payment =
-                mercadoPagoService.createPayment(
+                mercadoPagoService.createPixPayment(
                         requestDto,
                         total
                 );
 
-
-        emailService.sendOrderNotification(
-                requestDto
-        );
-
-
         return new OrderResponseDto(
-                String.valueOf(payment.getId()),
-                "PENDENTE"
+                payment.getId(),
+                "PENDENTE",
+                requestDto.getPaymentMethod()
         );
     }
 }
