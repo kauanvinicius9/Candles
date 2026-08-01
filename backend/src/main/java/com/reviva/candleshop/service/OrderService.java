@@ -25,7 +25,7 @@ public class OrderService {
     }
 
 
-    public OrderResponseDto createOrder(OrderRequestDto requestDto) {
+    public OrderResponseDto createOrder(OrderRequestDto requestDto) throws Exception {
 
         BigDecimal subtotal = BigDecimal.ZERO;
         BigDecimal totalWeight = BigDecimal.ZERO;

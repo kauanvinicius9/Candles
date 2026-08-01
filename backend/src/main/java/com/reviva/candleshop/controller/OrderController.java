@@ -31,7 +31,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponseDto createOrder(@Valid @RequestBody OrderRequestDto requestDto) {
+    public OrderResponseDto createOrder(@Valid @RequestBody OrderRequestDto requestDto) throws Exception {
         return orderService.createOrder(requestDto);
     }
 
