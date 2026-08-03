@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CorsConfig {
 
     @Value("${cors.allowed-origin:http://localhost:4200,https://revivavelas.com.br,https://www.revivavelas.com.br}")
-    private String allowedOrigin;
+    private String[ allowdOrigins;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
