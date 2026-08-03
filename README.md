@@ -1,3 +1,5 @@
+> Deployed ✅
+
 # Candles & Scents 
 
 Reviva Atelier is a small **E-Commerce** site focused on **candles**, **diffusers**, and **home sprays**. A simple site with Mercado Pago's `SDK` system integrated for secure payments via:
