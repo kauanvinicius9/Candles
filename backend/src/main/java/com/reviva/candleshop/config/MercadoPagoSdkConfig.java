@@ -9,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 @Configuration
 public class MercadoPagoSdkConfig {
 
+    // "${mercadopago.access-token: ---------}"
     @Value("${mercadopago.access-token}")
     private String accessToken;
 
