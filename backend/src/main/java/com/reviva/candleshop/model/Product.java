@@ -3,21 +3,13 @@ package com.reviva.candleshop.model;
 import java.math.BigDecimal;
 
 public class Product {
-
     private Long id;
-
     private String name;
-
     private ProductCategory category;
-
     private String fragrance;
-
     private String description;
-
     private BigDecimal price;
-
     private BigDecimal weightG;
-
     private String imageUrl;
 
     public Long getId() {

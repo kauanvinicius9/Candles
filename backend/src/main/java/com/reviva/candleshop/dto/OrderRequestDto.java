@@ -8,7 +8,6 @@ import java.util.List;
 import com.reviva.candleshop.model.PaymentMethod;
 
 public class OrderRequestDto {
-
     @Valid
     @NotNull
     private CustomerDto customer;
@@ -21,7 +20,6 @@ public class OrderRequestDto {
     private PaymentMethod paymentMethod;
 
     private Integer cardInstallments;
-
     private String notes;
 
     public CustomerDto getCustomer() {

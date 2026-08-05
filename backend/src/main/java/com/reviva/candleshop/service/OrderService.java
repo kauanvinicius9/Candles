@@ -11,10 +11,8 @@ import com.reviva.candleshop.dto.OrderResponseDto;
 
 @Service
 public class OrderService {
-
     private final MercadoPagoService mercadoPagoService;
     private final FreightService freightService;
-
 
     public OrderService(
             MercadoPagoService mercadoPagoService,
@@ -24,45 +22,19 @@ public class OrderService {
         this.freightService = freightService;
     }
 
-
     public OrderResponseDto createOrder(OrderRequestDto requestDto) throws Exception {
-
         BigDecimal subtotal = BigDecimal.ZERO;
         BigDecimal totalWeight = BigDecimal.ZERO;
 
-
         for (OrderItemDto item : requestDto.getItems()) {
-
-            BigDecimal quantity =
-                    BigDecimal.valueOf(item.getQuantity());
-
-
-            subtotal = subtotal.add(
-                    item.getPrice()
-                    .multiply(quantity)
-            );
-
-
-            totalWeight = totalWeight.add(
-                    item.getWeight()
-                    .multiply(quantity)
-            );
+            BigDecimal quantity = BigDecimal.valueOf(item.getQuantity());
+            subtotal = subtotal.add(item.getPrice().multiply(quantity));
+            totalWeight = totalWeight.add(item.getWeight().multiply(quantity));
         }
 
-
-        BigDecimal shipping =
-                freightService.calculate(totalWeight);
-
-
-        BigDecimal total =
-                subtotal.add(shipping);
-
-
-        Payment payment =
-                mercadoPagoService.createPixPayment(
-                        requestDto,
-                        total
-                );
+        BigDecimal shipping = freightService.calculate(totalWeight);
+        BigDecimal total = subtotal.add(shipping);
+        Payment payment = mercadoPagoService.createPixPayment(requestDto, total);
 
         return new OrderResponseDto(
                 payment.getId(),

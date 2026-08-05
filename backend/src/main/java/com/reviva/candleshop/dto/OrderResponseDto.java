@@ -3,7 +3,6 @@ package com.reviva.candleshop.dto;
 import com.reviva.candleshop.model.PaymentMethod;
 
 public class OrderResponseDto {
-
     private Long orderId;
     private String status;
     private PaymentMethod paymentMethod;

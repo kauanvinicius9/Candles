@@ -20,7 +20,6 @@ import com.reviva.candleshop.service.ShippingService;
 @RestController
 @RequestMapping("/api/pedidos")
 public class OrderController {
-
     private final OrderService orderService;
     private final ShippingService shippingService;
 

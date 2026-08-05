@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class ShippingRequestDto {
-    
     @NotBlank
     private String state;
 

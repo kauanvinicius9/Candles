@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public class OrderItemDto {
-
     private String name;
 
     @NotNull
@@ -19,7 +18,6 @@ public class OrderItemDto {
     @Min(1)
     private Integer quantity;
 
-
     public String getName() {
         return name;
     }
@@ -27,7 +25,6 @@ public class OrderItemDto {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public BigDecimal getPrice() {
         return price;
@@ -37,7 +34,6 @@ public class OrderItemDto {
         this.price = price;
     }
 
-
     public BigDecimal getWeight() {
         return weight;
     }
@@ -45,7 +41,6 @@ public class OrderItemDto {
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
-
 
     public Integer getQuantity() {
         return quantity;

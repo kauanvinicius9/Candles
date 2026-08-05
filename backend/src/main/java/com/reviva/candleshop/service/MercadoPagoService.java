@@ -13,7 +13,6 @@ import com.reviva.candleshop.dto.OrderRequestDto;
 
 @Service
 public class MercadoPagoService {
-
     public Payment getPayment(String id) throws Exception {
         PaymentClient client = new PaymentClient();
         return client.get(Long.valueOf(id));

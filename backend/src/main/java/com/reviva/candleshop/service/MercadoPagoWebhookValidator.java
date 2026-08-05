@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MercadoPagoWebhookValidator {
-
     @Value("${mercadopago.webhook-secret}")
     private String secret;
 

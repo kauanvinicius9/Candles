@@ -3,7 +3,6 @@ package com.reviva.candleshop.model;
 import java.time.LocalDateTime;
 
 public class PaymentLog{
-
     private Long id;
     private String mercadoPagoId;
     private String status;

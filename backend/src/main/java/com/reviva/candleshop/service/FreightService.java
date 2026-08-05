@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FreightService {
-    
     public BigDecimal calculate(BigDecimal totalWeightG){
         if (totalWeightG.compareTo(new BigDecimal("1")) <= 0) {
             return new BigDecimal("10.00");

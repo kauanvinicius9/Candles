@@ -3,11 +3,9 @@ package com.reviva.candleshop.dto;
 import java.math.BigDecimal;
 
 public class CardPaymentRequestDto {
-
     private String customerName;
     private String customerEmail;
     private BigDecimal totalAmount;
-
     private String token;
     private Integer installments;
     private String paymentMethodId;

@@ -8,27 +8,16 @@ import java.util.Objects;
 
 public class Order {
     private Long id;
-
     private Customer customer;
-
     private List<OrderItem> items = new ArrayList<>();
-
     private PaymentMethod paymentMethod;
-
     private Integer cardInstallments;
-
     private BigDecimal totalAmount;
-
     private OrderStatus status = OrderStatus.PENDENTE;
-
     private String mercadoPagoId;
-
     private String notes;
-
     private LocalDateTime createdAt = LocalDateTime.now();
-
     private BigDecimal shippingAmount;
-
     private BigDecimal subtotalAmount;
 
     public BigDecimal getShippingAmount() {
