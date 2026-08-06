@@ -38,6 +38,7 @@ mvn spring:boot-run
 - **Official URL**: [https://revivavelas.com.br](https://revivavelas.com.br "Click to Access")
 - **EmailJS**: [https://emailjs.com](https://emailjs.com "Click to Access")
 - **Monitoring Service**: [https://dashboard.uptimerobot.com](https://dashboard.uptimerobot.com/ "Click to Access")
+- **GitGuardian**: [https://dashboard.gitguardian.com](https://dashboard.gitguardian.com/ "Click to Access")
 
 <img src="frontend/src/assets/Comprovante_Dominio.jpeg" width="500" title="Domain payment"></img>
 
