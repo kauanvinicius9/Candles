@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { loadMercadoPago } from '@mercadopago/sdk-js';
+import { environment } from "../../../environments/environment";
 
 @Injectable({
     providedIn: "root"
 })
 export class MercadoPagoService {
-    private publickey = "chave publica aqui";
-    // Colocar a chave publica real quando for subir pra produção
+    private publickey = environment.mercadoPagoPublicKey;
     
     async initialize(): Promise<any> {
         await loadMercadoPago();
