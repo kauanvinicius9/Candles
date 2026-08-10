@@ -69,7 +69,7 @@ export class ProductService {
       id: 7,
       name: 'Coleção Sugar Berry: Flor de Cerejeira',
       category: 'vela',
-      fragrance: 'Bambu',
+      fragrance: 'Cereja',
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 35.90,
       imagePlaceholder: 'assets/Candle-Flower-Cer.jpeg',
@@ -92,7 +92,7 @@ export class ProductService {
       fragrance: 'Proteção, Energia, Peônia e Pavio de Madeira',
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 46.90,
-      imagePlaceholder: 'assets/Evil-Eye.jpeg',
+      imagePlaceholder: 'assets/Candle-Evil-Eye.jpeg',
       weightG: 80,
     },
     {
