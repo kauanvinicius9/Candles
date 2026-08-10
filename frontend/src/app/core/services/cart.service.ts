@@ -14,7 +14,23 @@ export class CartService {
 
   readonly subtotalAmount = computed(() =>
     this.itemsSignal().reduce(
-      (sum, item) => sum + item.quantity * item.product.price, 
+      (sum, item) => sum + item.quantity * item.product.price,
+      0
+    )
+  );
+
+  // Soma total acumulada em Gramas
+  readonly totalWeightG = computed(() =>
+    this.itemsSignal().reduce(
+      (sum, item) => sum + (item.product.weightG ?? 0) * item.quantity,
+      0
+    )
+  );
+
+  // Soma total acumulada em Mililitros
+  readonly totalVolumML = computed(() =>
+    this.itemsSignal().reduce(
+      (sum, item) => sum + (item.product.volumML ?? 0) * item.quantity,
       0
     )
   );

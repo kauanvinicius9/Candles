@@ -153,7 +153,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 62.90,
       imagePlaceholder: 'assets/Dif.jpeg',
-      weightG: 10,
+      volumML: 10,
     },
     {
       id: 16,
@@ -163,7 +163,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 62.90,
       imagePlaceholder: 'assets/Dif.jpeg',
-      weightG: 10,
+      volumML: 10,
     },
     {
       id: 17,
@@ -173,7 +173,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 62.90,
       imagePlaceholder: 'assets/Dif.jpeg',
-      weightG: 10,
+      volumML: 10,
     },
     {
       id: 18,
@@ -183,7 +183,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 15.00,
       imagePlaceholder: 'assets/Dif-Car.jpeg',
-      weightG: 8,
+      volumML: 8,
     },
     {
       id: 19,
@@ -193,7 +193,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 42.90,
       imagePlaceholder: 'assets/Dif-Kit.jpeg',
-      weightG: 250,
+      volumML: 250,
     },
     {
       id: 20,
@@ -203,7 +203,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 37.90,
       imagePlaceholder: 'assets/Dif-Kit.jpeg',
-      weightG: 250,
+      volumML: 250,
     },
     {
       id: 21,
@@ -213,7 +213,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 25.00,
       imagePlaceholder: 'assets/Dif-Kit.jpeg',
-      weightG: 30,
+      volumML: 30,
     },
     {
       id: 21,
@@ -223,7 +223,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 20.00,
       imagePlaceholder: 'assets/Dif-Kit.jpeg',
-      weightG: 25,
+      volumML: 25,
     },
     {
       id: 22,
@@ -233,7 +233,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 35.90,
       imagePlaceholder: 'assets/Dif-Kit.jpeg',
-      weightG: 150,
+      volumML: 150,
     },
     {
       id: 22,
@@ -243,7 +243,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 39.90,
       imagePlaceholder: 'assets/Dif-Kit.jpeg',
-      weightG: 150,
+      volumML: 150,
     },
     {
       id: 23,
@@ -253,7 +253,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 41.90,
       imagePlaceholder: 'assets/Dif-Kit.jpeg',
-      weightG: 300,
+      volumML: 300,
     },
     {
       id: 24,
@@ -263,7 +263,7 @@ export class ProductService {
       description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
       price: 35.00,
       imagePlaceholder: 'assets/Dif-Kit.jpeg',
-      weightG: 250,
+      volumML: 250,
     },
     {
       id: 25,
@@ -307,16 +307,6 @@ export class ProductService {
     },
     {
       id: 29,
-      name: 'Coleção Lembranças e Eventos: Mini Velas (Pote Patê - Consulte Aromas, Prazos, Orçamentos e Eventos)',
-      category: 'vela',
-      fragrance: 'Comfort Baby',
-      description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
-      price: 51.90,
-      imagePlaceholder: 'assets/Candle-Baby.jpeg',
-      weightG: 200,
-    },
-    {
-      id: 30,
       name: 'Coleção Lembranças e Eventos: Cerveja (Copo Americano e Rótulo Personalizável) - Consulte Valores',
       category: 'vela',
       fragrance: 'Cera de Coco',
@@ -326,7 +316,7 @@ export class ProductService {
       weightG: 150,
     },
     {
-      id: 31,
+      id: 30,
       name: 'Coleção Lembranças e Eventos: Trio de Velas (Vidro Patê com Fósforos) - Rótulo, Fita e Aroma Ajustados ao Tema de Sua Festa, Valor Negociável',
       category: 'vela',
       fragrance: 'Escolha do Cliente',

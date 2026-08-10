@@ -14,12 +14,20 @@
           @for (item of cartService.items(); track item.product.id) {
             <div class="cart-item">
               <div class="cart-item__image">
-                <img src="{{ item.product.imagePlaceholder }}" alt="{{ item.product.name }}">
+                <img [src]="item.product.imagePlaceholder" [alt]="item.product.name">
               </div>
 
               <div class="cart-item__info">
                 <h3>{{ item.product.name }}</h3>
                 <p>{{ item.product.fragrance }}</p>
+                
+                @if (item.product.volumML) {
+                  <span class="cart-item__badge">{{ item.product.volumML }}ml</span>
+                }
+                @if (item.product.weightG) {
+                  <span class="cart-item__badge">{{ item.product.weightG }}g</span>
+                }
+
                 <p class="cart-item__unit-price">R$ {{ formatPrice(item.product.price) }} / unidade</p>
               </div>
 
@@ -47,16 +55,18 @@
           
           <div class="cart__summary-row">
             <span>Frete</span>
-            <span>A calcular</span>
+            @if (freightCost() === 0) {
+              <span class="free-shipping">Grátis</span>
+            } @else {
+              <span>R$ {{ formatPrice(freightCost()) }}</span>
+            }
+
           </div>
-
           <hr>
-
           <div class="cart__summary-row cart__summary-total">
             <span>Total</span>
             <span>R$ {{ formatPrice(cartService.subtotalAmount()) }}</span>
           </div>
-
           <a routerLink="/checkout" class="cart__checkout-btn">Finalizar compra</a>
         </aside>
       </div>

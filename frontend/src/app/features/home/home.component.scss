@@ -3,12 +3,20 @@
 .hero {
   background: linear-gradient(135deg, $color-cream-dark, $color-beige);
   padding: 64px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 
   &__inner {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 48px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 24px;
   }
 
   &__title {
@@ -20,33 +28,19 @@
   }
 
   &__subtitle {
-    max-width: 480px;
+    max-width: 540px;
     color: $color-silver;
     font-size: 1.05rem;
     line-height: 1.7;
+    margin: 0 auto;
   }
 
   &__buttons {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 12px;
     margin-top: 24px;
-  }
-
-  &__image {
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-    position: relative;
-    border-radius: 25px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      transition: transform .4s ease;
-    }
   }
 
   &__overlay {

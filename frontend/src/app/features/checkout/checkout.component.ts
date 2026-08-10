@@ -183,26 +183,27 @@ export class CheckoutComponent {
     });
   }
 
-  private calculateShipping(state: string): void {
-    this.orderService.calculateShipping({
-      state,
-      items: this.cartService.items().map((item) => ({
-        productId: item.product.id,
-        quantity: item.quantity,
-      })),
-    })
+private calculateShipping(state: string): void {
+  const totalWeightG = this.cartService.totalWeightG();
+  const totalVolumML = this.cartService.totalVolumML();
+  const subtotal = this.subtotal();
 
-    .subscribe({
-      next: (response) => {
-        this.shipping.set(response.shipping);
-        this.orderTotal.set(response.total);
-      },
-
-      error: (error) => {
-        console.error("Erro ao calcular frete", error);
-      },
-    });
-  }
+  this.orderService.calculateShipping({
+    state,
+    subtotal,
+    totalWeightG,
+    totalVolumML
+  })
+  .subscribe({
+    next: (response) => {
+      this.shipping.set(response.shipping);
+      this.orderTotal.set(response.total);
+    },
+    error: (error) => {
+      console.error("Erro ao calcular frete", error);
+    },
+  });
+}
 
   submitOrder(): void {
     if (this.checkoutForm.invalid || this.cartService.items().length === 0) {

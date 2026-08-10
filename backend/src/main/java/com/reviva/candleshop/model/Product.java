@@ -10,6 +10,7 @@ public class Product {
     private String description;
     private BigDecimal price;
     private BigDecimal weightG;
+    private Integer volumML;
     private String imageUrl;
 
     public Long getId() {
@@ -74,5 +75,13 @@ public class Product {
 
     public void setWeightG(BigDecimal weightG) {
         this.weightG = weightG;
+    }
+
+    public Integer getVolumML() {
+        return volumML;
+    }
+
+    public void setVolumML(Integer volumML) {
+        this.volumML = volumML;
     }
 }

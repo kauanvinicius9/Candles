@@ -8,5 +8,6 @@ export interface Product {
   description: string;
   price: number;
   imagePlaceholder: string;
-  weightG: number;
+  weightG?: number;
+  volumML?: number;
 }

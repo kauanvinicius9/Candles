@@ -1,6 +1,9 @@
 export interface ShippingRequest {
   state: string;
-  items: ShippingItemRequest[];
+  items?: ShippingItemRequest[];
+  subtotal?: number;
+  totalWeightG?: number;
+  totalVolumML?: number;
 }
 
 export interface ShippingItemRequest {

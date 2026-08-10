@@ -2,7 +2,7 @@
 
 .section-title {
   text-align: left;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
   color: $color-black;
 }
 
@@ -11,8 +11,8 @@
 
   &__layout {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 1.8fr 1.2fr;
+    gap: 2.5rem;
     align-items: start;
   }
 
@@ -22,17 +22,37 @@
     gap: 1.5rem;
   }
 
-  &__summary {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 16px;
+  &__sidebar {
     top: 100px;
-    height: fit-content;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  }
 
-    h2 {
-      margin-bottom: 1.5rem;
+  &__image-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  &__image {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__badge {
+    padding: 1.5rem;
+
+    h3 {
       color: $color-black;
+      margin-bottom: 0.25rem;
+      font-size: 1.2rem;
+    }
+
+    p {
+      color: $color-silver;
+      font-size: 0.95rem;
+      margin: 0;
     }
   }
 }
@@ -41,34 +61,44 @@
   background: #fff;
   border-radius: 16px;
   padding: 1.8rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 
   h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     color: $color-black;
+  }
+
+  h3 {
+    margin: 1.2rem 0 0.6rem;
+    font-size: 1.05rem;
+    color: $color-brown;
   }
 
   p {
     line-height: 1.7;
     color: $color-silver;
+    margin-bottom: 0.8rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
-  ul {
-    margin: 0;
+  &__steps,
+  &__checklist {
     padding-left: 1.2rem;
-  }
+    margin: 0 0 1rem;
 
-  li {
-    margin-bottom: .8rem;
-  }
-}
+    li {
+      color: $color-silver;
+      line-height: 1.6;
+      margin-bottom: 0.6rem;
 
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+      strong {
+        color: $color-black;
+      }
+    }
+  }
 }
 
 @media (max-width: 992px) {
@@ -80,10 +110,12 @@
       gap: 2rem;
     }
 
-    &__summary {
+    &__sidebar {
       position: static;
-      width: 100%;
-      top: auto;
+    }
+
+    &__image {
+      height: 280px;
     }
   }
 }
@@ -100,11 +132,6 @@
     &__content {
       gap: 1rem;
     }
-
-    &__summary {
-      padding: 1.5rem;
-      border-radius: 12px;
-    }
   }
 
   .info-card {
@@ -117,19 +144,9 @@
 
     p,
     li {
-      font-size: .95rem;
+      font-size: 0.95rem;
       line-height: 1.6;
     }
-  }
-
-  .summary-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .5rem;
-  }
-
-  .summary-text {
-    margin: 1rem 0;
   }
 }
 
@@ -141,8 +158,8 @@
   .about-products {
     padding: 1.5rem 0;
 
-    &__summary {
-      padding: 1.25rem;
+    &__image {
+      height: 220px;
     }
   }
 
@@ -155,11 +172,7 @@
 
     p,
     li {
-      font-size: .9rem;
+      font-size: 0.9rem;
     }
-  }
-
-  .summary-text {
-    font-size: .9rem;
   }
 }
