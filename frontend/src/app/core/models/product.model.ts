@@ -8,6 +8,5 @@ export interface Product {
   description: string;
   price: number;
   imagePlaceholder: string;
-  isNew: boolean;
   weightG: number;
 }

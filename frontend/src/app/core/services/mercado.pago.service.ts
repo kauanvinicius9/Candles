@@ -10,7 +10,6 @@ export class MercadoPagoService {
     
     async initialize(): Promise<any> {
         await loadMercadoPago();
-
         const mp = new (window as any).MercadoPago(
             this.publickey,
             {
