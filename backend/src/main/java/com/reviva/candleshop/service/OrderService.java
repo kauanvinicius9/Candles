@@ -34,11 +34,18 @@ public class OrderService {
 
         BigDecimal shipping = freightService.calculate(requestDto.getCustomer().getState(), totalWeight);
         BigDecimal total = subtotal.add(shipping);
+
         Payment payment = mercadoPagoService.createPixPayment(requestDto, total);
+
+        if ("PIX".equalsIgnoreCase(requestDto.getPaymentMethod())) {
+            payment = mercadoPagoService.createPixPayment(request.Dto, total);
+        } else {
+            payment = mercadoPagoService.createCardPayment(requestDto, total);
+        }
 
         return new OrderResponseDto(
                 payment.getId(),
-                "PENDENTE",
+                payment.getStatus() != null ? payment.getStatus() : "PENDENTE",
                 requestDto.getPaymentMethod()
         );
     }
