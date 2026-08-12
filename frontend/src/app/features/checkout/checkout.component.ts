@@ -1,6 +1,7 @@
 import { Component, inject, signal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
+import { HttpClient } from "@angular/common/http"; // Adicionado para consultar ViaCEP
 import { CartService } from "../../core/services/cart.service";
 import { OrderService } from "../../core/services/order.service";
 import { OrderRequest, OrderResponse, PaymentMethod, CardPaymentRequest } from "../../core/models/order.model";
@@ -19,9 +20,9 @@ function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | nul
   templateUrl: "./checkout.component.html",
   styleUrl: "./checkout.component.scss",
 })
-
 export class CheckoutComponent {
   private readonly formBuilder = inject(FormBuilder);
+  private readonly http = inject(HttpClient);
   
   private mp: any;
   private cardBrick: any;
@@ -29,6 +30,7 @@ export class CheckoutComponent {
   readonly showConfirmModal = signal<boolean>(false);
   readonly cartService = inject(CartService);
   readonly sending = signal(false);
+  readonly loadingCep = signal(false);
   
   readonly submitError = signal<string | boolean | null>(null);
   readonly submitSuccess = signal(false);
@@ -66,9 +68,12 @@ export class CheckoutComponent {
   ) {
     this.initializeMercadoPago();
     
-    this.checkoutForm.get("state")?.valueChanges.subscribe((state) => {
-      if (!state || this.checkoutForm.get("state")?.invalid) return;
-      this.calculateShipping(state.toUpperCase());
+    // Escuta alterações no campo de CEP para autofill e cálculo de frete
+    this.checkoutForm.get("zipCode")?.valueChanges.subscribe((zip) => {
+      const cleanZip = (zip || "").replace(/\D/g, "");
+      if (cleanZip.length === 8) {
+        this.fetchAddressByZipCode(cleanZip);
+      }
     });
 
     this.checkoutForm.get("paymentMethod")?.valueChanges.subscribe((method) => {
@@ -82,6 +87,28 @@ export class CheckoutComponent {
 
   get f() {
     return this.checkoutForm.controls;
+  }
+
+  // Busca dados de endereço via ViaCEP
+  private fetchAddressByZipCode(zipCode: string): void {
+    this.loadingCep.set(true);
+    this.http.get<any>(`https://viacep.com.br/ws/${zipCode}/json/`).subscribe({
+      next: (data) => {
+        this.loadingCep.set(false);
+        if (data.erro) return;
+
+        this.checkoutForm.patchValue({
+          address: data.logradouro ? `${data.logradouro}, ` : '',
+          city: data.localidade,
+          state: data.uf
+        });
+
+        if (data.uf) {
+          this.calculateShipping(data.uf);
+        }
+      },
+      error: () => this.loadingCep.set(false)
+    });
   }
 
   openModal(): void {
@@ -110,10 +137,6 @@ export class CheckoutComponent {
     );
   }
 
-  get isCreditCard(): boolean {
-    return this.checkoutForm.value.paymentMethod === "CREDITO";
-  }
-
   formatPrice(value: number): string {
     return value.toFixed(2).replace(".", ",");
   }
@@ -135,12 +158,17 @@ export class CheckoutComponent {
       await this.cardBrick.unmount();
     }
 
+    const formVal = this.checkoutForm.value;
+
     this.cardBrick = await bricksBuilder.create(
       "cardPayment",
       "cardPaymentBrick_container",
       {
         initialization: {
           amount: this.orderTotal(),
+          payer: {
+            email: formVal.email || undefined,
+          }
         },
         callbacks: {
           onReady: () => {
@@ -154,9 +182,8 @@ export class CheckoutComponent {
             }
             this.sendCardPayment(cardData);
           },
-
-          onError(error: any) {
-            console.error("Erro cartão", error);
+          onError: (error: any) => {
+            console.error("Erro no cartão:", error);
           },
         },
       }
@@ -167,7 +194,7 @@ export class CheckoutComponent {
     const request: CardPaymentRequest = {
       orderId: 1,
       token: cardData.token,
-      installments: this.checkoutForm.value.cardInstallments ?? 1,
+      installments: cardData.installments ?? this.checkoutForm.value.cardInstallments ?? 1,
       paymentMethodId: cardData.payment_method_id,
       paymentTypeId: cardData.payment_type_id,
       issuerId: cardData.issuer_id,
@@ -178,7 +205,6 @@ export class CheckoutComponent {
         console.log("Pagamento aprovado", response);
         this.submitSuccess.set(true);
       },
-      
       error: (error) => {
         console.error("Erro de pagamento", error);
         this.submitError.set("Pagamento recusado");
@@ -186,49 +212,53 @@ export class CheckoutComponent {
     });
   }
 
-private calculateShipping(state: string): void {
-  const totalWeightG = this.cartService.totalWeightG();
-  const totalVolumML = this.cartService.totalVolumML();
-  const subtotal = this.subtotal();
+  private calculateShipping(state: string): void {
+    const totalWeightG = this.cartService.totalWeightG();
+    const totalVolumML = this.cartService.totalVolumML();
+    const subtotal = this.subtotal();
 
-  this.orderService.calculateShipping({
-    state,
-    subtotal,
-    totalWeightG,
-    totalVolumML
-  })
-  .subscribe({
-    next: (response) => {
-      this.shipping.set(response.shipping);
-      this.orderTotal.set(response.total);
-    },
-    error: (error) => {
-      console.error("Erro ao calcular frete", error);
-    },
-  });
-}
+    this.orderService.calculateShipping({
+      state,
+      subtotal,
+      totalWeightG,
+      totalVolumML
+    })
+    .subscribe({
+      next: (response) => {
+        this.shipping.set(response.shipping);
+        this.orderTotal.set(response.total);
+
+        // Se o Brick já estiver montado, atualiza o valor total dinamicamente
+        if (this.cardBrick) {
+          this.cardBrick.update({ amount: response.total });
+        }
+      },
+      error: (error) => {
+        console.error("Erro ao calcular frete", error);
+      },
+    });
+  }
 
   submitOrder(): void {
     if (this.checkoutForm.invalid || this.cartService.items().length === 0) {
       this.checkoutForm.markAllAsTouched();
       this.submitError.set("Preencha todos os campos corretamente");
-
-      setTimeout(() => {
-        this.submitError.set(null);
-      }, 3000);
+      setTimeout(() => this.submitError.set(null), 3000);
       return;
     }
 
     const formValue = this.checkoutForm.getRawValue();
+
+    // Higienização dos dados antes do envio
     const order: OrderRequest = {
       customer: {
         name: formValue.name?.trim() ?? "",
-        email: formValue.email?.trim() ?? "",
-        phone: formValue.phone?.trim() ?? "",
+        email: formValue.email?.trim().toLowerCase() ?? "",
+        phone: formValue.phone?.replace(/\D/g, "") ?? "",
         address: formValue.address?.trim() ?? "",
         city: formValue.city?.trim() ?? "",
         state: formValue.state?.trim().toUpperCase() ?? "",
-        zipCode: formValue.zipCode?.trim() ?? "",
+        zipCode: formValue.zipCode?.replace(/\D/g, "") ?? "",
       },
 
       items: this.cartService.items().map((item) => ({
@@ -237,9 +267,7 @@ private calculateShipping(state: string): void {
       })),
 
       paymentMethod: formValue.paymentMethod ?? "PIX",
-      cardInstallments: this.isCardPayment
-        ? (formValue.cardInstallments ?? 1)
-        : undefined,
+      cardInstallments: this.isCardPayment ? (formValue.cardInstallments ?? 1) : undefined,
       notes: formValue.notes?.trim() ?? "",
     };
 
@@ -260,20 +288,13 @@ private calculateShipping(state: string): void {
           this.pixTicketUrl.set(response.pixTicketUrl ?? null);
         }
 
-        setTimeout(() => {
-          this.submitSuccess.set(false);
-        }, 3000);
+        setTimeout(() => this.submitSuccess.set(false), 3000);
       },
       error: (error: any) => {
         this.sending.set(false);
-        this.submitError.set(
-          "Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes."
-        );
+        this.submitError.set("Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes.");
         console.error("Erro no submitOrder:", error);
-
-        setTimeout(() => {
-          this.submitError.set(null);
-        }, 3000);
+        setTimeout(() => this.submitError.set(null), 3000);
       },
     });
   }

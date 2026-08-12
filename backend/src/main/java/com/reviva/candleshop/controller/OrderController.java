@@ -19,7 +19,7 @@ import com.reviva.candleshop.service.FreightService;
 
 @RestController
 @RequestMapping("/api/pedidos")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://www.revivavelas.com.br")
 public class OrderController {
     private final OrderService orderService;
     private final FreightService freightService;
