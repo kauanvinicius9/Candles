@@ -25,10 +25,16 @@ public class SecurityConfig {
             .headers(headers -> headers
                 .frameOptions(frame -> frame.deny())
                 .xssProtection(xss -> xss.disable())
-                .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self"))
+                .contentSecurityPolicy(csp -> csp.policyDirectives(
+                        "default-src 'self'; " +
+                        "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+                        "style-src 'self' 'unsafe-inline'; " +
+                        "img-src 'self' data: https:;"
+                    )
+                )
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/mercadopago/webhook/**", "/webhook/**").permitAll()
+                .requestMatchers("/mercadopago/webhook/**", "/webhook/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().permitAll()
             )
 
