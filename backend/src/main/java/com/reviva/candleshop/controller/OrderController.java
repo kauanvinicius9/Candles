@@ -19,6 +19,7 @@ import com.reviva.candleshop.service.FreightService;
 
 @RestController
 @RequestMapping("/api/pedidos")
+@CrossOrigin(origins = "*")
 public class OrderController {
     private final OrderService orderService;
     private final FreightService freightService;
