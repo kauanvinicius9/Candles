@@ -1,4 +1,4 @@
-import { Component, inject, signal } from "@angular/core";
+import { Component, inject, signal, OnDestroy } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { HttpClient } from "@angular/common/http"; // Adicionado para consultar ViaCEP
@@ -20,7 +20,14 @@ function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | nul
   templateUrl: "./checkout.component.html",
   styleUrl: "./checkout.component.scss",
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnDestroy {
+
+  ngOnDestroy(): void {
+    if (this.submitSuccess()) {
+      this.cartService.clearCart();
+    }
+  }
+  
   private readonly formBuilder = inject(FormBuilder);
   private readonly http = inject(HttpClient);
   
@@ -294,7 +301,6 @@ export class CheckoutComponent {
           this.pixQrCodeBase64.set(response.pixQrCodeBase64 ?? null);
           this.pixTicketUrl.set(response.pixTicketUrl ?? null);
         }
-        this.cartService.clearCart();
       },
       error: (error: any) => {
         this.sending.set(false);
