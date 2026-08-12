@@ -137,6 +137,10 @@ export class CheckoutComponent {
     );
   }
 
+  get isCreditCard(): boolean {
+    return this.checkoutForm.value.paymentMethod === "CREDITO";
+  }
+
   formatPrice(value: number): string {
     return value.toFixed(2).replace(".", ",");
   }
