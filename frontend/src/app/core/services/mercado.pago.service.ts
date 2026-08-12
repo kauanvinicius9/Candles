@@ -6,7 +6,7 @@ import { environment } from "../../../environments/environment";
     providedIn: "root"
 })
 export class MercadoPagoService {
-    private publickey = environment.mercadoPagoAccessToken;
+    private publickey = environment.mercadoPagoPublicKey;
     
     async initialize(): Promise<any> {
         await loadMercadoPago();

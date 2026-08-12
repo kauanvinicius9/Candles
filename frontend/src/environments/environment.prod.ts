@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   apiUrl: '/api',
-  mercadoPagoAccessToken: "VITE_MERCADO_PAGO_ACCESS_TOKEN"
+  mercadoPublicKey: "TEST-fc8b1d9c-544a-4c8a-9f45-40e9db39f77aTEST-fc8b1d9c-544a-4c8a-9f45-40e9db39f77a"
 };
