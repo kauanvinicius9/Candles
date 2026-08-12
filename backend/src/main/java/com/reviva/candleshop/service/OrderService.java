@@ -62,11 +62,5 @@ public class OrderService {
         }
 
         return response;
-
-        return new OrderResponseDto(
-                payment.getId(),
-                payment.getStatus() != null ? payment.getStatus() : "PENDENTE",
-                requestDto.getPaymentMethod()
-        );
     }
 }
