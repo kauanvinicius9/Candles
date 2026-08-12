@@ -294,6 +294,7 @@ export class CheckoutComponent {
           this.pixQrCodeBase64.set(response.pixQrCodeBase64 ?? null);
           this.pixTicketUrl.set(response.pixTicketUrl ?? null);
         }
+        this.cartService.clearCart();
       },
       error: (error: any) => {
         this.sending.set(false);
