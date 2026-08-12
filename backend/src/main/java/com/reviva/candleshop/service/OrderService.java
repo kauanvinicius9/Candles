@@ -34,8 +34,8 @@ public class OrderService {
             if (itemWeight == null) {
                 itemWeight = BigDecimal.ZERO;
             }
-            
-            totalWeight = totalWeight.add(item.getWeight().multiply(quantity));
+
+            totalWeight = totalWeight.add(item.getWeightG().multiply(quantity));
         }
 
         BigDecimal shipping = freightService.calculate(requestDto.getCustomer().getState(), totalWeight);
