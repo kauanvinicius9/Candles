@@ -19,7 +19,10 @@ export interface OrderRequest {
 }
 
 export interface OrderItemRequest {
-  productId: number;
+  name?: string;
+  price: number;
+  weightG: number;
+  volumML: number;
   quantity: number;
 }
 
