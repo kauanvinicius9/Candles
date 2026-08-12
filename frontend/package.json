@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "node set-env.js && ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+   "set-env": "node -e \"const fs = require('fs'); const file = 'src/environments/environment.prod.ts'; let content = fs.readFileSync(file, 'utf8'); content = content.replace('MERCADO_PAGO_ACCESS_TOKEN_PLACEHOLDER', process.env.MERCADO_ACCESS_TOKEN || ''); fs.writeFileSync(file, content);\""
   },
   "private": true,
   "dependencies": {
