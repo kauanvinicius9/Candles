@@ -324,6 +324,16 @@ export class ProductService {
       price: 45.00,
       imagePlaceholder: 'assets/Candle-Three.jpeg',
       weightG: 90,
+    },
+    {
+      id: 31,
+      name: 'Edição Especial: Vela Bridgerton',
+      category: 'vela',
+      fragrance: 'Sweet Floral',
+      description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
+      price: 70.00,
+      imagePlaceholder: 'assets/Candle-Bridgerton.jpeg',
+      weightG: 80,
     }
   ];
 

@@ -33,7 +33,7 @@ public class BotBlockConfig extends OncePerRequestFilter {
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
 
     private Bucket createNewBucket() {
-        BandWidth limit = Bandwidth.classic(30, Refill.greedy(30, Duration.ofMinutes(1)));
+        Bandwidth limit = Bandwidth.classic(30, Refill.greedy(30, Duration.ofMinutes(1)));
         return Bucket.builder().addLimit(limit).build();
     }
 
@@ -73,7 +73,7 @@ public class BotBlockConfig extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
 
-        private boolean isAllowedByPass(HttpServletRequest request, String userAgent) {
+        private boolean isAllowedBypass(HttpServletRequest request, String userAgent) {
             String uri = request.getRequestURI();
 
             if (uri.contains("/mercadopago/webhook") || uri.contains("/webhook")) {

@@ -32,7 +32,7 @@ public class OrderService {
             totalWeight = totalWeight.add(item.getWeight().multiply(quantity));
         }
 
-        BigDecimal shipping = freightService.calculate(totalWeight);
+        BigDecimal shipping = freightService.calculate(requestDto.getCustomer().getState(), totalWeight);
         BigDecimal total = subtotal.add(shipping);
         Payment payment = mercadoPagoService.createPixPayment(requestDto, total);
 
