@@ -12,7 +12,7 @@ public class OrderItemDto {
     private BigDecimal price;
 
     @NotNull
-    private BigDecimal weight;
+    private BigDecimal weightG;
     private BigDecimal volumML;
 
     @NotNull
@@ -35,12 +35,12 @@ public class OrderItemDto {
         this.price = price;
     }
 
-    public BigDecimal getWeight() {
-        return weight;
+    public BigDecimal getWeightG() {
+        return weightG;
     }
 
-    public void setWeight(BigDecimal weight) {
-        this.weight = weight;
+    public void setWeightG(BigDecimal weightG) {
+        this.weightG = weightG;
     }
 
     public BigDecimal getVolumML() {
