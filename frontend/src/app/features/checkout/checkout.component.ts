@@ -294,8 +294,6 @@ export class CheckoutComponent {
           this.pixQrCodeBase64.set(response.pixQrCodeBase64 ?? null);
           this.pixTicketUrl.set(response.pixTicketUrl ?? null);
         }
-
-        setTimeout(() => this.submitSuccess.set(false), 3000);
       },
       error: (error: any) => {
         this.sending.set(false);
