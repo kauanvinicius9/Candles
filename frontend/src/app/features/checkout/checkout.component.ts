@@ -268,7 +268,7 @@ export class CheckoutComponent {
       items: this.cartService.items().map((item) => ({
         name: item.product.name,
         price: item.product.price,
-        weight: item.product.weightG ?? item.product.weight ?? 0,
+        weightG: item.product.weightG ?? item.product.weightG ?? 0,
         volumML: item.product.volumML ?? 0,
         quantity: item.quantity,
       })),
