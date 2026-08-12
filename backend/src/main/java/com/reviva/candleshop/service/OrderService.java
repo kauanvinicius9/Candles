@@ -34,11 +34,10 @@ public class OrderService {
 
         BigDecimal shipping = freightService.calculate(requestDto.getCustomer().getState(), totalWeight);
         BigDecimal total = subtotal.add(shipping);
-        // Converte o Enum para String de forma segura
-        String paymentMethodStr = requestDto.getPaymentMethod() != null ? requestDto.getPaymentMethod().name() : "PIX";
+
         Payment payment;
 
-        if ("PIX".equalsIgnoreCase(paymentMethodStr)) {
+        if (requestDto.getPaymentMethod() != null && "PIX".equalsIgnoreCase(requestDto.getPaymentMethod().name())) {
             payment = mercadoPagoService.createPixPayment(requestDto, total);
         } else {
             payment = mercadoPagoService.createCardPayment(requestDto, total);
@@ -47,7 +46,7 @@ public class OrderService {
         return new OrderResponseDto(
                 payment.getId(),
                 payment.getStatus() != null ? payment.getStatus() : "PENDENTE",
-                paymentMethodStr
+                requestDto.getPaymentMethod()
         );
     }
 }
