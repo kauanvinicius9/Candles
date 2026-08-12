@@ -35,7 +35,7 @@ public class OrderService {
                 itemWeight = BigDecimal.ZERO;
             }
 
-            totalWeight = totalWeight.add(item.getWeightG().multiply(quantity));
+            totalWeight = totalWeight.add(itemWeightG().multiply(quantity));
         }
 
         BigDecimal shipping = freightService.calculate(requestDto.getCustomer().getState(), totalWeight);
@@ -48,6 +48,20 @@ public class OrderService {
         } else {
             payment = mercadoPagoService.createCardPayment(requestDto, total);
         }
+
+        OrdeResponseDto response = new OrderResponseDto(
+            payment.getId(),
+            payment.getStatus() != null ? payment.getStatus()  : "PENDENTE",
+            requestDto.getPaymentMethod()
+        );
+
+        if ("PIX".equalsIgnoreCase(requestDto.getPaymentMethod().name())) {
+            response.setPixQrCode(mercadoPagoService.getPixQrCode(payment));
+            response.setPixQrCodeBase64(mercadoPagoService.getPixQrCodeBase64(payment));
+            response.setPixTicketUrl(mercadoPagoService.getPixTicketUrl(payment));
+        }
+
+        return response;
 
         return new OrderResponseDto(
                 payment.getId(),
