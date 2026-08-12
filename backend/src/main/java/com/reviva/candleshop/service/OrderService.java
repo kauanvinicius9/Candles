@@ -35,7 +35,9 @@ public class OrderService {
         BigDecimal shipping = freightService.calculate(requestDto.getCustomer().getState(), totalWeight);
         BigDecimal total = subtotal.add(shipping);
 
-        Payment payment = mercadoPagoService.createPixPayment(requestDto, total);
+        String paymentMethodStr = requestDto.getPaymentMethod() != null ? requestDto.getPaymentMethod().toString() : "";
+
+        Payment payment
 
         if ("PIX".equalsIgnoreCase(requestDto.getPaymentMethod())) {
             payment = mercadoPagoService.createPixPayment(request.Dto, total);

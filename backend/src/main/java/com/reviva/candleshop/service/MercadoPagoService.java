@@ -50,6 +50,10 @@ public class MercadoPagoService {
         return client.create(request);
     }
 
+    public Payment createCardPayment(OrderRequestDto order, BigDecimal totalAmount) throws Exception {
+        return createPixPayment(order, totalAmount);
+    }
+
     public String getPixQrCode(Payment payment) {
         if (payment.getPointOfInteraction() == null)
             return null;
