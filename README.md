@@ -36,6 +36,7 @@ mvn spring:boot-run
 
 - **GSC WebSite**: [https://search.google.com](https://search.google.com/search-console/about "Click to Access")
 - **Official URL**: [https://revivavelas.com.br](https://revivavelas.com.br "Click to Access")
+- **Swagger UI Backend**: [https://revivavelasbackend.onrender.com/swagger-ui/index.html](https://revivavelasbackend.onrender.com/swagger-ui/index.html "Click to Access")
 - **EmailJS**: [https://emailjs.com](https://emailjs.com "Click to Access")
 - **Monitoring Service**: [https://dashboard.uptimerobot.com](https://dashboard.uptimerobot.com/ "Click to Access")
 - **GitGuardian**: [https://dashboard.gitguardian.com](https://dashboard.gitguardian.com/ "Click to Access")
