@@ -49,7 +49,7 @@ public class OrderService {
             payment = mercadoPagoService.createCardPayment(requestDto, total);
         }
 
-        OrdeResponseDto response = new OrderResponseDto(
+        OrderResponseDto response = new OrderResponseDto(
             payment.getId(),
             payment.getStatus() != null ? payment.getStatus()  : "PENDENTE",
             requestDto.getPaymentMethod()
