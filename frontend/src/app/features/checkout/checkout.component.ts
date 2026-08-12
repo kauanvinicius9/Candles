@@ -143,6 +143,9 @@ export class CheckoutComponent {
           amount: this.orderTotal(),
         },
         callbacks: {
+          onReady: () => {
+            console.log("Card Brick renderizado e pronto");
+          },
           onSubmit: async (cardData: any) => {
             if (this.checkoutForm.invalid) {
               this.checkoutForm.markAllAsTouched();
