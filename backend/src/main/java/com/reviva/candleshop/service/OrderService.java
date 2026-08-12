@@ -37,7 +37,7 @@ public class OrderService {
 
         String paymentMethodStr = requestDto.getPaymentMethod() != null ? requestDto.getPaymentMethod().toString() : "";
 
-        Payment payment
+        Payment payment;
 
         if ("PIX".equalsIgnoreCase(requestDto.getPaymentMethod())) {
             payment = mercadoPagoService.createPixPayment(request.Dto, total);
