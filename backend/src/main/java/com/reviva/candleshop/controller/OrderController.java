@@ -15,7 +15,6 @@ import com.reviva.candleshop.dto.OrderResponseDto;
 import com.reviva.candleshop.dto.ShippingResponseDto;
 import com.reviva.candleshop.dto.ShippingRequestDto;
 import com.reviva.candleshop.service.OrderService;
-import com.reviva.candleshop.service.ShippingService;
 import com.reviva.candleshop.service.FreightService;
 
 @RestController
