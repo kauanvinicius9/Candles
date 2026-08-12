@@ -29,6 +29,12 @@ public class OrderService {
         for (OrderItemDto item : requestDto.getItems()) {
             BigDecimal quantity = BigDecimal.valueOf(item.getQuantity());
             subtotal = subtotal.add(item.getPrice().multiply(quantity));
+
+            BigDecimal itemWeight = item.getWeightG() != null ? item.getWeightG() : item.getVolumML();
+            if (itemWeight == null) {
+                itemWeight = BigDecimal.ZERO;
+            }
+            
             totalWeight = totalWeight.add(item.getWeight().multiply(quantity));
         }
 
