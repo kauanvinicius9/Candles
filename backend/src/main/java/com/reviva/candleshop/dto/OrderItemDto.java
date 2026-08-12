@@ -13,6 +13,7 @@ public class OrderItemDto {
 
     @NotNull
     private BigDecimal weight;
+    private BigDecimal volumML;
 
     @NotNull
     @Min(1)
@@ -40,6 +41,14 @@ public class OrderItemDto {
 
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
+    }
+
+    public BigDecimal getVolumML() {
+        return volumML;
+    }
+
+    public void setVolumML(BigDecimal volumML) {
+        this.volumML = volumML;
     }
 
     public Integer getQuantity() {
