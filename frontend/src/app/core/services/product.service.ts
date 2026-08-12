@@ -454,6 +454,16 @@ export class ProductService {
       price: 19.90,
       imagePlaceholder: 'assets/Candle-Sig.jpeg',
       weightG: 80,
+    },
+    {
+      id: 44,
+      name: 'Edição Especial: Vela Iceberg - Blue Ocean (Efeito de Bolhas e Textura Dupla)',
+      category: 'vela',
+      fragrance: 'Fresco, Marinho, Revigorante',
+      description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
+      price: 39.90,
+      imagePlaceholder: 'assets/Candle-Blue-Ocean.jpeg',
+      weightG: 100,
     }
   ];
 
