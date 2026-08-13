@@ -4,6 +4,7 @@ import com.mercadopago.resources.payment.Payment;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.math.BigDecimal;
 
 @Service
 public class MercadoPagoWebhookService {
