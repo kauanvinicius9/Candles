@@ -248,6 +248,14 @@ textarea {
   }
 }
 
+.btn-payment {
+  border-radius: 25px;
+  background: $color-brown;
+  color: $color-white;
+  transition: 0.3s ease;
+
+}
+
 #cardPaymentBrick_container {
   width: 100%;
   min-height: 420px;

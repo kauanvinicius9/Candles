@@ -4,7 +4,7 @@
 
     @if (submitSuccess()) {
       <div class="checkout__success">
-        <h2>Pedido enviado com sucesso</h2>
+        <h2>Pedido enviado</h2>
         <p>
           Recebemos seus dados e as informações do pagamento. Em breve você receberá
           a confirmação por e-mail.
@@ -14,11 +14,14 @@
           <div class="pix-payment">
             <h3>Pagamento via Pix</h3>
             <img class="pix-payment__qrcode" [src]="'data:image/png;base64,' + pixQrCodeBase64()" alt="QR Code Pix">
-            <p>Copie o código Pix</p>
-            <textarea readonly>{{ pixQrCode() }}</textarea>
+            <p>Copie o código Pix abaixo</p>
+
+            <div class="pix-copy-box">
+              <textarea readonly #pixInput>{{ pixQrCode() }}</textarea>
+            </div>
 
             @if (pixTicketUrl()) {
-              <a class="btn-payment" [href]="pixTicketUrl()!" target="_blank">Abrir pagamento</a>
+              <a class="btn-payment" [href]="pixTicketUrl()!" target="_blank" rel="noopener noreferrer">Abrir pagamento</a>
             }
           </div>
         }
@@ -40,6 +43,7 @@
           <div class="field">
             <label for="name">Nome completo</label>
             <input id="name" type="text" formControlName="name" placeholder="Seu nome">
+
             @if (f.name.touched && f.name.invalid) {
               <span class="field__error">Informe seu nome e sobrenome completo</span>
             }
@@ -48,7 +52,8 @@
           <div class="field-row">
             <div class="field">
               <label for="email">E-mail</label>
-              <input id="email" type="email" formControlName="email" placeholder="voce@email.com">
+              <input id="email" type="email" formControlName="email" placeholder="seuemail@dominio.com">
+
               @if (f.email.touched && f.email.invalid) {
                 <span class="field__error">E-mail inválido. Ex: nome&#64;dominio.com</span>
               }
@@ -57,6 +62,7 @@
             <div class="field">
               <label for="phone">Telefone / Whatsapp</label>
               <input id="phone" type="tel" formControlName="phone" placeholder="(00) 00000-0000">
+
               @if (f.phone.touched && f.phone.invalid) {
                 <span class="field__error">DDD + Número inválido</span>
               }
@@ -66,6 +72,7 @@
           <div class="field">
             <label for="address">Endereço</label>
             <input id="address" type="text" formControlName="address" placeholder="Rua, número, complemento">
+
             @if (f.address.touched && f.address.invalid) {
               <span class="field__error">Seu endereço é obrigatório</span>
             }
@@ -75,6 +82,7 @@
             <div class="field">
               <label for="city">Cidade</label>
               <input id="city" type="text" formControlName="city">
+
               @if (f.city.touched && f.city.invalid) {
                 <span class="field__error">Sua cidade é obrigatória</span>
               }
@@ -83,6 +91,7 @@
             <div class="field field--small">
               <label for="state">UF</label>
               <input id="state" type="text" maxlength="2" formControlName="state">
+
               @if (f.state.touched && f.state.invalid) {
                 <span class="field__error">UF inválida. (Ex: SP)</span>
               }
@@ -91,6 +100,7 @@
             <div class="field">
               <label for="zipCode">CEP</label>
               <input id="zipCode" type="text" formControlName="zipCode" placeholder="00000-000">
+              
               @if (f.zipCode.touched && f.zipCode.invalid) {
                 <span class="field__error">CEP inválido, precisa conter 8 dígitos.</span>
               }
@@ -124,10 +134,8 @@
             }
 
             @if (isCreditCard) {
-
             <div class="field field--small">
               <label for="cardInstallments">Parcelas</label>
-
               <select id="cardInstallments" formControlName="cardInstallments">
                 @for (installment of [1, 2, 3, 4, 5, 6]; track installment) {
                   <option [value]="installment">{{ installment }}x</option>
@@ -150,52 +158,42 @@
           }
 
           @if (!isCardPayment) {
-            <button 
-                type="button" 
-                class="checkout__submit" 
-                [disabled]="sending() || checkoutForm.invalid" 
-                (click)="openModal()">
-                {{ sending() ? 'Enviando...' : 'Confirmar pedido' }}
-            </button>
+            <button  type="button"  class="checkout__submit"  [disabled]="sending() || checkoutForm.invalid"  (click)="openModal()"> {{ sending() ? 'Enviando...' : 'Confirmar pedido' }}</button>
           }
-
-          <app-confirmation-modal 
-            [isOpen]="showConfirmModal()" 
-            title="Confirmar pedido" 
-            message="Deseja confirmar seu pedido?" 
-            (confirmed)="handleConfirm()" 
-            (cancelled)="handleCancel()" />
         </div>
 
-        <aside class="checkout__summary">
-          <h2>Resumo</h2>
+          <aside class="checkout__summary">
+            <h2>Resumo</h2>
+  
+            @for (item of cartService.items(); track item.product.id) {
+              <div class="checkout__summary-item">
+                <span>{{ item.quantity }}x {{ item.product.name }}</span>
+                <span>R$ {{ formatPrice(item.quantity * item.product.price) }}</span>
+              </div>
+            }
+  
+            <hr>
 
-          @for (item of cartService.items(); track item.product.id) {
             <div class="checkout__summary-item">
-              <span>{{ item.quantity }}x {{ item.product.name }}</span>
-              <span>R$ {{ formatPrice(item.quantity * item.product.price) }}</span>
+              <span>Subtotal</span>
+              <span>R$ {{ formatPrice(cartService.subtotalAmount()) }}</span>
             </div>
-          }
+  
+            <div class="checkout__summary-item">
+              <span>Frete</span>
+              <span>R$ {{ formatPrice(shipping()) }}</span>
+            </div>
+  
+            <hr>
+  
+            <div class="checkout__summary-total">
+              <span>Total</span>
+              <span>R$ {{ formatPrice(orderTotal()) }}</span>
+            </div>
+          </aside>
+        </form>
+      }
 
-          <hr>
-          <div class="checkout__summary-item">
-            <span>Subtotal</span>
-            <span>R$ {{ formatPrice(cartService.subtotalAmount()) }}</span>
-          </div>
-
-          <div class="checkout__summary-item">
-            <span>Frete</span>
-            <span>R$ {{ formatPrice(shipping()) }}</span>
-          </div>
-
-          <hr>
-
-          <div class="checkout__summary-total">
-            <span>Total</span>
-            <span>R$ {{ formatPrice(orderTotal()) }}</span>
-          </div>
-        </aside>
-      </form>
-    }
-  </div>
+      <app-confirmation-modal [isOpen]="showConfirmModal()" title="Confirmar pedido" message="Deseja confirmar seu pedido?" (confirmed)="handleConfirm()" (cancelled)="handleCancel()" />
+    </div>
 </section>
