@@ -6,6 +6,9 @@ import java.time.OffsetDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import com.mercadopago.client.payment.PaymentClient;
 import com.mercadopago.client.payment.PaymentCreateRequest;
 import com.mercadopago.client.payment.PaymentPayerRequest;
@@ -48,7 +51,7 @@ public class MercadoPagoService {
                         .description("Compra Reviva Velas")
                         .paymentMethodId("pix")
                         .externalReference("PED-" + System.currentTimeMillis())
-                        .notificationUrl(notificaionUrl)
+                        .notificationUrl(notificationUrl)
                         .metadata(metadata)
                         .payer(payer)
                         .dateOfExpiration(OffsetDateTime.now().plusMinutes(30))

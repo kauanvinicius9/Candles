@@ -14,14 +14,19 @@
           <div class="pix-payment">
             <h3>Pagamento via Pix</h3>
             <img class="pix-payment__qrcode" [src]="'data:image/png;base64,' + pixQrCodeBase64()" alt="QR Code Pix">
-            <p>Copie o código Pix abaixo</p>
+            <p>Escaneie pelo aplicativo do seu banco ou copie o código abaixo</p>
 
             <div class="pix-copy-box">
-              <textarea readonly #pixInput>{{ pixQrCode() }}</textarea>
+              <input type="text" [value]="pixCopyPaste() || pixQrCode()" readonly #pixInput />
+              <button type="button" (click)="copyPixCode(pixInput.value)">
+                {{ coyButtonText() }}
+              </button>
             </div>
 
             @if (pixTicketUrl()) {
-              <a class="btn-payment" [href]="pixTicketUrl()!" target="_blank" rel="noopener noreferrer">Abrir pagamento</a>
+              <a class="btn-payment" [href]="pixTicketUrl()!" target="_blank" rel="noopener noreferrer">
+                Abrir comprovante / página pix
+              </a>
             }
           </div>
         }

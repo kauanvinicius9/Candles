@@ -42,6 +42,8 @@ export class CheckoutComponent {
   readonly subtotal = signal(this.cartService.subtotalAmount());
   readonly shipping = signal(0);
   readonly orderTotal = signal(this.cartService.subtotalAmount());
+
+  readonly copyButtonText = signal<string>("Copiar código pix");
   
   private readonly emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   private readonly phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
@@ -241,6 +243,14 @@ export class CheckoutComponent {
         console.error("Erro ao calcular frete", error);
       },
     });
+  }
+
+  copyPixCode(code: string | null): void {
+    if (code) {
+      navigator.clipboard.writeText(code);
+      this.copyButtonText.set("Copiado para a área de transferência");
+      setTimeout(() => this.copyButtonText.set("Copiar código pix"), 3000);
+    }
   }
 
   submitOrder(): void {

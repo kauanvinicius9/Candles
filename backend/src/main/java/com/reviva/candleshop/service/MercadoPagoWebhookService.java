@@ -34,7 +34,7 @@ public class MercadoPagoWebhookService {
 
             String status = payment.getStatus();
             String externalRef = payment.getExternalReference();
-            Double amountPaid = payment.getTransactionAmount();
+            BigDecimal amountPaid = payment.getTransactionAmount();
 
             paymentLogService.save(
                     String.valueOf(payment.getId()),

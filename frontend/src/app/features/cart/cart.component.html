@@ -65,7 +65,7 @@
           <hr>
           <div class="cart__summary-row cart__summary-total">
             <span>Total</span>
-            <span>R$ {{ formatPrice(cartService.subtotalAmount()) }}</span>
+            <span>R$ {{ formatPrice(cartService.subtotalAmount() + freightCost()) }}</span>
           </div>
           <a routerLink="/checkout" class="cart__checkout-btn">Finalizar compra</a>
         </aside>
