@@ -9,15 +9,42 @@
 .checkout {
   padding: 4rem 0 5rem;
 
-  &__empty,
-  &__success {
+  &__empty {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    padding: 3.75rem 0;
+    padding: 4rem 2rem;
     text-align: center;
     color: $color-silver;
+  }
+
+  &__success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 2.5rem 2rem;
+    background: $color-white;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    color: $color-silver;
+
+    h2 {
+      margin: 0 0 0.75rem;
+      color: $color-success;
+      font-size: 1.7rem;
+      font-weight: 700;
+    }
+
+    > p {
+      max-width: 700px;
+      margin: 0 0 1rem;
+      color: $color-silver;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
   }
 
   &__layout {
@@ -44,36 +71,28 @@
   }
 
   &__note {
+    margin-top: 0.25rem;
     font-size: 0.8rem;
     line-height: 1.5;
     color: $color-silver;
   }
 
-  &__error,
-  &__success {
+  &__error {
+    width: 100%;
     padding: 0.75rem 0.9rem;
     border-radius: $radius-sm;
+    background: $background-color-danger;
+    color: $color-danger;
     font-size: 0.9rem;
     line-height: 1.5;
-  }
-
-  &__error {
-    color: $color-danger;
-    background: $background-color-danger;
-  }
-
-  &__success {
-    color: $color-success;
-    background: $background-color-success;
   }
 
   &__submit {
     display: flex;
     justify-content: center;
     align-items: center;
-    align-self: flex-start;
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
     padding: 0.8rem 1.5rem;
     border: none;
     border-radius: 25px;
@@ -82,7 +101,9 @@
     font-family: $font-body;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: opacity 0.3s ease, transform 0.2s ease;
+    transition:
+      opacity 0.3s ease,
+      transform 0.2s ease;
 
     &:hover {
       opacity: 0.85;
@@ -110,6 +131,12 @@
       font-size: 1.2rem;
       color: $color-black;
     }
+
+    hr {
+      margin: 1rem 0;
+      border: 0;
+      border-top: 1px solid $color-beige;
+    }
   }
 
   &__summary-item,
@@ -127,9 +154,7 @@
   }
 
   &__summary-total {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid $color-beige;
+    padding-top: 0.25rem;
     font-size: 1.1rem;
     font-weight: 700;
     color: $color-brown-dark;
@@ -181,7 +206,9 @@ textarea {
   color: $color-ink;
   font-family: $font-body;
   font-size: 0.95rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:focus {
     outline: none;
@@ -208,7 +235,10 @@ textarea {
   border-radius: $radius-md;
   color: $color-black;
   cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.2s ease;
   white-space: nowrap;
 
   &:hover {
@@ -240,33 +270,58 @@ textarea {
 }
 
 .pix-payment {
-  margin-top: 1.8rem;
-  padding-top: 1rem;
+  width: 100%;
+  max-width: 560px;
+  margin: 1.5rem auto 0;
+  padding: 1.5rem;
+  border: 1px solid $color-beige;
+  border-radius: 16px;
+  background: $color-cream;
   text-align: center;
 
   h3 {
-    margin-bottom: 0.5rem;
+    margin: 0 0 1rem;
     color: $color-black;
+    font-size: 1.2rem;
+  }
+
+  > p {
+    margin: 0.75rem 0;
+    color: $color-silver;
+    font-size: 0.9rem;
   }
 
   &__qrcode {
     display: block;
-    width: 250px;
-    max-width: 100%;
-    margin: 1.25rem auto;
-    border-radius: $radius-sm;
+    width: 220px;
+    height: 220px;
+    margin: 1.5rem auto;
+    object-fit: contain;
+    background: $color-white;
+    border-radius: 8px;
   }
+}
+
+.pix-copy-box {
+  width: 100%;
+  margin-top: 0.75rem;
 
   textarea {
+    display: block;
     width: 100%;
-    height: 120px;
-    margin-top: 0.9rem;
-    resize: none;
+    min-height: 100px;
+    padding: 0.8rem;
+    resize: vertical;
+    background: $color-white;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    text-align: left;
   }
 }
 
 .btn-buy,
-.btn-products {
+.btn-products,
+.btn-payment {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -274,7 +329,11 @@ textarea {
   border-radius: 25px;
   background: $color-brown;
   color: $color-white;
-  transition: opacity 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    opacity 0.3s ease,
+    transform 0.2s ease;
 
   &:hover {
     opacity: 0.85;
@@ -282,19 +341,15 @@ textarea {
   }
 }
 
-.btn-payment {
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 25px;
-  background: $color-brown;
-  color: $color-white;
-  cursor: pointer;
-  transition: opacity 0.3s ease, transform 0.2s ease;
+.btn-buy {
+  margin-top: 1.5rem;
+}
 
-  &:hover {
-    opacity: 0.85;
-    transform: translateY(-1px);
-  }
+.btn-payment {
+  margin-top: 1rem;
+  border: none;
+  font-family: $font-body;
+  font-size: 0.9rem;
 }
 
 #cardPaymentBrick_container {
@@ -320,6 +375,10 @@ textarea {
     &__summary {
       position: static;
       top: auto;
+    }
+
+    &__success {
+      padding: 2rem 1.5rem;
     }
   }
 
@@ -351,6 +410,18 @@ textarea {
     &__summary {
       padding: 1.1rem;
       border-radius: 12px;
+    }
+
+    &__success {
+      padding: 1.5rem 1rem;
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      > p {
+        font-size: 0.9rem;
+      }
     }
 
     &__form h2,
@@ -387,7 +458,6 @@ textarea {
   .payment-option {
     width: 100%;
     padding: 0.75rem;
-    justify-content: center;
   }
 
   .btn-buy,
@@ -396,21 +466,18 @@ textarea {
     width: 100%;
   }
 
+  .pix-payment {
+    padding: 1rem;
+
+    &__qrcode {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
   #cardPaymentBrick_container {
     min-height: 340px;
     margin: 1.1rem 0;
-  }
-
-  .pix-payment {
-    margin-top: 1.25rem;
-
-    &__qrcode {
-      width: 220px;
-    }
-
-    textarea {
-      height: 110px;
-    }
   }
 }
 
@@ -423,7 +490,8 @@ textarea {
     padding: 1.5rem 0 2rem;
 
     &__form,
-    &__summary {
+    &__summary,
+    &__success {
       padding: 1rem;
       border-radius: 12px;
     }
@@ -461,12 +529,13 @@ textarea {
   .pix-payment {
     &__qrcode {
       width: 180px;
+      height: 180px;
     }
+  }
 
-    textarea {
-      height: 90px;
-      font-size: 0.85rem;
-    }
+  .pix-copy-box textarea {
+    min-height: 90px;
+    font-size: 0.75rem;
   }
 
   #cardPaymentBrick_container {
@@ -477,7 +546,8 @@ textarea {
 @media (max-width: 360px) {
   .checkout {
     &__form,
-    &__summary {
+    &__summary,
+    &__success {
       padding: 0.75rem;
     }
   }
@@ -500,6 +570,7 @@ textarea {
   .pix-payment {
     &__qrcode {
       width: 150px;
+      height: 150px;
     }
   }
 
