@@ -3,6 +3,8 @@ package com.reviva.candleshop.service;
 import com.mercadopago.resources.payment.Payment;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @Service
 public class MercadoPagoWebhookService {
     private final PaymentLogService paymentLogService;
