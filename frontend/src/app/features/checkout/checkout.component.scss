@@ -107,7 +107,6 @@
 
     &:hover {
       opacity: 0.85;
-      transform: translateY(-1px);
     }
 
     &:disabled {
@@ -242,7 +241,6 @@ textarea {
   white-space: nowrap;
 
   &:hover {
-    transform: translateY(-1px);
     border-color: $color-amber;
   }
 
@@ -337,7 +335,6 @@ textarea {
 
   &:hover {
     opacity: 0.85;
-    transform: translateY(-1px);
   }
 }
 
