@@ -1,19 +1,21 @@
 @use "../../../scss/variables" as *;
 
 .section-title {
+  text-align: left;
+  margin-bottom: 2.5rem;
   color: $color-black;
 }
 
 .checkout {
-  padding: 48px 0 80px;
+  padding: 4rem 0 5rem;
 
   &__empty,
   &__success {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    padding: 60px 0;
+    gap: 1rem;
+    padding: 3.75rem 0;
     text-align: center;
     color: $color-silver;
   }
@@ -21,21 +23,21 @@
   &__layout {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 32px;
+    gap: 2.5rem;
     align-items: start;
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 28px;
+    gap: 1rem;
+    padding: 1.8rem;
     background: $color-white;
-    border-radius: $radius-md;
-    box-shadow: $shadow-soft;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 
     h2 {
-      margin-top: 12px;
+      margin: 0.75rem 0 0.25rem;
       font-size: 1.3rem;
       color: $color-black;
     }
@@ -43,19 +45,24 @@
 
   &__note {
     font-size: 0.8rem;
+    line-height: 1.5;
     color: $color-silver;
   }
 
-  &__error {
-    padding: 10px 14px;
+  &__error,
+  &__success {
+    padding: 0.75rem 0.9rem;
     border-radius: $radius-sm;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  &__error {
     color: $color-danger;
     background: $background-color-danger;
   }
 
   &__success {
-    padding: 10px 14px;
-    border-radius: $radius-sm;
     color: $color-success;
     background: $background-color-success;
   }
@@ -66,33 +73,40 @@
     align-items: center;
     align-self: flex-start;
     width: 100%;
-    margin-top: 24px;
-    padding: 13px 25px;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    border: none;
     border-radius: 25px;
     background: $color-brown;
     color: $color-white;
-    transition: 0.3s ease;
+    font-family: $font-body;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.2s ease;
 
     &:hover {
       opacity: 0.85;
+      transform: translateY(-1px);
     }
 
     &:disabled {
       background-color: $color-silver !important;
       cursor: not-allowed !important;
       opacity: 0.7;
+      transform: none;
     }
   }
 
   &__summary {
-    top: 96px;
-    padding: 24px;
+    position: sticky;
+    top: 6rem;
+    padding: 1.5rem;
     background: $color-white;
-    border-radius: $radius-md;
-    box-shadow: $shadow-soft;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 
     h2 {
-      margin-bottom: 16px;
+      margin: 0 0 1rem;
       font-size: 1.2rem;
       color: $color-black;
     }
@@ -102,16 +116,20 @@
   &__summary-total {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
+    gap: 0.75rem;
   }
 
   &__summary-item {
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
     font-size: 0.88rem;
+    line-height: 1.5;
     color: $color-silver;
   }
 
   &__summary-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid $color-beige;
     font-size: 1.1rem;
     font-weight: 700;
     color: $color-brown-dark;
@@ -119,21 +137,22 @@
 }
 
 .field {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.4rem;
+
   input.ng-invalid.ng-touched,
   select.ng-invalid.ng-touched {
     border-color: $color-danger !important;
     background-color: $background-color-danger;
   }
 
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 6px;
-
   &__error {
-    color: $color-danger;
-    margin-top: 4px;
     display: block;
+    margin-top: 0.25rem;
+    color: $color-danger;
+    font-size: 0.8rem;
   }
 }
 
@@ -143,7 +162,7 @@
 
 .field-row {
   display: flex;
-  gap: 16px;
+  gap: 1rem;
 }
 
 label {
@@ -155,24 +174,26 @@ input,
 select,
 textarea {
   width: 100%;
-  padding: 11px 14px;
+  padding: 0.7rem 0.9rem;
   border: 1.5px solid $color-beige;
   border-radius: $radius-sm;
   background: $color-cream;
   color: $color-ink;
   font-family: $font-body;
   font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:focus {
     outline: none;
     border-color: $color-amber;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.03);
   }
 }
 
 .payment-options {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .payment-option {
@@ -181,14 +202,19 @@ textarea {
   justify-content: center;
   flex: 1;
   min-width: 140px;
-  gap: 10px;
-  padding: 12px 18px;
+  gap: 0.6rem;
+  padding: 0.75rem 1.1rem;
   border: 1.5px solid $color-silver;
   border-radius: $radius-md;
-  cursor: pointer;
   color: $color-black;
-  transition: 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
   white-space: nowrap;
+
+  &:hover {
+    transform: translateY(-1px);
+    border-color: $color-amber;
+  }
 
   input[type="radio"],
   input {
@@ -214,20 +240,27 @@ textarea {
 }
 
 .pix-payment {
-  margin-top: 30px;
+  margin-top: 1.8rem;
+  padding-top: 1rem;
   text-align: center;
+
+  h3 {
+    margin-bottom: 0.5rem;
+    color: $color-black;
+  }
 
   &__qrcode {
     display: block;
     width: 250px;
     max-width: 100%;
-    margin: 20px auto;
+    margin: 1.25rem auto;
+    border-radius: $radius-sm;
   }
 
   textarea {
     width: 100%;
     height: 120px;
-    margin-top: 15px;
+    margin-top: 0.9rem;
     resize: none;
   }
 }
@@ -237,38 +270,46 @@ textarea {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding: 13px 25px;
+  padding: 0.8rem 1.5rem;
   border-radius: 25px;
   background: $color-brown;
   color: $color-white;
-  transition: 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.2s ease;
 
   &:hover {
     opacity: 0.85;
+    transform: translateY(-1px);
   }
 }
 
 .btn-payment {
+  padding: 0.8rem 1.5rem;
+  border: none;
   border-radius: 25px;
   background: $color-brown;
   color: $color-white;
-  transition: 0.3s ease;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.2s ease;
 
+  &:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
 }
 
 #cardPaymentBrick_container {
   width: 100%;
   min-height: 420px;
-  margin: 24px 0;
+  margin: 1.5rem 0;
 }
 
 @media (max-width: 992px) {
   .checkout {
-    padding: 40px 0 56px;
+    padding: 3rem 0 3.5rem;
 
     &__layout {
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 2rem;
     }
 
     &__form,
@@ -284,7 +325,7 @@ textarea {
 
   .field-row {
     flex-direction: column;
-    gap: 12px;
+    gap: 0.75rem;
   }
 
   .field--small {
@@ -295,21 +336,21 @@ textarea {
 @media (max-width: 768px) {
   .section-title {
     text-align: center;
+    margin-bottom: 2rem;
     font-size: 2rem;
-    margin-bottom: 24px;
   }
 
   .checkout {
-    padding: 28px 0 40px;
+    padding: 2rem 0 2.5rem;
 
     &__layout {
-      gap: 20px;
+      gap: 1.25rem;
     }
 
     &__form,
     &__summary {
-      padding: 18px;
-      border-radius: 16px;
+      padding: 1.1rem;
+      border-radius: 12px;
     }
 
     &__form h2,
@@ -318,7 +359,7 @@ textarea {
     }
 
     &__submit {
-      margin-top: 16px;
+      margin-top: 1rem;
     }
 
     &__summary-item,
@@ -334,18 +375,18 @@ textarea {
   input,
   select,
   textarea {
-    padding: 10px 12px;
+    padding: 0.65rem 0.75rem;
     font-size: 0.92rem;
   }
 
   .payment-options {
     flex-direction: column;
-    gap: 10px;
+    gap: 0.6rem;
   }
 
   .payment-option {
     width: 100%;
-    padding: 12px;
+    padding: 0.75rem;
     justify-content: center;
   }
 
@@ -357,11 +398,11 @@ textarea {
 
   #cardPaymentBrick_container {
     min-height: 340px;
-    margin: 18px 0;
+    margin: 1.1rem 0;
   }
 
   .pix-payment {
-    margin-top: 20px;
+    margin-top: 1.25rem;
 
     &__qrcode {
       width: 220px;
@@ -375,15 +416,15 @@ textarea {
 
 @media (max-width: 480px) {
   .section-title {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
 
   .checkout {
-    padding: 20px 0 32px;
+    padding: 1.5rem 0 2rem;
 
     &__form,
     &__summary {
-      padding: 14px;
+      padding: 1rem;
       border-radius: 12px;
     }
 
@@ -396,19 +437,19 @@ textarea {
     &__summary-total {
       flex-direction: column;
       align-items: flex-start;
-      gap: 4px;
+      gap: 0.25rem;
     }
   }
 
   input,
   select,
   textarea {
-    padding: 9px 10px;
+    padding: 0.55rem 0.65rem;
     font-size: 0.9rem;
   }
 
   .payment-option {
-    padding: 10px;
+    padding: 0.6rem;
     font-size: 0.88rem;
 
     img {
@@ -437,7 +478,7 @@ textarea {
   .checkout {
     &__form,
     &__summary {
-      padding: 12px;
+      padding: 0.75rem;
     }
   }
 
@@ -453,7 +494,7 @@ textarea {
 
   .payment-option {
     font-size: 0.82rem;
-    gap: 6px;
+    gap: 0.4rem;
   }
 
   .pix-payment {
