@@ -19,7 +19,7 @@
             <div class="pix-copy-box">
               <input type="text" [value]="pixCopyPaste() || pixQrCode()" readonly #pixInput />
               <button type="button" (click)="copyPixCode(pixInput.value)">
-                {{ coyButtonText() }}
+                {{ copyButtonText() }}
               </button>
             </div>
 
