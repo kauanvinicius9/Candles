@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.math.BigDecimal;
 
 import com.mercadopago.client.payment.PaymentClient;
 import com.mercadopago.client.payment.PaymentCreateRequest;
