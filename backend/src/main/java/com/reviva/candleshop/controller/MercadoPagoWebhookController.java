@@ -24,16 +24,10 @@ public class MercadoPagoWebhookController {
     public ResponseEntity<Void> receiveWebhook(
         @RequestBody String payload,
 
-        @RequestHeader(
-            value = "x-signature",
-            required = false
-        )
+        @RequestHeader(value = "x-signature",required = false)
         String signature,
 
-        @RequestHeader(
-            value = "x-request-id",
-            required = false
-        )
+        @RequestHeader(value = "x-request-id",required = false)
         String requestId,
 
         @RequestParam(required = false)
@@ -44,14 +38,9 @@ public class MercadoPagoWebhookController {
     ) {
 
         boolean valid = validator.validate(signature, requestId, data_id);
-        if (!valid) {
-            return ResponseEntity.badRequest().build();
-        }
+        if (!valid) {return ResponseEntity.badRequest().build();}
         
-        webhookService.processWebhook(
-            type,
-            data_id
-        );
+        webhookService.processWebhook( type, data_id );
 
         return ResponseEntity.ok().build();
     }

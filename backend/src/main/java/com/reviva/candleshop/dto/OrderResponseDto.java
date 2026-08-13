@@ -11,8 +11,10 @@ public class OrderResponseDto {
     private String pixCopyPaste;
     private String pixTicketUrl;
     private String paymentUrl;
+    private String paymentId;
 
     public OrderResponseDto() {}
+
     public OrderResponseDto(Long orderId, String status, PaymentMethod paymentMethod) {
         this.orderId = orderId;
         this.status = status;
@@ -81,5 +83,13 @@ public class OrderResponseDto {
 
     public void setPixTicketUrl(String pixTicketUrl) {
         this.pixTicketUrl = pixTicketUrl;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 }
