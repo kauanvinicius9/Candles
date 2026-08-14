@@ -112,7 +112,7 @@ export class CheckoutComponent {
     this.http.get<any>(`https://viacep.com.br/ws/${zipCode}/json/`).subscribe({
       next: (data) => {
         this.loadingCep.set(false);
-        if (data.erro) return;
+        if (data.error) return;
 
         this.checkoutForm.patchValue({
           address: data.street ? `${data.street}` : this.checkoutForm.value.address,

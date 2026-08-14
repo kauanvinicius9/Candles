@@ -3,6 +3,7 @@ export type PaymentMethod = 'CREDITO' | 'DEBITO' | 'PIX';
 export interface CustomerInfo {
   name: string;
   email: string;
+  cpf: string;
   phone: string;
   address: string;
   city: string;
