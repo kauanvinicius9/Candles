@@ -35,6 +35,50 @@ function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | nul
 })
 
 export class CheckoutComponent {
+  formatName(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+
+    value = value.replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
+    this.checkoutForm.get("name")?.setValue(value, { emitEvent: false });
+  }
+
+  formatCpf(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, "");
+
+    if (value.length > 11) value = value.slice(0, 11);
+
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+    this.checkoutForm.get("cpf")?.setValue(value, { emitEvent: false });
+  }
+
+  formatPhone(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, "");
+
+    if (value.length > 11) value = value.slice(0, 11);
+
+    value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+    value = value.replace(/(\d{5})(\d)/, "$1-$2");
+
+    this.checkoutForm.get("phone")?.setValue(value, { emitEvent: false });
+  }
+
+  formatZipCode(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, "");
+
+    if (value.length > 8) value = value.slice(0, 8);
+
+    value = value.replace(/^(\d{5})(\d)/, "$1-$2");
+
+    this.checkoutForm.get("zipCode")?.setValue(value, { emitEvent: false });
+  }
+
   private readonly formBuilder = inject(FormBuilder);
   private readonly http = inject(HttpClient);
   
@@ -61,9 +105,9 @@ export class CheckoutComponent {
   readonly copyButtonText = signal<string>("Copiar código pix");
   
   private readonly emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  private readonly phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
-  private readonly zipCodeRegex = /^\d{5}-?\d{3}$/;
-  private readonly cpfRegex = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
+  private readonly phoneRegex = /^\(\d{2}\)\s\d{5}-\d{4}$/;
+  private readonly zipCodeRegex = /^\d{5}-\d{3}$/;
+  private readonly cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
   private readonly stateRegex = /^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO)$/i;
 
   readonly checkoutForm = this.formBuilder.group({

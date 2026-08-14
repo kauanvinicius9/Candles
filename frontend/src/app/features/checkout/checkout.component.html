@@ -47,7 +47,7 @@
 
           <div class="field">
             <label for="name">Nome completo</label>
-            <input id="name" type="text" formControlName="name" placeholder="Seu nome">
+            <input id="name" type="text" formControlName="name" placeholder="Seu nome" (input)="formatName($event)">
 
             @if (f.name.touched && f.name.invalid) {
               <span class="field__error">Informe seu nome e sobrenome completo</span>
@@ -57,7 +57,7 @@
           <div class="field-row">
             <div class="field">
               <label for="cpf">CPF</label>
-              <input id="cpf" type="text" formControlName="cpf" placeholder="000.000.000-00">
+              <input id="cpf" type="text" formControlName="cpf" placeholder="000.000.000-00" (input)="formatCpf($event)" maxLength="14">
 
               @if (f.cpf.touched && f.cpf.invalid) {
                 <span class="field__error">CPF inválido. Padrão: 11 dígitos</span>
@@ -76,7 +76,7 @@
 
           <div class="field">
             <label for="phone">Telefone / Whatsapp</label>
-            <input id="phone" type="tel" formControlName="phone" placeholder="(00) 00000-0000">
+            <input id="phone" type="tel" formControlName="phone" placeholder="(00) 00000-0000" maxLength="15" (input)="formatPhone($event)">
 
             @if (f.phone.touched && f.phone.invalid) {
               <span class="field__error">DDD + Número inválido</span>
@@ -118,7 +118,7 @@
 
             <div class="field">
               <label for="zipCode">CEP</label>
-              <input id="zipCode" type="text" formControlName="zipCode" placeholder="00000-000">
+              <input id="zipCode" type="text" formControlName="zipCode" placeholder="00000-000" maxLength="9" (input)="formatZipCode($event)">
               
               @if (loadingCep()) {
                 <small class="field__info">Buscando CEP...</small>
