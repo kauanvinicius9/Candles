@@ -156,7 +156,7 @@
             <div id="cardPaymentBrick_container"></div>
           }
 
-          @if (isCreditCard) {
+          @if (checkoutForm.get('paymentMethod')?.value === 'CREDITO') {
             <div class="field field--small">
               <label for="cardInstallments">Parcelas</label>
               <select id="cardInstallments" formControlName="cardInstallments">
