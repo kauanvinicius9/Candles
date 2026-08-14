@@ -8,6 +8,19 @@ import { OrderRequest, OrderResponse, PaymentMethod, CardPaymentRequest } from "
 import { MercadoPagoService } from "../../core/services/mercado.pago.service";
 import { ConfirmationModalComponent } from '../../confirmation-modal.component';
 
+// Constante com as 27 UF
+export const ESTADOS_BRASIL = [
+  { acronym: 'AC', name: 'Acre' }, { acronym: 'AL', name: 'Alagoas' }, { acronym: 'AP', name: 'Amapá' },
+  { acronym: 'AM', name: 'Amazonas' }, { acronym: 'BA', name: 'Bahia' }, { acronym: 'CE', name: 'Ceará' },
+  { acronym: 'DF', name: 'Distrito Federal' }, { acronym: 'ES', name: 'Espírito Santo' }, { acronym: 'GO', name: 'Goiás' },
+  { acronym: 'MA', name: 'Maranhão' }, { acronym: 'MT', name: 'Mato Grosso' }, { acronym: 'MS', name: 'Mato Grosso do Sul' },
+  { acronym: 'MG', name: 'Minas Gerais' }, { acronym: 'PA', name: 'Pará' }, { acronym: 'PB', name: 'Paraíba' },
+  { acronym: 'PR', name: 'Paraná' }, { acronym: 'PE', name: 'Pernambuco' }, { acronym: 'PI', name: 'Piauí' },
+  { acronym: 'RJ', name: 'Rio de Janeiro' }, { acronym: 'RN', name: 'Rio Grande do Norte' }, { acronym: 'RS', name: 'Rio Grande do Sul' },
+  { acronym: 'RO', name: 'Rondônia' }, { acronym: 'RR', name: 'Roraima' }, { acronym: 'SC', name: 'Santa Catarina' },
+  { acronym: 'SP', name: 'São Paulo' }, { acronym: 'SE', name: 'Sergipe' }, { acronym: 'TO', name: 'Tocantins' }
+];
+
 function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | null {
   const isWhiteSpace = (control.value || "").trim().length === 0;
   return !isWhiteSpace ? null : { whitespace: true };
@@ -20,6 +33,7 @@ function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | nul
   templateUrl: "./checkout.component.html",
   styleUrl: "./checkout.component.scss",
 })
+
 export class CheckoutComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly http = inject(HttpClient);
@@ -27,6 +41,7 @@ export class CheckoutComponent {
   private mp: any;
   private cardBrick: any;
 
+  readonly estados = ESTADOS_BRASIL;
   readonly showConfirmModal = signal<boolean>(false);
   readonly cartService = inject(CartService);
   readonly sending = signal(false);
@@ -48,11 +63,13 @@ export class CheckoutComponent {
   private readonly emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   private readonly phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
   private readonly zipCodeRegex = /^\d{5}-?\d{3}$/;
+  private readonly cpfRegex = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
   private readonly stateRegex = /^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO)$/i;
 
   readonly checkoutForm = this.formBuilder.group({
     name: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(100), noWhiteSpaceValidator]],
     email: ["", [Validators.required, Validators.pattern(this.emailRegex)]],
+    cpf: ["", [Validators.required, Validators.pattern(this.cpfRegex)]], // Adicionado para requisito do Mercado Pago
     phone: ["", [Validators.required, Validators.pattern(this.phoneRegex)]],
     address: ["", [Validators.required, Validators.minLength(5), noWhiteSpaceValidator]],
     city: ["", [Validators.required, Validators.minLength(2), noWhiteSpaceValidator]],
@@ -68,9 +85,8 @@ export class CheckoutComponent {
     private readonly router: Router,
     private readonly mercadoPagoService: MercadoPagoService,
   ) {
+
     this.initializeMercadoPago();
-    
-    // Escuta alterações no campo de CEP para autofill e cálculo de frete
     this.checkoutForm.get("zipCode")?.valueChanges.subscribe((zip) => {
       const cleanZip = (zip || "").replace(/\D/g, "");
       if (cleanZip.length === 8) {
@@ -91,7 +107,6 @@ export class CheckoutComponent {
     return this.checkoutForm.controls;
   }
 
-  // Busca dados de endereço via ViaCEP
   private fetchAddressByZipCode(zipCode: string): void {
     this.loadingCep.set(true);
     this.http.get<any>(`https://viacep.com.br/ws/${zipCode}/json/`).subscribe({
@@ -100,8 +115,8 @@ export class CheckoutComponent {
         if (data.erro) return;
 
         this.checkoutForm.patchValue({
-          address: data.logradouro ? `${data.logradouro}, ` : '',
-          city: data.localidade,
+          address: data.street ? `${data.street}` : this.checkoutForm.value.address,
+          city: data.location,
           state: data.uf
         });
 
@@ -139,10 +154,6 @@ export class CheckoutComponent {
     );
   }
 
-  get isCreditCard(): boolean {
-    return this.checkoutForm.value.paymentMethod === "CREDITO";
-  }
-
   formatPrice(value: number): string {
     return value.toFixed(2).replace(".", ",");
   }
@@ -176,10 +187,12 @@ export class CheckoutComponent {
             email: formVal.email || undefined,
           }
         },
+
         callbacks: {
           onReady: () => {
-            console.log("Card Brick renderizado e pronto");
+            console.log("Card Brick pronto");
           },
+
           onSubmit: async (cardData: any) => {
             if (this.checkoutForm.invalid) {
               this.checkoutForm.markAllAsTouched();
@@ -188,6 +201,7 @@ export class CheckoutComponent {
             }
             this.sendCardPayment(cardData);
           },
+
           onError: (error: any) => {
             console.error("Erro no cartão:", error);
           },
@@ -208,9 +222,9 @@ export class CheckoutComponent {
 
     this.orderService.payWithCard(request).subscribe({
       next: (response) => {
-        console.log("Pagamento aprovado", response);
         this.submitSuccess.set(true);
       },
+      
       error: (error) => {
         console.error("Erro de pagamento", error);
         this.submitError.set("Pagamento recusado");
@@ -229,12 +243,12 @@ export class CheckoutComponent {
       totalWeightG,
       totalVolumML
     })
+
     .subscribe({
       next: (response) => {
         this.shipping.set(response.shipping);
         this.orderTotal.set(response.total);
 
-        // Se o Brick já estiver montado, atualiza o valor total dinamicamente
         if (this.cardBrick) {
           this.cardBrick.update({ amount: response.total });
         }
@@ -263,11 +277,12 @@ export class CheckoutComponent {
 
     const formValue = this.checkoutForm.getRawValue();
 
-    // Higienização dos dados antes do envio
+    // Payload pronto com CPF e valores de frete/total sincronizados
     const order: OrderRequest = {
       customer: {
         name: formValue.name?.trim() ?? "",
         email: formValue.email?.trim().toLowerCase() ?? "",
+        cpf: formValue.cpf?.replace(/\D/g, "") ?? "",
         phone: formValue.phone?.replace(/\D/g, "") ?? "",
         address: formValue.address?.trim() ?? "",
         city: formValue.city?.trim() ?? "",
@@ -278,11 +293,14 @@ export class CheckoutComponent {
       items: this.cartService.items().map((item) => ({
         name: item.product.name,
         price: item.product.price,
-        weightG: item.product.weightG ?? item.product.weightG ?? 0,
+        weightG: item.product.weightG ?? 0,
         volumML: item.product.volumML ?? 0,
         quantity: item.quantity,
       })),
 
+      // Passando valores de frete e total explicitamente para o backend não resetar
+      shippingAmount: this.shipping(),
+      totalAmount: this.orderTotal(),
       paymentMethod: formValue.paymentMethod ?? "PIX",
       cardInstallments: this.isCardPayment ? (formValue.cardInstallments ?? 1) : undefined,
       notes: formValue.notes?.trim() ?? "",
@@ -303,10 +321,12 @@ export class CheckoutComponent {
           this.pixQrCode.set(response.pixQrCode ?? null);
           this.pixQrCodeBase64.set(response.pixQrCodeBase64 ?? null);
           this.pixTicketUrl.set(response.pixTicketUrl ?? null);
+          
         } else {
           setTimeout(() => this.submitSuccess.set(false), 3000);
         }
       },
+
       error: (error: any) => {
         this.sending.set(false);
         this.submitError.set("Não foi possível enviar seu pedido agora. Tente novamente em alguns instantes.");

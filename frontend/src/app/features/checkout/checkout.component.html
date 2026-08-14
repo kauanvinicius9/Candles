@@ -56,6 +56,15 @@
 
           <div class="field-row">
             <div class="field">
+              <label for="cpf">CPF</label>
+              <input id="cpf" type="text" formControlName="cpf" placeholder="000.000.000-00">
+
+              @if (f.cpf.touched && f.cpf.invalid) {
+                <span class="field__error">CPF inválido. Padrão: 11 dígitos</span>
+              }
+            </div>
+
+            <div class="field">
               <label for="email">E-mail</label>
               <input id="email" type="email" formControlName="email" placeholder="seuemail@dominio.com">
 
@@ -63,15 +72,15 @@
                 <span class="field__error">E-mail inválido. Ex: nome&#64;dominio.com</span>
               }
             </div>
+          </div>
 
-            <div class="field">
-              <label for="phone">Telefone / Whatsapp</label>
-              <input id="phone" type="tel" formControlName="phone" placeholder="(00) 00000-0000">
+          <div class="field">
+            <label for="phone">Telefone / Whatsapp</label>
+            <input id="phone" type="tel" formControlName="phone" placeholder="(00) 00000-0000">
 
-              @if (f.phone.touched && f.phone.invalid) {
-                <span class="field__error">DDD + Número inválido</span>
-              }
-            </div>
+            @if (f.phone.touched && f.phone.invalid) {
+              <span class="field__error">DDD + Número inválido</span>
+            }
           </div>
 
           <div class="field">
@@ -95,10 +104,15 @@
 
             <div class="field field--small">
               <label for="state">UF</label>
-              <input id="state" type="text" maxlength="2" formControlName="state">
+              <select id="state" formControlName="state" class="custom-select">
+                <option value="" disabled selected>UF</option>
+                @for (state of states; track state.acronym) {
+                  <option [value]="state.acronym">{{ state.acronym }}</option>
+                }
+              </select>
 
               @if (f.state.touched && f.state.invalid) {
-                <span class="field__error">UF inválida. (Ex: SP)</span>
+                <span class="field__error">UF inválida</span>
               }
             </div>
 
@@ -106,6 +120,10 @@
               <label for="zipCode">CEP</label>
               <input id="zipCode" type="text" formControlName="zipCode" placeholder="00000-000">
               
+              @if (loadingCep()) {
+                <small class="field__info">Buscando CEP...</small>
+              }
+
               @if (f.zipCode.touched && f.zipCode.invalid) {
                 <span class="field__error">CEP inválido, precisa conter 8 dígitos.</span>
               }
@@ -136,9 +154,9 @@
 
           @if (isCardPayment) {
             <div id="cardPaymentBrick_container"></div>
-            }
+          }
 
-            @if (isCreditCard) {
+          @if (isCreditCard) {
             <div class="field field--small">
               <label for="cardInstallments">Parcelas</label>
               <select id="cardInstallments" formControlName="cardInstallments">
@@ -163,42 +181,47 @@
           }
 
           @if (!isCardPayment) {
-            <button  type="button"  class="checkout__submit"  [disabled]="sending() || checkoutForm.invalid"  (click)="openModal()"> {{ sending() ? 'Enviando...' : 'Confirmar pedido' }}</button>
+            <button type="submit" class="checkout__submit" [disabled]="sending()">{{ sending() ? 'Enviando...' : 'Confirmar pedido' }}</button>
           }
         </div>
 
-          <aside class="checkout__summary">
-            <h2>Resumo</h2>
-  
-            @for (item of cartService.items(); track item.product.id) {
-              <div class="checkout__summary-item">
-                <span>{{ item.quantity }}x {{ item.product.name }}</span>
-                <span>R$ {{ formatPrice(item.quantity * item.product.price) }}</span>
-              </div>
-            }
-  
-            <hr>
+        <aside class="checkout__summary">
+          <h2>Resumo</h2>
 
+          @for (item of cartService.items(); track item.product.id) {
             <div class="checkout__summary-item">
-              <span>Subtotal</span>
-              <span>R$ {{ formatPrice(cartService.subtotalAmount()) }}</span>
+              <span>{{ item.quantity }}x {{ item.product.name }}</span>
+              <span>R$ {{ formatPrice(item.quantity * item.product.price) }}</span>
             </div>
-  
-            <div class="checkout__summary-item">
-              <span>Frete</span>
-              <span>R$ {{ formatPrice(shipping()) }}</span>
-            </div>
-  
-            <hr>
-  
-            <div class="checkout__summary-total">
-              <span>Total</span>
-              <span>R$ {{ formatPrice(orderTotal()) }}</span>
-            </div>
-          </aside>
-        </form>
-      }
+          }
 
-      <app-confirmation-modal [isOpen]="showConfirmModal()" title="Confirmar pedido" message="Deseja confirmar seu pedido?" (confirmed)="handleConfirm()" (cancelled)="handleCancel()" />
-    </div>
+          <hr>
+
+          <div class="checkout__summary-item">
+            <span>Subtotal</span>
+            <span>R$ {{ formatPrice(cartService.subtotalAmount()) }}</span>
+          </div>
+
+          <div class="checkout__summary-item">
+            <span>Frete</span>
+            <span>R$ {{ formatPrice(shipping()) }}</span>
+          </div>
+
+          <hr>
+
+          <div class="checkout__summary-total">
+            <span>Total</span>
+            <span>R$ {{ formatPrice(orderTotal()) }}</span>
+          </div>
+        </aside>
+      </form>
+    }
+
+    <app-confirmation-modal 
+      [isOpen]="showConfirmModal()" 
+      title="Confirmar pedido" 
+      message="Deseja confirmar seu pedido?" 
+      (confirmed)="handleConfirm()" 
+      (cancelled)="handleCancel()" />
+  </div>
 </section>
