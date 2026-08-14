@@ -36,7 +36,7 @@ mvn spring:boot-run
 
 ## Integrated API's
 
-This project has 3 integrated APIs. They are:
+This project has **4** integrated `APIs`. They are:
 
 - API **EmailJS**: Contact;
 - API **Back-End** (Spring-Boot) + **Front-End** (Angular): System;
