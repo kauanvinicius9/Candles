@@ -9,7 +9,7 @@ import { MercadoPagoService } from "../../core/services/mercado.pago.service";
 import { ConfirmationModalComponent } from '../../confirmation-modal.component';
 
 // Constante com as 27 UF
-export const ESTADOS_BRASIL = [
+export const BRAZIL_STATES = [
   { acronym: 'AC', name: 'Acre' }, { acronym: 'AL', name: 'Alagoas' }, { acronym: 'AP', name: 'Amapá' },
   { acronym: 'AM', name: 'Amazonas' }, { acronym: 'BA', name: 'Bahia' }, { acronym: 'CE', name: 'Ceará' },
   { acronym: 'DF', name: 'Distrito Federal' }, { acronym: 'ES', name: 'Espírito Santo' }, { acronym: 'GO', name: 'Goiás' },
@@ -41,7 +41,7 @@ export class CheckoutComponent {
   private mp: any;
   private cardBrick: any;
 
-  readonly estados = ESTADOS_BRASIL;
+  readonly states = BRAZIL_STATES;
   readonly showConfirmModal = signal<boolean>(false);
   readonly cartService = inject(CartService);
   readonly sending = signal(false);
