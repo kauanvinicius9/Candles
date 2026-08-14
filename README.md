@@ -38,9 +38,10 @@ mvn spring:boot-run
 
 This project has 3 integrated APIs. They are:
 
-- API **EmailJS**;
-- API **Back-End** (Spring-Boot) + **Front-End** (Angular);
-- API **SDK Mercado Pago**.
+- API **EmailJS**: Contact;
+- API **Back-End** (Spring-Boot) + **Front-End** (Angular): System;
+- API **SDK Mercado Pago**: Payments;
+- API **Melhor Envio**: Freights;
 
 ---
 
