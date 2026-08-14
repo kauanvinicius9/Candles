@@ -17,6 +17,8 @@ export interface OrderRequest {
   paymentMethod: PaymentMethod;
   cardInstallments?: number;
   notes?: string;
+  shippingAmount?: number;
+  totalAmount?: number;
 }
 
 export interface OrderItemRequest {
