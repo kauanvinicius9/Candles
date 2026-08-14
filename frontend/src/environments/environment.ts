@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
   apiUrl: 'https://revivavelasbackend.onrender.com/api',
-  mercadoPagoPublicKey: "TEST-fc8b1d9c-544a-4c8a-9f45-40e9db39f77a"
+  mercadoPagoPublicKey: "APP_USR-bbb339c8-117f-4d9f-884e-5b0657bd731f"
 };

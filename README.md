@@ -34,6 +34,16 @@ mvn spring:boot-run
 
 ---
 
+## Integrated API's
+
+This project has 3 integrated APIs. They are:
+
+- API **EmailJS**;
+- API **Back-End** (Spring-Boot) + **Front-End** (Angular);
+- API **SDK Mercado Pago**.
+
+---
+
 - **GSC WebSite**: [https://search.google.com](https://search.google.com/search-console/about "Click to Access")
 - **Official URL**: [https://revivavelas.com.br](https://revivavelas.com.br "Click to Access")
 - **Swagger UI Backend**: [https://revivavelasbackend.onrender.com/swagger-ui/index.html](https://revivavelasbackend.onrender.com/swagger-ui/index.html "Click to Access")
