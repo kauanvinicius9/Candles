@@ -1,4 +1,4 @@
-> Deployed ✅
+> Developing...
 
 # Candles & Scents 
 
