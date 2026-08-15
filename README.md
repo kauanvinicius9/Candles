@@ -2,24 +2,18 @@
 
 # Candles & Scents 
 
-Reviva Atelier is a small **E-Commerce** site focused on **candles**, **diffusers**, and **home sprays**. A simple site with Mercado Pago's `SDK` system integrated for secure payments via:
+Reviva Atelier is a small **E-Commerce** site focused on **candles**, **diffusers**, and **home sprays**.
 
-- Pix;</br>
-- Debit Card;</br>
-- Credit Card;</br>
-
-The system has a **database** for storing products and accessibility with integrated **VLibras**.
-
-> Run Front-End
+> Run frontend
 
 ```bash
 ng serve
 ```
 
-> Run Back-End
+> Run Docker
 
 ```bash
-mvn spring:boot-run
+docker compose up -d
 ```
 
 ---
@@ -30,24 +24,12 @@ mvn spring:boot-run
 - Self-Contrast;
 - Voice;
 - TAB navigation;
-- Adaptable text source
-
----
-
-## Integrated API's
-
-This project has **4** integrated `APIs`. They are:
-
-- API **EmailJS**: Contact;
-- API **Back-End** (Spring-Boot) + **Front-End** (Angular): System;
-- API **SDK Mercado Pago**: Payments;
-- API **Melhor Envio**: Freights;
+- Adaptable text source.
 
 ---
 
 - **GSC WebSite**: [https://search.google.com](https://search.google.com/search-console/about "Click to Access")
 - **Official URL**: [https://revivavelas.com.br](https://revivavelas.com.br "Click to Access")
-- **Swagger UI Backend**: [https://revivavelasbackend.onrender.com/swagger-ui/index.html](https://revivavelasbackend.onrender.com/swagger-ui/index.html "Click to Access")
 - **EmailJS**: [https://emailjs.com](https://emailjs.com "Click to Access")
 - **Monitoring Service**: [https://dashboard.uptimerobot.com](https://dashboard.uptimerobot.com/ "Click to Access")
 - **GitGuardian**: [https://dashboard.gitguardian.com](https://dashboard.gitguardian.com/ "Click to Access")
