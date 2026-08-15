@@ -6,9 +6,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: app-frontend
-    
-    ports:
-      - "80:80"
+   
     networks:
       - app-network
 
