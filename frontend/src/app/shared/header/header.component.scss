@@ -58,43 +58,6 @@
   gap: 16px;
 }
 
-.header__cart {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: $color-cream-dark;
-  flex-shrink: 0;
-  transition: 0.3s ease;
-
-  &:hover {
-    background: $color-terracotta;
-  }
-}
-
-.header__cart-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.header__cart-count {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: $color-amber;
-  color: $color-white;
-  font-size: .7rem;
-}
-
 .header__toggle {
   display: none;
   background: transparent;

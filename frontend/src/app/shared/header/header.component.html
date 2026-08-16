@@ -12,11 +12,6 @@
     </nav>
     
     <div class="header__actions">
-      <a routerLink="/carrinho" class="header__cart" (click)="closeMenu()">
-        <img src="assets/Cart-Icon.png" class="header__cart-icon" alt="Carrinho">
-        <span class="header__cart-count">{{ cartService.totalItems() }}</span>
-      </a>
-
       <button type="button" class="header__toggle" [class.active]="isMenuOpen()" (click)="toggleMenu()"aria-label="Alternar menu de navegação">
         <span></span>
         <span></span>

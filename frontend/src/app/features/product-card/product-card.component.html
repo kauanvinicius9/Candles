@@ -18,8 +18,15 @@
       <p class="product-card__weight">{{ product.weightG }}g</p>
     }
 
-    <button class="product-card__button" (click)="addToCart()">
-      {{ justAdded ? 'Adicionado' : 'Adicionar ao carrinho' }}
+    <button class="product-card__button" type="button" (click)="openModal()">
+      Compre pelo WhatsApp
     </button>
   </div>
 </article>
+
+<app-confirmation-modal 
+  [isOpen]="showConfirmModal()" 
+  title="Comprar via WhatsApp" 
+  [message]="'Você será redirecionado para o WhatsApp para finalizar o pedido de ' + product.name + '.'" 
+  (confirmed)="handleConfirm()" 
+  (cancelled)="handleCancel()" />
