@@ -42,6 +42,6 @@ export class ProductCardComponent {
     const text = `Olá! Gostaria de comprar o produto *${this.product.name}* (R$ ${formattedPrice}). Pode me ajudar?`;
     const whatsappUrl = `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(text)}`;
 
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    window.location.href = whatsappUrl;
   }
 }
