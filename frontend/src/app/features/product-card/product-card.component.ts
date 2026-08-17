@@ -13,7 +13,7 @@ export class ProductCardComponent {
   @Input({ required: true }) product!: Product;
 
   readonly showConfirmModal = signal<boolean>(false);
-  private readonly whatsappNumber = '5519 999582649'; 
+  private readonly whatsappNumber = '5519999582649'; 
   get categoryLabel(): string {
     const labels: Record<string, string> = {
       vela: 'Vela',
