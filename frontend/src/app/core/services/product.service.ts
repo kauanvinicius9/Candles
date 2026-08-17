@@ -464,6 +464,16 @@ export class ProductService {
       price: 39.90,
       imagePlaceholder: 'assets/Candle-Blue-Ocean.jpeg',
       weightG: 100,
+    },
+    {
+      id: 45,
+      name: 'Bosque Secreto',
+      category: 'vela',
+      fragrance: 'English Pear',
+      description: 'Feito com carinho, não em escala. Por serem artesanais, alguns produtos podem levar até 3 dias úteis para produção, além do prazo de entrega.',
+      price: 69.90,
+      imagePlaceholder: 'assets/Candle-Secret-Bosq.jpeg',
+      weightG: 260,
     }
   ];
 
