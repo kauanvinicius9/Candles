@@ -1,5 +1,3 @@
-> Developing...
-
 # Candles & Scents 
 
 Reviva Atelier is a small **E-Commerce** site focused on **candles**, **diffusers**, and **home sprays**.
