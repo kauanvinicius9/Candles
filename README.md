@@ -20,11 +20,7 @@ docker compose up -d
 
 ## Accessibility
 
-- Sign language support;
-- Self-Contrast;
-- Voice;
-- TAB navigation;
-- Adaptable text source.
+- Sign language support.
 
 ---
 
