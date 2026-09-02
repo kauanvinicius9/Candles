@@ -22,8 +22,6 @@ docker compose up -d
 
 ---
 
-<img src="frontend/src/assets/Comprovante_Dominio.jpeg" width="500" title="Domain payment"></img>
-
 <div align="left">
   <img src="https://skillicons.dev/icons?i=ts" height="45" alt="typescript logo" title="TypeScript" />
   <img src="https://skillicons.dev/icons?i=angular" height="45" alt="angularjs logo" title="Angular" />
